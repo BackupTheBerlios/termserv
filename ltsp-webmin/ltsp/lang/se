@@ -7,6 +7,11 @@ save_settings=Spara inställningar
 delete_host=Radera värd
 name_of_new_host=Namn på ny värd
 add_host=Lägg till värd
+
+select_rom_image=
+select=
+select_nic=
+
 SERVER=Server
 DNS_SERVER=DNS Server
 LOCAL_APPS=Lokala applikationer

@@ -2,7 +2,7 @@
 
 require "./helper.pl";
 
-$DEBUG = 1;
+require "./globals.pl";
 
 # Hash "profiles"
 # Contains the host configuration entry name as key

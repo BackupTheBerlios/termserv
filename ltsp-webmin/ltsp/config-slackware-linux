@@ -1,1 +1,3 @@
 ltsconf_path=/tftpboot/lts/ltsroot/etc
+path_to_etherboot=/usr/lib/etherboot
+path_to_rom_images=/usr/lib/etherboot/lzrom

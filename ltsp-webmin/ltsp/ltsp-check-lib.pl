@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+require "./globals.pl";
+
 sub ltsp_check_tftp() {
 
   open (LST, "</etc/inetd.conf");

@@ -13,6 +13,10 @@ configuration_check=Überprüfung der Konfiguration
 checks=Überprüfungen
 tftp_daemon_running=TFTP-Dienst läuft
 
+select_rom_image=ROM-Image auswählen
+select=Auswahl
+select_nic=Wählen Sie Ihre Netzwerkkarte aus
+
 DNS_SERVER=DNS-Server
 LOCAL_APPS=Lokale Anwendungen
 LOCAL_WM=Lokaler Window-Manager

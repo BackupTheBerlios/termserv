@@ -8,6 +8,11 @@ save_settings=Enregistrer la configuration
 delete_host=Supprimer la station
 name_of_new_host=Nom de la nouvelle station
 add_host=Ajouter une station
+
+select_rom_image=
+select=
+select_nic=
+
 SERVER=Serveur
 DNS_SERVER=Serveur DNS
 LOCAL_APPS=Applications locales

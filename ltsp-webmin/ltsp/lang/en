@@ -11,6 +11,11 @@ add_host=Add Host
 configuration_check=Configuration Check
 checks=Checks
 tftp_daemon_running=TFTP daemon running
+
+select_rom_image=Select ROM Image
+select=Select
+select_nic=Select your NIC
+
 yes=Yes
 no=No
 
