@@ -106,16 +106,48 @@ sub ltsp_get_configuration($) {
 
 }
 
+sub ltsp_get_option_groups() {
+
+  print "ltsp_get_option_groups called<br>\n" if $DEBUG;
+
+  my @options = ();
+
+  open (LST, "./options/order");
+  foreach (<LST>) {
+    chop;
+    print "ltsp_get_option_groups: $_<br>\n" if $DEBUG;
+    s/=(.*)?$//;
+    print "ltsp_get_option_groups: $_<br>\n" if $DEBUG;
+    push (@options, $_);
+  }
+  close (LST);
+
+  return @options;
+
+}
+
 sub ltsp_get_options() {
 
 #  opendir (DIR, "./options");
 #  @options = grep { (not /^\./) && -d "./options/$_" } readdir (DIR);
 #  closedir (DIR);
 
+  print "ltsp_get_options called<br>\n" if $DEBUG;
+
+  my $option = shift(@_);
+  my @options = ();
+
   open (LST, "./options/order");
   foreach (<LST>) {
     chop;
-    push (@options, $_);
+    if (/^$option/) {
+      print "ltsp_get_options: option found<br>\n" if $DEBUG;
+      s/^(.*)?=//;
+      foreach (split(/\,/)) {
+        push (@options, $_);
+        print "ltsp_get_options: $_<br>\n" if $DEBUG;
+      }
+    }
   }
   close (LST);
 

@@ -1,5 +1,10 @@
 Installation of the Webmin LTSP module
 
+If you have a recent version of Webmin (>0.80 will do) you can use the 
+Webmin Modules tool in the Webmin Configuration module to install 
+directly from the tarball.  If you want to do it manually, you can use
+the following instructions:
+
 1. Download the ltsp-0.x.tar.gz package from
    http://termserv.berlios.de/ltsp-module/
 
@@ -13,12 +18,13 @@ Installation of the Webmin LTSP module
 
 3. Create an empty file /etc/webmin/ltsp/admin.acl, mode 600, owner root:root
 
-4. Copy /usr/share/webmin/ltsp/config-<your-distribution>-linux to
+4. Copy /usr/share/webmin/ltsp/config-<your-distribution>-linux 
+   (respectively /usr/libexec/webmin/config-<your-distribution>-linux) to
    /etc/webmin/ltsp/config, mode 600, owner root:root
 
 5. Add ltsp in /etc/webmin/webmin.acl
 
 6. Restart the webmin daemon, e.g.
    /etc/rc.d/init.d/webmin restart on Caldera and most Linuxes or
-   /etc/init.d/webmin restart on Debian (not sure)
+   /etc/init.d/webmin restart on Debian
 
