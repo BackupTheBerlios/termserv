@@ -3,6 +3,7 @@
 
 do '../web-lib.pl';
 require './ltsp-lib.pl';
+
 &init_config();
 
 &ReadParse();
