@@ -44,6 +44,7 @@ X_MOUSE_BUTTONS=Anzahl der Maus-Buttons
 X_MOUSE_DEVICE=Maus-Schnittstelle
 X_MOUSE_PROTOCOL=Maus-Protokoll
 X_MOUSE_BAUD=Baudzahl der Schnittstelle
+X_MOUSE_EMULATE3BUTTONS=3-Button-Maus emulieren
 XkbModel=Tastatur-Typ
 XkbLayout=Tastatur-Belegung
 Y=Ja

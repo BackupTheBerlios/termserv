@@ -36,6 +36,7 @@ X_MOUSE_PROTOCOL=Mouse Protokol
 X_MOUSE_BAUD=Baudrate för mus(device)
 X_VERTREFRESH=Vertikal synkronisering
 X_HORZSYNC=Horisontell Synkronisering
+X_MOUSE_EMULATE3BUTTONS=
 XkbModel=Tangentbords modell
 XkbLayout=Tangentbord layout typ
 Y=Ja

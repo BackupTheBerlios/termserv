@@ -36,6 +36,7 @@ X_MOUSE_PROTOCOL=Protocole de la souris
 X_MOUSE_BAUD=Vitesse du port
 X_HORZSYNC=Fréquence de synchronisation horizontale (kHz)
 X_VERTREFRESH=Fréquence de rafraichissement verticale (Hz)
+X_MOUSE_EMULATE3BUTTONS=
 XkbModel=Modèle du clavier
 XkbLayout=Type de clavier
 RAMDISK_SIZE=Taille ramdisk

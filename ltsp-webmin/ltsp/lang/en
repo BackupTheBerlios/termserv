@@ -45,6 +45,7 @@ X_MOUSE_BUTTONS=Number of Mouse Buttons
 X_MOUSE_DEVICE=Mouse Device
 X_MOUSE_PROTOCOL=Mouse Protocol
 X_MOUSE_BAUD=Baudrate of device
+X_MOUSE_EMULATE3BUTTONS=Emulate a 3-button mouse
 XkbModel=Keyboard Model
 XkbLayout=Keyboard Layout
 

@@ -43,6 +43,7 @@ X_MOUSE_BUTTONS=Número de Botones del Ratón
 X_MOUSE_DEVICE=Dispositivo Ratón
 X_MOUSE_PROTOCOL=Protocolo del Ratón
 X_MOUSE_BAUD=Capacidad del Dispositivo
+X_MOUSE_EMULATE3BUTTONS=
 XkbModel=Modelo del Teclado 
 XkbLayout=Plantilla del Teclado
 
