@@ -920,16 +920,25 @@ Unter Linux schreibt man sich die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) mit
 cat eb-5.0.2-ne.lzdsk &gt; /dev/fd0
 </programlisting>
 
-auf die Diskette im 1. Laufwerk. Aber Achtung: Wenn vorher etwas auf der
-Diskette gespeichert war, ist es jetzt überschrieben, und wenn man sich bei
-<literal>/dev/fd0</literal> vertippt, kann Schlimmes passieren (Überschreiben der
-Festplatte etc.) Natürlich braucht man für diesen Befehl Schreibrechte
+auf die Diskette im 1. Laufwerk.
+</para>
+
+<caution>
+<para>
+Wenn vorher etwas auf der Diskette gespeichert war, ist es jetzt überschrieben,
+und wenn man sich bei <literal>/dev/fd0</literal> vertippt, kann Schlimmes
+passieren (Überschreiben der Festplatte etc).
+</para>
+</caution>
+
+<para>
+Natürlich braucht man für diesen Befehl Schreibrechte
 auf dem Diskettenlaufwerk, als Benutzer root sollte es auf alle Fälle
 funktionieren.
 </para>
 
 <para>
-Unter DOS/Windows kann man das Programm rawrite.exe benutzen, um die
+Unter DOS bzw. Windows kann man das Programm rawrite.exe benutzen, um die
 Startdiskette zu erstellen. Es ist normalerweise auf einer der Installations-CDs
 jeder Linuxdistribution zu finden oder kann von 
 <ulink url="http://uranus.it.swin.edu.au/~jn/linux/">http://uranus.it.swin.edu.au/~jn/linux/</ulink>
@@ -975,7 +984,7 @@ Hat man eine Karte mit einem Sockel für ein normales EPROM, so ist die
 erhaltene Datei mit dem Epromprogrammiergerät in das Eprom zu brennen.
 Alternativ können fertig programmierte Eproms bei verschiedenen Anbietern
 bezogen werden. Eine Liste steht auf
-<ulink url="http://etherboot.sourceforge.net/commercial.html">http://etherboot.sourceforge.net/commercial.html</ulink>
+<ulink url="http://etherboot.sourceforge.net/commercial.html">http://etherboot.sourceforge.net/commercial.html</ulink>.
 Anschließend muss das Eprom in den Sockel eingesetzt werden, und zwar so,
 daß die Aussparung an der einen Stirnseite mit der entsprechenden Markierung
 des Sockels übereinstimmt.
@@ -996,7 +1005,7 @@ unter GNU/Linux oder
 <programlisting>
 copy eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom eb-5.0.2-ne-big.lzrom
 </programlisting>
-unter DOS/Windows erzeugt.
+unter DOS bzw. Windows erzeugt.
 </para>
 
 <para>
@@ -1039,12 +1048,12 @@ anderen PC.
 
 <para>
 Wenn das Terminal über ein Diskettenlaufwerk verfügt, kopiert man
-die Imagedatei auf eine formatierte Diskette, unter Linux t. B. mit
+die Imagedatei auf eine formatierte Diskette, unter Linux z. B. mit
 <programlisting>
 cp eb-5.0.2-ne.lzdsk /floppy/
 </programlisting>
 Hierbei ist angenommen, daß die Diskette unter <literal>/floppy/</literal> gemountet ist.
-Natürlich kann das Kopieren auch auf einem DOS/Windows-Rechner geschehen.
+Natürlich kann das Kopieren auch auf einem DOS- bzw. Windows-Rechner geschehen.
 </para>
 
 <para>
@@ -1084,9 +1093,15 @@ Wenn die Platte z. B. als Master am zweiten IDE-Kanal hängt, wird mit
 cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hdc
 </programlisting>
 
-das Image kopiert. Auch hier muss man wieder aufpassen: Ein Tippfehler bei
+das Image kopiert.
+</para>
+
+<caution>
+<para>
+Auch hier muss man wieder aufpassen: Ein Tippfehler bei
 <literal>/dev/hdc</literal> kann sehr unangenehme Folgen haben!
 </para>
+</caution>
 
 <para>
 Nun kann die Platte wieder in das Terminal eingebaut werden.
@@ -1104,7 +1119,7 @@ Betrieb unter DOS oder als Terminal gewählt werden.
 </para>
 
 <para>
-Hier wird davon ausgegangen, dass DOS bereits auf der Fetsplatte installiert
+Hier wird davon ausgegangen, dass DOS bereits auf der Festplatte installiert
 ist. Das Format bei der ROM-o-matic ist ``DOS.COM Executable ROM Image''.
 Die erhaltene Datei (z. B. eb-5.0.2-ne.com) kopiert man auf die Festplatte.
 Beim Aufruf wird dann Etherboot gestartet - Fertig!

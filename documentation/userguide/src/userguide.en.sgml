@@ -781,7 +781,7 @@ of <literal>dhcpd.conf</literal> (with the command <literal>man dhcpd.conf</lite
 
 <para>
 You can still use the description above as a starting point
-if you don´t use Arktur, but another DHCP-server.
+if you don't use Arktur, but another DHCP-server.
 </para>
 
 <para>
@@ -812,7 +812,7 @@ fixme: der angegebenen Tabelle
 <colspec colname="col2">
 <spanspec namest="col1" nameend="col2" spanname="col1-2">
 <thead>
-<row><entry>Name</entry>			<entry>IP-Adresse</entry></row>
+<row><entry>Name</entry>			<entry>IP Address</entry></row>
 </thead>
 <tbody>
 <row><entry><literal>Client-A40</literal></entry>		<entry><literal>192.168.0.40</literal></entry></row>
@@ -833,296 +833,305 @@ fixme: der angegebenen Tabelle
 </para>
 
 <sect2>
-<title>Das LTSP-Modul - Einrichtung der Terminal-Hardware</title>
+<title>The LTSP Module - setup of the terminal hardware</title>
 <comment>TODO!</comment>
 </sect2>
 </chapter>
 
 <chapter>
-<title>Installation der Terminals</title>
+<title>Installation of the terminals</title>
 
 <para>
-Bevor es an die Installation der Terminals geht, ein paar Grundlagen
-zum Startvorgang eines PCs:
+Before we will come to the installation of the terminals,
+we need a few basics about the starting procedure of PC's.
 </para>
 
 <para>
-Direkt nach dem Einschalten wird das BIOS (Basic Input and Output System)
-gestartet. Dieses führt ein paar Tests durch und lädt danach das
-Startprogramm des Betriebssystems. Wo es dieses findet, kann man im
-Setup-Programm des BIOS einstellen.
-Dort finden sich normalerweise die Optionen Diskette, Festplatte, CDROM
-und bei neueren Rechnern oft auch Netzwerk.
+Directly after power on the BIOS (Basic Input and Output System) starts.
+After some tests it executes the bootloader of the operating system.
+The location where the bootloader is fetched from can be controlled
+via the BIOS setup. Normally there are the options floppy, harddisk,
+CDROM and network (newer PC's only).
 </para>
 
 <para>
-Normalerweise wird vom Startprogramm dann das Betriebssystem geladen,
-evtl. kann man zwischen mehreren wählen. In unserem Fall heißt dieses
-Startprogramm etherboot oder netboot. Beide erfüllen den gleichen Zweck:
-Statt das Betriebssystem von Platte oder Diskette zu laden, wird es über
-das Netz von einem Server geholt.
+Normally the bootloader loads the operating system. Some bootloaders offer
+to choose between different operating systems. In our case the bootloader
+is called either etherboot or netboot. Both do the same thing:
+Instead of loading the operating system from disk it is fetched
+from a server over the network.
 </para>
 
 <para>
-Im Folgenden gehen wir von etherboot aus, da es deutlich flexibler als
-netboot ist und aktiver weiterentwickelt wird. Ein Unterschied zwischen
-etherboot und netboot ist, daß etherboot für jede Netzwerkkarte einen eigenen
-Treiber braucht, während netboot eine Art Mini-DOS zur Verfügung stellt,
-sodass mit netboot alle Netzwerkkarten verwendet werden können, für die
-es einen DOS-Packet-Treiber gibt. In der Regel sollte man also etherboot
-verwenden. Wenn die Netzwerkkarte von etherboot nicht unterstützt wird,
-kann man es mit netboot versuchen.
+In the following chapters we assume that you use etherboot, because it
+is more flexible than netboot and it is developped more actively.
+A difference between netboot and etherboot is that etherboot needs
+a driver for every NIC while netboot provides a sort of mini-DOS.
+Therefore netboot can be used with all NICs that have a DOS-packet driver.
+Normally one should use etherboot, but if etherboot does not support
+the desired NIC, one could try netboot.
 </para>
 
 <para>
-Von wo aus etherboot geladen wird, ist für den weiteren Startvorgang des
-Terminals unerheblich. Es hat allein praktische Gründe. Wir beschränken
-uns hier auf vier Methoden: Start von Diskette, vom Bootsektor der
-Festplatte, von DOS aus und von
-einem Booteprom, die in den nächsten Kapiteln beschrieben werden.
+The location where etherboot ist loaded from does not matter at all for
+the further booting process of the terminals. The only reason to prefer
+one are practical ones. We discuss four methods for starting etherboot in
+the next chapters:
+From a bootfloppy, from the bootsector of the harddisk, from DOS and
+from a booteprom.
 </para>
 
 <para>
-Weiterhin gehen wir davon aus, dass Zugang zum Internet besteht und die
-Etherboot-Images von <ulink url="http://rom-o-matic.net/">http://rom-o-matic.net/</ulink>
-heruntergeladen werden können.
+Furthermore we assume that you have internet access and that you can load the
+etherboot-images from <ulink url="http://rom-o-matic.net/">http://rom-o-matic.net/</ulink>.
 
 <sect1>
-<title>Erstellen eines Etherbootimages mit der ROM-o-matic</title>
+<title>Creating an etherbootimage with the ROM-o-matic</title>
 
 <para>
-Marty Connor betreibt auf <ulink url="http://rom-o-matic.net/">http://rom-o-matic.net/</ulink>
-einen Service, bei dem speziell konfigurierte Etherboot-Images dynamisch erzeugt und
-heruntergeladen werden können. Die Benutzung ist einfach:
+Marty Connor provides a service on
+<ulink url="http://rom-o-matic.net/">http://rom-o-matic.net/</ulink>
+where you can create custom configured etherbootimages on demand and
+download them.
+Using this site is simple:
 </para>
 
 <para>
-Auf der Startseite wählt man die gewünschte Version von Etherboot.
-Normalerweise sollte man hier die neueste "Production Release" wählen.
-Man gelangt dann zu einem Formular mit 4 Punkten. Mit dem ersten Punkt
-wählt man den Typ seiner Netzwerkkarte. Wenn nicht klar ist, welcher der
-richtige ist, hilft ein Blick auf die Etherboot-Homepage
+You can choose the desired version of etherboot on the starting page.
+Normally you should choose the newest "Production Release".
+The next page is a form containing four topics. The first one chooses
+the NIC driver. If you don't know the suitable driver for your NIC,
+you may find it out on the etherboot homepage at
 <ulink url="http://etherboot.sourceforge.net/">http://etherboot.sourceforge.net/</ulink>
-bzw. die Netzwerkkartendatenbank auf 
+or with the help of the NIC database at
 <ulink url="http://etherboot.sourceforge.net/db/">http://etherboot.sourceforge.net/db/</ulink>.
-Unter dem zweiten Punkt kann man verschiedene Optionen einstellen, das ist
-normalerweise nicht nötig. Mit dem 3. Knopf wählt man das gewünschte Format
-(welches benötigt wird, hängt von der Startmethode ab, und wird in den
-zugehörigen Kapiteln beschrieben), und der 4. schließlich generiert das Image.
+With the second topic you can adjust several options. Normally you don't need
+to do that.
+The third button chooses the desired imageformat, and the fourth generates the
+image. The format of the image depends on the booting method and is described
+in the relevant chapters.
 </para>
 </sect1>
 
 <sect1>
-<title>Terminals mit Startdiskette</title>
+<title>Terminals with bootfloppy</title>
 
 <para>
-Eine Startdiskette ist die einfachste Methode, um ein Terminal zu starten,
-weil sie schnell auf einem anderen Rechner erstellt werden kann und einfach
-nur eingelegt zu werden braucht. Daher wird diese Methode auch gerne zum
-Testen verwendet. Ein Nachteil ist, daß ein Diskettenlaufwerk bewegliche
-Teile besitzt und damit staubanfällig ist und mechanisch altert. Ein weiterer
-Nachteil ist, daß die Startdiskette verlorengehen kann (dem kann man abhelfen,
-indem man das Laufwerk mit eingelegter Diskette so einbaut, daß es von außen
-nicht zugänglich ist, dann kann man es aber nicht für andere Zwecke
-verwenden).
+The simplest method to start a terminal is a bootfloppy, because it can be
+created quickly on another host and you only need to insert it into the
+floppy drive in order to use it. Therefore this method is well suited for
+testing purposes. A disadvantage are the movable parts and the dust
+sensitiveness of the floppy drive. Another disadvantage is that the
+bootfloppy can get lost. You can circumvent this one if you mount
+the drive with the inserted disk inside the cover, but you cannot use
+it normally any more if you do this.
 </para>
 
 <para>
-Das Format bei der ROM-o-matic ist ``Floppy Bootable ROM Image (.lzdsk)''.
-Unter Linux schreibt man sich die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) mit
+The image format for the ROM-o-matic is ``Floppy Bootable ROM Image (.lzdsk)''.
+Under Linux you can write the received file (e.g. eb-5.0.2-ne.lzdsk) with
+the command
 
 <programlisting>
 cat eb-5.0.2-ne.lzdsk &gt; /dev/fd0
 </programlisting>
 
-auf die Diskette im 1. Laufwerk. Aber Achtung: Wenn vorher etwas auf der
-Diskette gespeichert war, ist es jetzt überschrieben, und wenn man sich bei
-<literal>/dev/fd0</literal> vertippt, kann Schlimmes passieren (Überschreiben der
-Festplatte etc.) Natürlich braucht man für diesen Befehl Schreibrechte
-auf dem Diskettenlaufwerk, als Benutzer root sollte es auf alle Fälle
-funktionieren.
+onto the floppy in the first drive.
+</para>
+
+<caution>
+<para>
+This overwrites the contents of the floppy, and if you mistype
+<literal>/dev/fd0</literal> Bad Things can happen
+(Overwriting of the harddisk etc).
+</para>
+</caution>
+
+<para>
+Of course you need writing rights for the floppy drive. If you are
+root it should work in all cases.
 </para>
 
 <para>
-Unter DOS/Windows kann man das Programm rawrite.exe benutzen, um die
-Startdiskette zu erstellen. Es ist normalerweise auf einer der Installations-CDs
-jeder Linuxdistribution zu finden oder kann von 
-<ulink url="http://uranus.it.swin.edu.au/~jn/linux/">http://uranus.it.swin.edu.au/~jn/linux/</ulink>
-heruntergeladen werden.
+Under DOS or windows you can use the program rawrite.exe to create the
+bootdisk. You can find it on one of the installation CD's of almost
+every Linux Distribution or at
+<ulink url="http://uranus.it.swin.edu.au/~jn/linux/">http://uranus.it.swin.edu.au/~jn/linux/</ulink>.
 </para>
 
 <para>
-Da das Diskettenabbild sehr klein ist, ist es normal, wenn die LED des Laufwerks
-beim Schreiben nur kurz aufleuchtet und man fast keine Geräusche hört.
+Because the floppy image is very small, it is normal when the floppy drive's
+LED lights only shortly and you almost hear no noises from the drive.
 </para>
 
 <para>
-Das wars! Jetzt kann das Terminal mit dieser Diskette gestartet werden.
+That was it! Now you can start the terminal with this floppy.
 </para>
 </sect1>
 
 <sect1>
-<title>Terminals mit Booteprom</title>
+<title>Terminals with booteprom</title>
 
 <para>
-Das Starten eines Terminals über ein Booteprom ist die eleganteste Methode,
-die auch bei entsprechenden kommerziell vertriebenen Lösungen angewandt wird.
-Der wesentliche Vorteil ist, daß man ohne bewegte Teile auskommt. Der Nachteil
-ist, daß fertig programmierte Booteproms bzw. Netzwerkkarten mit fertigem
-Booteprom recht teuer sind, und daß man zum Selberbrennen ein
-Epromprogrammiergerät und eine Epromlöschlampe braucht (sofern es sich nicht
-um Flasheproms handelt, die können ohne zusätzliche Geräte direkt
-``in circuit'' programmiert werden).
+Booting a terminal with a booteprom is the most elegant way. This method
+is also used by commercially available solutions. The main advantage is
+that you don't need any moving parts. The disadvantage is that programmed
+booteproms and NICs with programmed booteproms are rather expensive and
+that you need an eprom burner and an erasing lamp if you want to program
+eproms yourself. The only exception are flasheproms, these can be programmed
+"in circuit" without additional hardware.
 </para>
 
 <para>
-Das Format des Images bei der ROM-o-matic ist ``Binary ROM Image (.lzrom)''.
+The image format for the ROM-o-matic is ``Binary ROM Image (.lzrom)''.
 </para>
 
 <para>
-Hat man das Glück und eine Netzwerkkarte mit Flasheprom, so ist die
-erhaltene Datei mit dem zur Netzwerkkarte gehörigen
-Flashprogramm in das Flasheprom zu laden.
+If you are the lucky owner of a NIC with a flasheprom, then you
+can use the accompanying flashprogram to load the flasheprom with the image.
 </para>
 
 <para>
-Hat man eine Karte mit einem Sockel für ein normales EPROM, so ist die
-erhaltene Datei mit dem Epromprogrammiergerät in das Eprom zu brennen.
-Alternativ können fertig programmierte Eproms bei verschiedenen Anbietern
-bezogen werden. Eine Liste steht auf
-<ulink url="http://etherboot.sourceforge.net/commercial.html">http://etherboot.sourceforge.net/commercial.html</ulink>
-Anschließend muss das Eprom in den Sockel eingesetzt werden, und zwar so,
-daß die Aussparung an der einen Stirnseite mit der entsprechenden Markierung
-des Sockels übereinstimmt.
+You have to program the received file into the eprom with an
+eprom burner if you have a NIC with a socket for a normal eprom.
+Alternatively several vendors offer programmed eproms.
+You cand find a list at
+<ulink url="http://etherboot.sourceforge.net/commercial.html">http://etherboot.sourceforge.net/commercial.html</ulink>.
+Finally the eprom has to be inserted into the socket on the NIC. Note that
+the notches on the small sides of the eprom and the socket have to match.
 </para>
 
 <para>
-Die meisten Etherbootimages sind 16 kB groß. Die passenden Eproms haben die
-Bezeichnung 27c128. Da jedoch die 32 kB-Eproms 27c256 pinkompatibel zum 27c128
-und wesentlich häufiger verkauft werden und somit billiger sind, empfiehlt
-sich dieser Typ.
-Damit das auch in Karten funktioniert, die eigentlich nur 16 kB-Typen
-vertragen, brennt man nicht das Image direkt, sondern ein 32 kB-Image
-(hier <literal>eb-5.0.2-ne-big.lzrom</literal>), das man sich z. B. mit
+Most etherboot images are 16 kB in size. Suitable eprom chips are named
+27c128. However, the 32 kB chips 27c258 are pin compatible to the 27c128
+and sold more often, so they are cheaper. Therefore these chips are
+preferrable.
+Some NIC's require the 16 kB type. You can nevertheless use the 27c256
+with these cards if you don't burn directly the image but a 32 kB image
+(here <literal>eb-5.0.2-ne-big.lzrom</literal>), that you can create
+for example with
 <programlisting>
 cat eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom > eb-5.0.2-ne-big.lzrom
 </programlisting>
-unter GNU/Linux oder
+under GNU/Linux or
 <programlisting>
 copy eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom eb-5.0.2-ne-big.lzrom
 </programlisting>
-unter DOS/Windows erzeugt.
+under DOS or Windows.
 </para>
 
 <para>
-Meistens muss das Eprom/Flasheprom noch mit einem Konfigurationsprogramm
-aktiviert werden, bevor es benutzt werden kann.
+In most cases the eprom/flasheprom has to be activated with a
+configuration tool before it can be used.
 </para>
 
 <para>
-Dieses Kapitel enthält nur die nötigsten Punkte und ist eher als Überblick
-über die Möglichkeiten gedacht, die man mit einem Booteprom hat. Für
-ausführlichere Informationen, z. B. auch wie man Etherboot bei neueren PCs
-direkt ins BIOS integrieren kann, oder wie ein vorhandenes PXE-kompatibles
-Booteprom benutzt werden kann, sei auf die Etherboot-Dokumentation verwiesen.
+This chapter only treats the most important topics and is rather an
+overview over the capabilities of booteproms. See the etherboot
+documentation for more advanced topics such as integrating etherboot
+into the BIOS of newer PC's or using an existing PXE compatible
+booteprom.
 </para>
 </sect1>
 
 <sect1>
-<title>Terminals mit Festplatte</title>
+<title>Terminals with harddisk</title>
 
 <para>
-Ist eine Festplatte in eimem Terminal überhaupt sinnvoll, da ja lokal sowieso
-nichts gespeichert wird?
-Ja, wenn nur wenig Hauptspeicher zur Verfügung steht, kann man sie sehr gut
-als virtuellen Arbeitsspeicher gebrauchen.
-In allen anderen Fällen sollten evtl. vorhandene Festplatten eher ausgebaut
-werden, da sie unnötig Strom verbrauchen, Lärm machen und aufgrund mechanisch
-bewegter Teile irgendwann kaputt gehen.
+You may ask wether a terminal with a harddisk makes sense at all since
+nothing is stored locally.
+The answer is: Yes, if it has little memory, you can then use the harddisk as
+swap space.
+In most other cases you should probably remove the harddisks, because
+they are noisy, consume electrical power and are dying at some day because
+of the mechanical moving parts.
 </para>
 
 <para>
-Das Format des Images bei der ROM-o-matic ist dasselbe wie beim Starten von
-Diskette, nur das Überspielen des Images auf die Festplatte funktioniert
-naturgemäß etwas anders.
+The image format for the ROM-o-matic is the same as the one used by
+bootfloppies. The only difference lays in putting the image onto the
+disk.
 </para>
 
 <para>
-Hier gibt es zwei Wege: Über Diskette oder über Einbau der Festplatte in einen
-anderen PC.
+There are two possibilities: Transfer the image with a floppy or mount
+the harddisk into another PC.
 </para>
 
 <para>
-Wenn das Terminal über ein Diskettenlaufwerk verfügt, kopiert man
-die Imagedatei auf eine formatierte Diskette, unter Linux t. B. mit
+If the terminal has a floppy drive you can copy the image onto a
+formatted floppy. The command under Linux is
 <programlisting>
 cp eb-5.0.2-ne.lzdsk /floppy/
 </programlisting>
-Hierbei ist angenommen, daß die Diskette unter <literal>/floppy/</literal> gemountet ist.
-Natürlich kann das Kopieren auch auf einem DOS/Windows-Rechner geschehen.
+assuming the floppy is mounted under <literal>/floppy/</literal>.
+Of course you can also copy the image under DOS or Windows.
 </para>
 
 <para>
-Nun kann man das Terminal mit einem Taschenlinux (die Rettungsdiskette
-gängiger Linuxdistributionen geht auch) starten.
-Nachdem man sich als root angemeldet hat bzw. auf andere
-Weise eine shell mit root-Rechten geöffnet hat, legt man die zuvor erstellte
-Diskette ein und mountet sie:
+Now you can start the terminal with a Pocket Linux or the
+rescue disk of a normal Linux distribution.
+After logging in as root or gaining root privileges by another way
+insert the floppy created above and mount it:
 
 <programlisting>
 mount /dev/fd0 /mnt
 </programlisting>
 
-Dazu muss das Verzeichnis <literal>/mnt/</literal> existieren. Falls nicht, legt man es mit dem
-Befehl
+Of course the directory <literal>/mnt/</literal> must exist. If it does
+not exist, create it with the command
 
 <programlisting>
 mkdir /mnt
 </programlisting>
 
-an. Nun kopiert man das Etherboot-Image auf die Festplatte:
+Now copy the etherboot image to the harddisk:
 
 <programlisting>
 cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hda
 </programlisting>
 
-Falls es sich um eine SCSI-Festplatte handelt, muss statt <literal>/dev/hda</literal>
-entsprechend <literal>/dev/sda</literal> eingegeben werden.
+In case you have a SCSI system replace <literal>/dev/hda</literal>
+with <literal>/dev/sda</literal>.
 </para>
 
 <para>
-Besitzt das Terminal kein Diskettenlaufwerk ist es etwas aufwendiger: Man baut
-die Festplatte aus und in einen Linux-PC ein.
-Wenn die Platte z. B. als Master am zweiten IDE-Kanal hängt, wird mit 
+If the terminal does not have a floppy drive you have a bit more work.
+Remove the harddisk of the terminal and mount it into a Linx PC.
+If the disk is connected as master on the second IDE channel for example,
+you can transfer the image with
 
 <programlisting>
 cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hdc
 </programlisting>
-
-das Image kopiert. Auch hier muss man wieder aufpassen: Ein Tippfehler bei
-<literal>/dev/hdc</literal> kann sehr unangenehme Folgen haben!
 </para>
 
+<caution>
 <para>
-Nun kann die Platte wieder in das Terminal eingebaut werden.
+A typo at <literal>/dev/hdc</literal> can lead to very unpleasant results!
+</para>
+</caution>
+
+<para>
+Now the disk can be put back into the terminal.
 </para>
 </sect1>
 
 <sect1>
-<title>Terminals mit DOS</title>
+<title>Terminals with DOS</title>
 
 <para>
-Wenn auf dem Terminal als zweites Betriebssystem DOS läuft, kann Etherboot
-auch von dort aus gestartet werden. Mit dem Startmenü von MS-DOS 6.x oder
-einer selbst geschriebenen Batch-Datei kann beim Starten zwischen dem
-Betrieb unter DOS oder als Terminal gewählt werden.
+If the terminal runs DOS as second operating system, it can load
+etherboot also from DOS. You can choose between operating the pc under
+DOS or as terminal with the bootmenu of MS-DOS 6.x or a selfwritten
+batchfile upon startup.
 </para>
 
 <para>
-Hier wird davon ausgegangen, dass DOS bereits auf der Fetsplatte installiert
-ist. Das Format bei der ROM-o-matic ist ``DOS.COM Executable ROM Image''.
-Die erhaltene Datei (z. B. eb-5.0.2-ne.com) kopiert man auf die Festplatte.
-Beim Aufruf wird dann Etherboot gestartet - Fertig!
+We assume that DOS is already installed on harddisk. The image format for the
+ROM-o-matic is ``DOS.COM Executable ROM Image''.
+Aftre copying the received file on disk it can be executed and then
+etherboot starts. That's it!
 </para>
 </chapter>
 
@@ -1134,7 +1143,7 @@ mittels webmin
 </para>
 
 <sect1>
-<title>Benutzer- und Gruppenverwaltung</title>
+<title>User and Group Management</title>
 
 <sect2>
 <title>Direkt auf dem Terminalserver</title>

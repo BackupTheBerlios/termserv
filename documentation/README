@@ -12,7 +12,7 @@ docbook-stylesheets-doc
 
 Note that these are the names of the Debian pacakges, they may vary for
 other distributions.
-Another good resource is the KDE Documentation Editor´s Homepage at
+Another good resource is the KDE Documentation Editor's Homepage at
 http://i18n.kde.org/doc/index.html.
 
 
@@ -39,5 +39,5 @@ to
 inside the document.
 The build system automatically recognises the
 new language and builds it. Note that the language code ("fr" here)
-is standardized by the ISO, so you can´t just invent one.
+is standardized by the norm ISO 639, so you can't just invent one.
 

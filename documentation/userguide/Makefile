@@ -13,7 +13,7 @@ LANGUAGES := $(patsubst src/$(GUIDE).%.sgml,%,$(wildcard src/$(GUIDE).*.sgml))
 # Here it is the language.
 html-%.stamp: src/$(GUIDE).%.sgml out/%/html
 	cd src && rm -rf ../out/$*/html/* $(GUIDE).$* && db2html $(GUIDE).$*.sgml && mv $(GUIDE).$*/* ../out/$*/html/
-	mv out/$*/html/book1.html out/$*/html/index.html
+	ln -sf book1.html out/$*/html/index.html
 	cp src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/html/
 	cp src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/html/
 	touch $@
@@ -50,7 +50,7 @@ out/%/sgml:
 	mkdir -p $@
 
 # The dependencies of the all target have to be in an order so that
-# no depndebncy depends from a dependency right from it. Otherwise
+# no dependency depends from a dependency right from it. Otherwise
 # some of the dependencies are built more than once.
 all: html-all dvi-all ps-all pdf-all ps-gz-all sgml-all
 
