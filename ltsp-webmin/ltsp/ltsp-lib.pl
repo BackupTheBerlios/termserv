@@ -65,6 +65,8 @@ sub ltsp_read_config($) {
 
 sub ltsp_write_config($) {
 
+  print "ltsp_write_config: procedure called\n<br>" if $DEBUG;
+
   my $conf_file = shift(@_);
   &lock_file("$conf_file");
   open (LST, ">$conf_file");
@@ -86,6 +88,8 @@ sub ltsp_write_config($) {
   close (LST);
   &unlock_file("$conf_file");
   &webmin_log("write", "file", $conf_file, );
+
+  print "ltsp_write_config: procedure finished\n<br>" if $DEBUG;
 
 }
 
@@ -195,12 +199,31 @@ sub ltsp_need_value_translation($) {
 sub ltsp_modify_entry($, %) {
 
   ($entry, %data) = @_;
+
+  # Test whether the entry is empty
+  # empty means that the entry does not yet exist,
+  # so it's been created
+
+  if ($profiles{"$entry"} eq "") {
+    push (@added_hosts, $entry);
+    print "ltsp_modify_entry: $entry is a new entry<br>\n" if $DEBUG;
+  }
+
   $profiles{"$entry"} = "";
   foreach (keys(%data)) {
     $profiles{"$entry"} .= ";$_," . $data{"$_"};
   }
   print "ltsp_modify_entry: $entry is " . $profiles{"$entry"} . "<br>\n" if $DEBUG;
   $profiles{"$entry"} = substr($profiles{"$entry"}, 1);
+
+  # Test whether the entry is empty at the end
+  # empty means that the entry does not have any configuration
+  # so the user wanted to delete that entry
+
+  if ($profiles{"$entry"} eq "") {
+    push (@added_hosts, $entry);
+    print "ltsp_modify_entry: $entry is a deleted entry<br>\n" if $DEBUG;
+  }
 
 }
 
