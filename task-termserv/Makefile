@@ -6,7 +6,7 @@ VERSION = ${shell head -1 debian/changelog | sed 's/.*(\([^-]*\)-.*/\1/'}
 
 # Check wether the fakeroot program is available. With fakeroot, non root
 # users can build the deb.
-FAKEROOT = ${shell which fakeroot}
+FAKEROOT = ${shell which fakeroot > /dev/null 2>&1 && echo fakeroot}
 
 # The name of this package:
 PACKAGE = task-termserv
