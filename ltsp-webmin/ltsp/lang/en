@@ -7,6 +7,13 @@ save_settings=Save Settings
 delete_host=Delete Host
 name_of_new_host=Name of New Host
 add_host=Add Host
+
+configuration_check=Configuration Check
+checks=Checks
+tftp_daemon_running=TFTP daemon running
+yes=Yes
+no=No
+
 SERVER=Server
 DNS_SERVER=DNS Server
 LOCAL_APPS=Local Applications
@@ -29,6 +36,7 @@ X_MOUSE_PROTOCOL=Mouse Protocol
 X_MOUSE_BAUD=Baudrate of device
 XkbModel=Keyboard Model
 XkbLayout=Keyboard Layout
+
 Y=Yes
 N=No
 GUI=Graphical, on the server

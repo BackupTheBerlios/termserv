@@ -83,6 +83,8 @@ print "</table>\n";
 
 print "<br><a href=\"./edit_host.cgi?action=add\">" . $text{"add_host"} . "</a>\n";
 
+print "<br><a href=\"./check_configuration.cgi\">" . $text{"configuration_check"} . "</a>\n";
+
 print "<br><hr>\n";
 &footer("/", $text{'index'});
 
