@@ -1,3 +1,10 @@
+ltsp-webmin (0.5.2-2) unstable; urgency=low
+
+  * Depends now on lts-core, since it is available now.
+  * Therefore removed README.Debian
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat, 7 Jul 2001 15:19:34 +0200
+
 ltsp-webmin (0.5.2-1) stable; urgency=low
 
   * New version.

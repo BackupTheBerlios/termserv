@@ -7,6 +7,10 @@
 # Reason: Only define the version at one place.
 VERSION = ${shell head -1 debian/changelog | sed 's/.*(\([^-]*\)-.*/\1/'}
 
+# Check wether the fakeroot program is available. With fakeroot, non root
+# users can build the deb.
+FAKEROOT = ${shell which fakeroot}
+
 # The name of this package:
 PACKAGE = ltsp-webmin
 
@@ -23,7 +27,7 @@ wbm:
 
 # debian package
 deb:
-	debian/rules binary
+	$(FAKEROOT) debian/rules binary
 
 # source package
 tgz: clean deb-clean
@@ -50,6 +54,6 @@ clean:
 	rm -rf tmp
 
 deb-clean:
-	debian/rules clean
+	$(FAKEROOT) debian/rules clean
 
 .PHONY: clean deb deb-clean install tgz wbm
