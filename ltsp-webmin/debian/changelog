@@ -1,3 +1,12 @@
+ltsp-webmin (0.5.99-1) unstable; urgency=low
+
+  * fixed a nasty bug that deleted the entire lts.conf
+  * added translation fixes to avoid ambigous translation strings
+  * missing: updated translations for all languages except en and de
+  * missing: a lot of testing
+
+ -- Christian Selig <christian.selig@bnv-bamberg.de>  Mon, 21 Jul 2003 19:18:00 +0200
+
 ltsp-webmin (0.5.3-1) unstable; urgency=low
 
   * changed section to contrib/admin because ltsp-core is in non-free now.
