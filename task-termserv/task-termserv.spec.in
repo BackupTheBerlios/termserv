@@ -6,7 +6,7 @@ Release: 0
 Copyright: GPL
 Source: task-termserv-_VERSION_.tar.gz
 Group: Networking/Admin
-Requires: lts-core, ltsp-webmin, webmin
+Requires: lts-core, ltsp-webmin, webmin, termserv-doc
 Packager: Georg Baum <gbaum@users.sourceforge.net>
 BuildArchitectures: noarch
 
