@@ -19,6 +19,7 @@ UI_MODE=Start Läge
 USE_XFS=Använd X Font Server
 XDM_SERVER=XDM Server
 XSERVER=X Server
+X_RES_1=
 X_COLOR_DEPTH=Färgdjup
 X_MOUSE_BUTTONS=Antal musknappar
 X_MOUSE_DEVICE=Mus(Device)
@@ -73,7 +74,7 @@ se=Svensk
 th=Thailändsk
 us=Amerikans
 
-network_settings= Nätverk och start intställningar
+network_settings=Nätverk och start intställningar
 graphics_card_settings=Grafikkort inställningar
 keyboard_settings=Tangentbord Inställningar
 mouse_settings=Mus inställningar

@@ -21,6 +21,7 @@ USE_XFS=X Font Server benutzen
 XDM_SERVER=XDM-Server
 XSERVER=X-Server
 X_COLOR_DEPTH=Farbtiefe
+X_RES_1=Auflösung
 X_HORZSYNC=Horizontal Sync
 X_VERTREFRESH=Vertikal Auffrischen
 X_MOUSE_BUTTONS=Anzahl der Maus-Buttons

@@ -19,6 +19,7 @@ UI_MODE=Mode de démarrage
 USE_XFS=Utilisation d'un serveur de polices
 XDM_SERVER=Serveur XDM
 XSERVER=Serveur X
+X_RES_1=
 X_COLOR_DEPTH=Profondeur de couleurs
 X_MOUSE_BUTTONS=Nombre de boutons de la souris
 X_MOUSE_DEVICE=Port de la souris
