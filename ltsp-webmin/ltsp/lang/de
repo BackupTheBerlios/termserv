@@ -1,6 +1,6 @@
 index_title=LTSP-Konfiguration
 hosts=Rechner
-hosts=Rechner
+host=Rechner
 settings_for=Einstellungen für
 edit_host=Rechner bearbeiten
 save_settings=Einstellungen speichern
