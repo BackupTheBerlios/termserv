@@ -17,7 +17,7 @@ print "<form action=\"./rom-image.cgi\" method=\"get\">\n";
 
 print "<table cellpadding=\"5\" border width=100%>\n";
 
-print "<tr $tb> <td colspan=\"2\"><b>" . $text{"select"} . "</b></td></tr>\n";
+print "<tr $tb> <td><b>" . $text{"select"} . "</b></td></tr>\n";
 
 print "<tr $cb><td><table border=\"0\">\n";
 
@@ -37,7 +37,7 @@ print "<option value=\"floppy_loadable_image\">" . $text{"floppy_loadable_image"
 print "</select>\n";
 
 print "</td></tr>\n";
-print "<tr $cb><td><input type=\"submit\" value=\"" . $text{"get_rom_image"} . "\"></td></tr>\n";
+print "<tr $cb><td><input type=\"submit\" value=\"" . $text{"get_rom_image"} . "\"></td><td></td></tr>\n";
 print "</table>\n";
 
 print "</td></tr>\n";
