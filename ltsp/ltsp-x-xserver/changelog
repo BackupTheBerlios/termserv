@@ -1,0 +1,17 @@
+ltsp-x-xserver-_:template:_-3.3.6-_:arch:_ (3.0.0-0) unstable; urgency=low
+
+  * new package name to reflect upstream change as well as the fact that
+    we are now fully prepared to support different client architectures
+    in parallel.
+  * new standards version: 3.5.6.0
+  * changed section to non-free/net because sources are not directly
+    available for all parts
+  * new upstream release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat,  5 Dec 2001 17:10:04 +0100
+
+lts-xserver-_:template:_ (2.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sun,  10 Jun 2001 19:12:13 +0200

@@ -1,0 +1,13 @@
+Source: ltsp-kernel-2.4.9-i386
+Section: non-free/net
+Priority: optional
+Maintainer: Georg Baum <gbaum@users.sourceforge.net>
+Standards-Version: 3.5.6.0
+
+Package: ltsp-kernel-2.4.9-i386
+Architecture: all
+Provides: ltsp-kernel-i386
+Depends: ltsp-core-i386 (>= 3.0.0)
+Description: Linux Terminal Server Project (ltsp.org) kernel file
+ This package contains a Linux kernel that has been built to
+ work with the Linux Terminal Server Project (www.ltsp.org).

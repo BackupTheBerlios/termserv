@@ -1,0 +1,48 @@
+--- inst.sh	Sat Nov 24 16:42:42 2001
++++ inst.sh	Sat Nov 24 19:40:24 2001
+@@ -166,16 +166,6 @@
+ echo "the CONFIG file and restart the installation."
+ echo
+ echo -n "Continue with installation (y/n)? "
+-read ANSWER
+-
+-if [ "${ANSWER}" = "Y" -o "${ANSWER}" = "y" ]; then
+-    :
+-else
+-    echo
+-    echo "Installation aborted"
+-    echo
+-    exit
+-fi
+ 
+ ##############################################################################
+ #
+@@ -383,12 +373,6 @@
+ 
+ #------------------------------------------------------------------------------
+ #
+-# Start building templates
+-#
+-/bin/sh ./${TEMPLATE_FILE}
+-
+-#------------------------------------------------------------------------------
+-#
+ # Build the lts.conf file, based on some of the CONFIG variables
+ #
+ sed "s^IP_SERVER^${IP_SERVER}^" \
+@@ -398,13 +382,13 @@
+ # Write some of the important config items to the /etc/ltsp.conf file,
+ # so that additional installations can use those values
+ #
+-CONF=/etc/ltsp.conf
++CONF=${DESTDIR}/etc/ltsp.conf.in
+ 
+ echo ":"                                      >${CONF}
+ echo "#"                                     >>${CONF}
+ echo "# Configuration variables for LTSP"    >>${CONF}
+ echo "#"                                     >>${CONF}
+ echo                                         >>${CONF}
+-echo "LTSP_DIR=${LTSP_DIR}"                  >>${CONF}
++echo "LTSP_DIR=_LTSP_DIR_"                  >>${CONF}
+ echo                                         >>${CONF}
+ 
