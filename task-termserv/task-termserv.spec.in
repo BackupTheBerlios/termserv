@@ -1,8 +1,10 @@
 Summary: Task package for the GNU/Linux Terminalserver for schools
+Summary(de): Task-Paket für den GNU/Linux Terminalserver für Schulen
 Name: task-termserv
 Version: _VERSION_
 Release: 0
 Copyright: GPL
+Source: task-termserv-_VERSION_.tar.gz
 Group: Networking/Admin
 Requires: lts-core, ltsp-webmin, webmin
 Packager: Georg Baum <gbaum@users.sourceforge.net>
@@ -15,10 +17,18 @@ This makes it easyer for you to select the right packages: Just install
 this package, and all the Terminalserver packages will be selected and
 installed automatically, too.
 
+%description -l de
+Dieses Paket ein Metapaket und enthält keine Dateien. Sein Zweck ist,
+daß es von allen Paketen abhängig ist, die für den Terminalserver
+gebraucht werden. Damti wird die Paketauswahl einfacher: Wenn dieses Paket
+installiert ist, ist automatisch sichergestellt, daß alle
+Terminalserverpakete auch installiert sind.
+
 %prep
   #
   # Prepare the package for building on the development machine
   #
+%setup
 
 %build
   #
