@@ -9,7 +9,7 @@ VERSION = ${shell head -1 debian/changelog | sed 's/.*(\([^-]*\)-.*/\1/'}
 
 # Check wether the fakeroot program is available. With fakeroot, non root
 # users can build the deb.
-FAKEROOT = ${shell which fakeroot}
+FAKEROOT = ${shell which fakeroot > /dev/null 2>&1 && echo fakeroot}
 
 # The name of this package:
 PACKAGE = ltsp-webmin
@@ -39,7 +39,7 @@ rpm: tgz
 	rpm -ta ../$(PACKAGE)-$(VERSION).tar.gz
 
 # source package
-tgz: clean deb-clean $(PACKAGE).spec
+tgz: clean  deb-clean $(PACKAGE).spec
 	@echo Building source package ../$(PACKAGE)-$(VERSION).tar.gz
 	@mkdir -p tmp/$(PACKAGE)-$(VERSION)
 	@find . ! \( -name "tmp" -o -path '*tmp/*' -o -name ".cvsignore" -o -path '*CVS/*' -o -name "CVS" -a -type d \) -print | cpio -pmud --quiet tmp/$(PACKAGE)-$(VERSION)
