@@ -360,6 +360,16 @@ sub ltsp_need_value_translation($) {
   return 0;
 }
 
+sub ltsp_value_needs_quotes($) {
+
+  my $option = shift(@_);
+
+  if ( -e "./options/$option/quoted") {
+    return 1;
+  }
+  return 0;
+}
+
 sub ltsp_modify_entry($, %) {
 
   ($entry, %data) = @_;
