@@ -97,19 +97,43 @@ sub _ltsp_modify_entry_on_write(@) {
       next; 
     }
 
-    $lines[$i] =~ s/ //g;
-
     ($key, $value) = split(/=/);
-    chomp($key); $key =~ s/( *)?//;
-    chomp($value); $value =~ s/( *)?//;
+    chomp($key); $key =~ s/( *)?//g;
+    chomp($value); $value =~ s/( *)?//g;
     $value =~ s/\"//g;
     $cur_conf{"$key"} .= $value;
   }
 
-  print "_ltsp_modify_entry_on_write: host is $host<br>\n"; 
+  %conf = &ltsp_get_configuration($host);
+
+  (*added, *deleted, *modified, *nonmodifed) = &compare_hashes(\%cur_conf, \%conf);
+
+  for ($i = 0; $i<=$#lines; $i++) {
+    $_ = $lines[$i];
+    chomp;
+    if (/^\#/) { next; }
+    if (length($_) == "0") { next; }
+    if (/^\[(.*)?\]/) { next; }
+
+    ($key, $value) = split(/=/);
+    chomp($key); $key =~ s/( *)?//g;
+    chomp($value); $value =~ s/( *)?//g;
+    $value =~ s/\"//g;
+
+    # And once again Larry gets on my ****. He is too stupid to invent
+    # the "a in b" operator which returns true when string a is in array b
+    # even the squichie eaters languages from Wirth have this simple operation!
+ 
+    foreach (@deleted) {
+      if ($_ eq $key) {
+        splice(@lines, $i, 1);
+      }
+    }    
+    
+  }
 
   foreach $key (keys(%cur_conf)) {
-    print "_ltsp_modify_entry_on_write: key is $key, value is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
+#    print "_ltsp_modify_entry_on_write: key is $key, value is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
   }
 
   print "_ltsp_modify_entry_on_write says bye-bye<br>\n";
@@ -142,7 +166,7 @@ sub ltsp_write_config($) {
         }
       }
       # Find out where to stop deletion
-      ENDDELETE: while ($i < $#lines) {
+      ENDDELETE: while ($i <= $#lines) {
         $i++;
         if ($lines[$i] =~ /^\[(.*)?\]/) {
           $end_delete = $i-1;
@@ -173,7 +197,7 @@ sub ltsp_write_config($) {
         }
       }
       # Find out where to stop deletion
-      ENDMODIFY: while ($i < $#lines) {
+      ENDMODIFY: while ($i <= $#lines) {
         $i++;
         if ($lines[$i] =~ /^\[(.*)?\]/) {
           $end_modify = $i-1;
@@ -185,10 +209,10 @@ sub ltsp_write_config($) {
       print "ltsp_write_config: modifying lines $begin_modify to $end_modify\n<br>" if $DEBUG;
       # TMTOWTDI - har har - lick my shiny metal a**, Larry!
       for ($i = $begin_modify; $i < $end_modify; $i++) { 
-        print "ltsp_write_config: " . $lines[$i] . "\n<br>" if $DEBUG;
+        print "<tt><font color=\"#1fff1f\">" . $lines[$i] . "</font></tt>\n<br>" if $DEBUG;
         push (@mod_lines, $lines[$i]); 
       }
-      # MODIFICATION ROUTINE CALL IT HERE
+      # That's the only interesting subroutine here, believe me
       &_ltsp_modify_entry_on_write(\@mod_lines);
     }
 
@@ -219,7 +243,7 @@ sub ltsp_write_config($) {
  
   if ($DEBUG) {
     foreach (@lines) {
-      print "<tt>$_</tt><br>\n";
+      print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n";
     }
   }
 
@@ -252,7 +276,6 @@ sub ltsp_get_configuration($) {
   foreach (split(/;/, $profiles{"$prof"})) {
     ($key, $value) = split(/,/); 
     $ret_hash{"$key"} = $value;
-    print "ltsp_get_configuration: key is $key, value is $value\n<br>" if $DEBUG;
   }
 
   return %ret_hash;
