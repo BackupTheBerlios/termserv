@@ -1,0 +1,65 @@
+#! /bin/sh
+
+# Script to update the language files. This is a two step process:
+# 1) Put all options that are not already present into the english language
+#    file.
+# 2) Put all strings that are present in the english language file into all
+#    other language files.
+# Note: If any language file contains something like "string=", then string is
+# translated into the empty string. Therefore make sure that the english
+# language file contains no such line and then run this script.
+# This assures that in no case an empty string is displayed.
+# If no translated version is available, the english version is used.
+# Another advantage of this approach is that translators don't need to
+# search for new strings in the english language file.
+#
+# This script is slow due to the use of shell and sed. The only reason that
+# it is a shell script is that I am more familiar with the shell than with
+# perl.
+#
+# Copyright 2001 Georg Baum <gbaum@users.sourceforge.net>
+
+(
+cd `dirname $0`
+
+# Extract the available options if not there already
+if ! test -f options.ltsp-webmin; then
+  ./get_options
+fi
+
+#Put all new options in the english language file
+for o in `cat options.ltsp-webmin`
+do
+  if ! grep "^${o}[[:space:]]*=" ltsp/lang/en >/dev/null 2>&1; then
+        echo "${o}=" >> ltsp/lang/en
+  fi
+done
+
+#Put all options of the english language file into the other language files
+for f in ltsp/lang/*
+do
+  if test -f ${f} -a ${f} != ltsp/lang/en; then
+    for o in `grep "^.*=" ltsp/lang/en | sed "s/\(^[^[:space:]]*\)[[:space:]]*=.*$/\1/g"`
+    do
+      if ! grep "^${o}" ${f} >/dev/null 2>&1; then
+        grep "^${o}" ltsp/lang/en >> ${f}
+      fi
+    done
+  fi
+done
+
+#Update empty strings in the other languages from the english one
+for f in ltsp/lang/*
+do
+  if test -f ${f} -a ${f} != ltsp/lang/en; then
+    for o in `grep "^.*=" ltsp/lang/en | sed "s/\(^[^[:space:]]*\)[[:space:]]*=.*$/\1/g"`
+    do
+      if grep "^${o}[[:space:]]*=[[:space:]]*$" ${f} >/dev/null 2>&1; then
+        descr=`grep "^${o}[[:space:]]*=" ltsp/lang/en | sed "s/^${o}[[:space:]]*=//g"`
+        sed "s/\(^${o}\)[[:space:]]*=/\1=${descr}/g" < ${f} > ${f}.$$
+	mv ${f}.$$ ${f}
+      fi
+    done
+  fi
+done
+)

@@ -1,0 +1,45 @@
+#! /bin/bash
+
+. CONFIG
+
+
+test -d ${PACKAGES_DIR} || mkdir ${PACKAGES_DIR}
+pushd ${PACKAGES_DIR}
+
+# get the architecture independant packages
+for p in ${PACKAGES}
+do
+    name=${p}_NAME
+    NAME=${!name}
+    old_name=${p}_OLD_NAME
+    OLD_NAME=${!old_name}
+    version=${p}_VERSION
+    VERSION=${!version}
+    wget http://prdownloads.sourceforge.net/ltsp/${OLD_NAME}-${VERSION}.tgz
+    ln -s ${OLD_NAME}-${VERSION}.tgz ${NAME}_${VERSION}.orig.tar.gz
+done
+
+# get the architecture dependant packages
+for arc in ${ARCHS}
+do
+    for p in ${ARCH_PACKAGES}
+    do
+        name=${p}_NAME
+        NAME=${!name}
+	old_name=${p}_OLD_NAME
+	OLD_NAME=${!old_name}
+	version=${p}_VERSION
+	VERSION=${!version}
+	wget http://prdownloads.sourceforge.net/ltsp/${OLD_NAME}-${VERSION}-${arc}.tgz
+        ln -s ${OLD_NAME}-${VERSION}-${arc}.tgz ${NAME}-${arc}_${VERSION}.orig.tar.gz
+    done
+    for x in ${XSERVERS}
+    do
+	NAME=${XSERVER_NAME}-${x}-${XFREE_VERSION}
+	OLD_NAME=${XSERVER_OLD_NAME}_${x}
+	VERSION=${XSERVER_VERSION}
+	wget http://prdownloads.sourceforge.net/ltsp/${OLD_NAME}-${VERSION}-${arc}.tgz
+        ln -s ${OLD_NAME}-${VERSION}-${arc}.tgz ${NAME}-${arc}_${VERSION}.orig.tar.gz
+    done
+done
+popd

@@ -1,0 +1,15 @@
+task-termserv (0.1-2) unstable; urgency=low
+
+  * Added some webmin dependencies.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Wed, 18 Jul 2001 11:55:13 +0200
+
+task-termserv (0.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat, 7 Jul 2001 15:35:32 +0200
+
+Local variables:
+mode: debian-changelog
+End:

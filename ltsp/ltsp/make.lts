@@ -1,0 +1,143 @@
+#! /bin/bash
+
+. CONFIG
+
+#Syntax: make_it dir name version packagesdir binary|source|both [dpkg-source-args]
+function make_it()
+{
+    local dir=$1
+    local name=$2
+    local version=$3
+    local packagesdir=$4
+    local format=$5
+    local dpkg_source_args=$6
+    local package=${name}-${version}
+    local full_version=`head -n1 ${dir}/${package}/debian/changelog | sed "s/^.*(\(.*\)).*$/\1/g"`
+    if test "${dpkg_source_args}" = "-sn"; then
+	local tgz=${name}_${full_version}.tar.gz
+    else
+	local tgz=${name}_${version}.orig.tar.gz
+    fi
+    local ptgz=../${packagesdir}/${tgz}
+    rm -rf ${dir}/${tgz}.tmp-nest
+    if test "${format}" = "source" ; then
+	pushd ${dir}
+	cp ${ptgz} .
+	pushd ${package}
+#	local section=`grep "^Section:" debian/control | cut -d' ' -f2`
+#	local priority=`grep "^Priority:" debian/control | cut -d' ' -f2`
+	fakeroot debian/rules clean
+	popd
+	if test "${dpkg_source_args}" = "-sn"; then
+            fakeroot dpkg-source -b ${dpkg_source_args} ${package}
+	else
+            fakeroot dpkg-source -b ${dpkg_source_args} ${package} ${tgz}
+	fi
+	test -f ${name}_${full_version}.dsc && mv  ${name}_${full_version}.dsc ../${packagesdir}
+	test -f ${name}_${full_version}.diff.gz && mv ${name}_${full_version}.diff.gz ../${packagesdir}
+	rm -f ${tgz}
+	popd
+    elif test "${format}" = "binary" ; then
+	pushd ${dir}/${package}
+#	local section=`grep "^Section:" debian/control | cut -d' ' -f2`
+#	local priority=`grep "^Priority:" debian/control | cut -d' ' -f2`
+	fakeroot debian/rules clean
+	debian/rules build
+	fakeroot debian/rules binary
+	test -f ${name}_${full_version}_all.deb && mv  ${name}_${full_version}_all.deb ../${packagesdir}
+	popd
+    elif test "${format}" = "both" ; then
+	pushd ${dir}
+	cp ${ptgz} .
+	pushd ${package}
+#	local section=`grep "^Section:" debian/control | cut -d' ' -f2`
+#	local priority=`grep "^Priority:" debian/control | cut -d' ' -f2`
+	fakeroot debian/rules clean
+	popd
+	if test "${dpkg_source_args}" = "-sn"; then
+            fakeroot dpkg-source -b ${dpkg_source_args} ${package}
+	else
+            fakeroot dpkg-source -b ${dpkg_source_args} ${package} ${tgz}
+	fi
+	pushd ${package}
+	debian/rules build
+	fakeroot debian/rules binary
+	popd
+	test -f ${name}_${full_version}_all.deb && mv  ${name}_${full_version}_all.deb ../${packagesdir}
+	test -f ${name}_${full_version}.dsc && mv  ${name}_${full_version}.dsc ../${packagesdir}
+	test -f ${name}_${full_version}.diff.gz && mv ${name}_${full_version}.diff.gz ../${packagesdir}
+	rm -f ${tgz}
+	popd
+    else
+	echo "usage: make.lts dir package packagesdir binary|source|both [dpkg-source-args]"
+	exit 1
+    fi
+	lintian ${packagesdir}/${name}_${full_version}_all.deb > ${packagesdir}/${name}_${full_version}.lintian
+#        echo "${name} ${priority} ${section}" >> ${packagesdir}/override
+}
+
+
+if test "x$1" = "x"; then
+    FORMAT="both"
+else
+    FORMAT=$1
+fi
+
+#rm packages/override
+#cp packages/override.stat packages/override
+for arc in ${ARCHS}
+do
+    for p in ${ARCH_PACKAGES}
+    do
+        name=${p}_NAME
+        old_name=${p}_OLD_NAME
+        version=${p}_VERSION
+        args=${p}_ARGS
+        dir=${p}_DIR
+        NAME=${!name}
+        OLD_NAME=${!old_name}
+        VERSION=${!version}
+        ARGS=${!args}
+        DIR=${!dir}
+	if test -z "${DIR}"; then
+	    DIR=${NAME}
+	fi
+
+	make_it ${DIR} ${NAME}-${arc} ${VERSION} packages ${FORMAT} ${ARGS}
+    done
+    for x in ${XSERVERS}
+    do
+	NAME=${XSERVER_NAME}-${x}-${XFREE_VERSION}
+	OLD_NAME=${XSERVER_OLD_NAME}_${x}
+        VERSION=${XSERVER_VERSION}
+        ARGS=${XSERVER_ARGS}
+        DIR=${XSERVER_DIR}
+	if test -z "${DIR}"; then
+	    DIR=${NAME}
+	fi
+	make_it ${DIR} ${NAME}-${arc} ${VERSION} packages ${FORMAT} ${ARGS}
+    done
+done
+for p in ${PACKAGES}
+do
+    name=${p}_NAME
+    old_name=${p}_OLD_NAME
+    version=${p}_VERSION
+    args=${p}_ARGS
+    dir=${p}_DIR
+    NAME=${!name}
+    OLD_NAME=${!old_name}
+    VERSION=${!version}
+    ARGS=${!args}
+    DIR=${!dir}
+    if test -z "${DIR}"; then
+	DIR=${NAME}
+    fi
+
+    make_it ${DIR} ${NAME} ${VERSION} packages ${FORMAT} ${ARGS}
+done
+
+pushd packages
+dpkg-scanpackages . override | gzip > Packages.gz
+dpkg-scansources . override | gzip > Sources.gz
+popd

@@ -1,0 +1,133 @@
+#!/usr/bin/make -f
+# MAde with the aid of dh_make, by Craig Small
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# Some lines taken from debmake, by Cristoph Lameter.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include CONFIG
+
+export DH_COMPAT = 2
+
+PACKAGE := $(shell head -n1 debian/changelog | cut -f1 -d' ')
+LTSP_DIR_PREFIX := $(patsubst /%,%,$(subst /ltsp,,$(LTSP_DIR)))
+SWAP_DIR_PREFIX := $(patsubst /%,%,$(subst /ltsp/swapfiles,,$(SWAP_DIR)))
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	
+	$(MAKE) 
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp install-stamp
+
+	-$(MAKE) clean
+
+	dh_clean -Xlts.orig
+	rm -f debian/postinst
+	rm -f debian/conffiles
+	rm -f debian/dirs
+	rm -f debian/README.debian
+	rm -f debian/templates
+
+install: install-stamp
+install-stamp: build-stamp debian/dirs
+	dh_testdir
+	dh_testroot
+	dh_clean -k -Xlts.orig
+	dh_installdirs
+
+	$(MAKE) install DESTDIR=`pwd`/debian/$(PACKAGE)
+
+# Remove lts.conf.readme, since it is in the documentation directory.
+	rm -f debian/$(PACKAGE)/$(ROOT_DIR)/etc/lts.conf.readme
+	rm -f debian/$(PACKAGE)/$(ROOT_DIR)/etc/lts.orig
+
+	sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' < debian/$(PACKAGE)/etc/ltsp.conf.in > debian/$(PACKAGE)/etc/ltsp.conf
+	rm -f debian/$(PACKAGE)/etc/ltsp.conf.in
+
+#	dh_movefiles
+	touch install-stamp
+
+debian/postinst: debian/postinst.in
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+
+debian/conffiles: debian/conffiles.in
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+
+debian/dirs: debian/dirs.in
+	sed 's!_LTSP_DIR_PREFIX_!$(LTSP_DIR_PREFIX)!g' < $< | sed 's!_SWAP_DIR_PREFIX_!$(SWAP_DIR_PREFIX)!g' > $@
+
+debian/README.debian: debian/README.debian.in
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_TMPL_DIR_!$(TMPL_DIR)!g'> $@
+
+debian/templates: debian/templates.in
+	sed 's!_TMPL_DIR_!$(TMPL_DIR)!g' < $< | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' | sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' > $@
+
+# Build architecture-independent files here.
+binary-indep: build install debian/conffiles debian/postinst debian/README.debian debian/templates
+#	dh_testversion
+	dh_testdir -i
+	dh_testroot -i
+	dh_installdocs -i
+	dh_installexamples -i
+	dh_installmenu -i
+#	dh_installemacsen -i
+#	dh_installinit -i
+	dh_installcron -i
+#	dh_installmanpages -i
+#	dh_undocumented
+	dh_installchangelogs -i
+	dh_strip -i
+	dh_compress -i
+	dh_fixperms -i
+#	dh_suidregister -i
+	dh_installdebconf -i
+# I have a broken installdebconf, so do this:
+	cp debian/templates debian/$(PACKAGE)/DEBIAN/
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+# Build architecture-dependent files here.
+binary-arch: build install debian/conffiles debian/postinst debian/README.debian debian/templates
+##	dh_testversion
+#	dh_testdir -a
+#	dh_testroot -a
+#	dh_installdocs -a
+#	dh_installexamples -a
+#	dh_installmenu -a
+##	dh_installemacsen -a
+##	dh_installinit -a
+#	dh_installcron -a
+#	dh_installmanpages -a
+##	dh_undocumented
+#	dh_installchangelogs -a
+#	dh_strip -a
+#	dh_compress -a
+#	dh_fixperms -a
+#	dh_suidregister -a
+#	dh_installdebconf -a
+## I have a broken installdebconf, so do this:
+#	cp debian/templates debian/$(PACKAGE)/DEBIAN/
+#	dh_installdeb -a
+## Since LTSP is a complete Linux system on its own, we have no library deps.
+##	dh_shlibdeps -a
+#	dh_gencontrol -a
+##	dh_makeshlibs -a
+#	dh_md5sums -a
+#	dh_builddeb -a
+
+source diff:                                                                  
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

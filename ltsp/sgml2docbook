@@ -1,0 +1,57 @@
+#! /bin/sh
+
+DTD='article PUBLIC "-//Norman Walsh//DTD DocBk XML V3.1.7//EN" "dtd/db3xml.dtd" [ ]'
+DTD='book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" "dtd/docbook-3.1/docbook.dtd"'
+
+echo '<?xml version="1.0" encoding="is8859-1">'
+sed 's/\\_/_/g
+    s!\(<\)\([^/]\{2\}\)\(/\)\([^<]*\)\(/\)!<\2>\4</\2>!g
+    s/<!--/<comment>/g
+    s!-->!</comment>!g
+    s!\(<eps file=\)\(".*"\)\(>\)!<graphic fileref=\2 format="eps"></graphic>!g
+    s!^\([^|]*\)@$!<row><entry>\1</entry></row>!g
+    s!^\([^|[:space:]]*\)\([[:space:]]*\)|\([^|[:space:]]*\)@$!<row><entry>\1</entry>\2<entry>\3</entry></row>!g
+    s!^\([^|[:space:]]*\)\([[:space:]]*\)|\([^|[:space:]]*\)\([[:space:]]*\)|\([^|[:space:]]*\)@$!<row><entry>\1</entry>\2<entry>\3</entry>\4<entry>\5</entry></row>!g
+    s!<tabular.*>!<tgroup cols="">\
+<tbody>!g
+    s!</tabular>!</tbody>\
+</tgroup>!g
+    s!<item>!<listitem>\
+<para>!g
+    s!</item>!</para>\
+</listitem>!g
+    s!<author>!<bookinfo>\
+<bookbiblio>\
+<authorgroup>!g
+    s!</author>!</authorgroup>\
+</bookbiblio>\
+</bookinfo>!g
+    s!\(<sect.\?\)>\([^<]*\)<label id=\(".*"\)>!\1 id=\3>\
+<title>\2</title>!g
+    s!\(<sect.\?>\)\([^<]*\)!\1\
+<title>\2</title>!g
+    s!\(<ref id=\)\(".*"\)\( name="\)\(.*\)\(">\)!<xref linkend=\2>\
+removeme: \4\
+!g
+    s!linuxdoc system>!'"${DTD}"'>\
+!g' \
+| sed 's!<\(/\?\)code>!<\1programlisting>!g
+    s!<htmlurl url=\(".*"\) name="\(.*\)\(">\)!<ulink url=\1>\2</ulink>!g
+    s!<\(/\?\)article>!<\1book>!g
+    s!<\(/\?\)caption>!<\1title>!g
+    s!<\(/\?\)itemize>!<\1itemizedlist>!g
+    s!<\(/\?\)enum>!<\1orderedlist>!g
+    s!<\(/\?\)sect>!<\1chapter>!g
+    s!<\(/\?\)p>!<\1para>!g
+    s!<\(/\?\)em>!<\1emphasis>!g
+    s!<\(/\?\)tt>!<\1literal>!g' \
+| sed 's!^\(.*\) \(.*\) <literal>\(.*@.*\)</literal>,\?!<author>\
+<surname>\2</surname>\
+<firstname>\1</firstname>\
+<affiliation>\
+<address>\
+<email>\3</email>\
+</address>\
+</affiliation>\
+</author>!g'
+

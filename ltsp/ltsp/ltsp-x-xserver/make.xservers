@@ -1,0 +1,93 @@
+#! /bin/bash
+
+. `dirname $0`/../CONFIG
+
+# Note that for every lts-xserver-foo package the xserver-foo package 
+# should exist for consistency reasons. That means, you cannot just invent names
+# here but have to choose those corresponding to the xserver packages.
+
+# For each package name in ${XSERVERS}, there has to be a variable X_${name}_Name
+# which contains the name of the executable
+X_fbdev_Name=XF86_FBDEV
+X_3dlabs_Name=XF86_3DLABS
+X_8514_Name=XF86_8514
+X_agx_Name=XF86_AGX
+X_i128_Name=XF86_I128
+X_mach32_Name=XF86_Mach32
+X_mach64_Name=XF86_Mach64
+X_mach8_Name=XF86_Mach8
+X_mono_Name=XF86_Mono
+X_p9000_Name=XF86_P9000
+X_s3_Name=XF86_S3
+X_s3v_Name=XF86_S3V
+X_svga_Name=XF86_SVGA
+X_vga16_Name=XF86_VGA16
+X_w32_Name=XF86_W32
+
+# For each package name in ${XSERVERS}, there has to be a variable X_${name}_DESCR
+# which contains the description which will appear in the control file
+X_fbdev_DESCR='\040for clients which use the framebuffer device of the Linux kernel.'
+X_3dlabs_DESCR='\040for clients with 3DLabs graphics cards.'
+X_8514_DESCR='\040for clients with ATI 8514/A graphics cards.'
+X_agx_DESCR='\040for clients with IBM XGA and IIT AGX-based graphics cards.'
+X_i128_DESCR='\040for clients with Number Nine Imagine 128 graphics cards.'
+X_mach32_DESCR='\040for clients with ATI Mach32-based graphics cards.'
+X_mach64_DESCR='\040for clients with ATI Mach64-based graphics cards.'
+X_mach8_DESCR='\040for clients with ATI Mach8-based graphics cards.'
+X_mono_DESCR='\040for clients with monochrome graphics cards.'
+X_p9000_DESCR='\040for clients with Weitek P9000-based graphics cards.'
+X_s3_DESCR='\040for clients with S3 chipset-based graphics cards.'
+X_s3v_DESCR='\040for clients with S3 ViRGE and ViRGE/VX-based graphics cards.'
+X_svga_DESCR='\040for clients with Super VGA graphics cards. If your card is not\n
+ supported by XFree 4.0 and you are unsure which xserver to choose,\n
+ try this one.'
+X_vga16_DESCR='\040for clients with VGA graphics cards. This xserver should work with\n
+ any VGA graphics card, so if your card is not supported by XFree 4.0\n
+ and none of the other XFree 3.3 xservers works, choose this one.'
+X_w32_DESCR='\040for clients with TSENG ET4000/W32 and ET6000-based graphics cards.'
+
+for arc in ${ARCHS}
+do
+    for tgz in ../${PACKAGES_DIR}/${XSERVER_NAME}-*-*-${arc}_*.orig.tar.gz
+    do
+        x=`basename $tgz | cut -d- -f4`
+        VERSION=`basename $tgz .orig.tar.gz | cut -d_ -f2`
+        XFREE_VERSION=`basename $tgz | cut -d- -f5`
+        package="${XSERVER_NAME}-${x}-${XFREE_VERSION}-${arc}-${VERSION}"
+        diff="${package}.diff"
+        desc="${x}_DESC"
+        XNAME="X_${x}_Name"
+        DESCR="X_${x}_DESCR"
+        if test "x${!XNAME}" = "x" -o "x${!DESCR}" = "x"; then
+    	    echo "Missing description or name for package ${package}!"
+	    echo "DESCR = ${DESCR}"
+	    echo "XNAME = ${XNAME}"
+	    exit 1
+        fi
+	if test -d ${package}; then
+	    rm -rf ${package}
+	fi
+        sed "s/_:template:_/${x}/g
+	    s/_:arch:_/${arc}/g
+	    s/_:xname:_/${!XNAME}/g
+	    s/_:version:_/${VERSION}/g" ltsp-xserver-template.diff > ${diff}
+	tar -xvzf ${tgz}
+        mv ${XSERVER_OLD_NAME}_${x} ${package}
+	cp CONFIG ${package}
+        pushd ${package}
+        mkdir debian
+        patch -p1 < ../${diff}
+        echo -en ${!DESCR} >> debian/control
+        sed "s/_:template:_/${x}/g
+	    s/_:arch:_/${arc}/g" ../changelog > debian/changelog
+	rm -f *.orig >/dev/null 2>&1
+        chmod +x debian/rules
+        echo -e ${!desc} >> debian/control
+        echo " You do not need this package if your video adapter is well supported"  >> debian/control
+        echo " by XFree 4. However, there are some cards that are supported by XFree 3.3"  >> debian/control
+        echo " but are not or not as well supported by XFree 4."  >> debian/control
+        popd 
+        rm -f ${diff}
+    done
+done
+

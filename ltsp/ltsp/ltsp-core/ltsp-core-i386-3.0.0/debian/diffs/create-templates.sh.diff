@@ -1,0 +1,278 @@
+--- create-templates.sh	Sat Nov 24 16:42:42 2001
++++ create-templates.sh	Sat Nov 24 19:04:29 2001
+@@ -1,4 +1,4 @@
+-:
++#! /bin/sh
+ #
+ # Copyright (c) 2001 by James A. McQuillan (McQuillan Systems)
+ #
+@@ -140,6 +140,8 @@
+ #
+ ##############################################################################
+ 
++pwd=`pwd`
++cd `dirname $0`
+ 
+ ##############################################################################
+ #
+@@ -150,7 +152,7 @@
+ ##############################################################################
+ 
+ echo
+-echo "About to install LTSP, using the following settings:"
++echo "About to create configuration file templates, using the following settings:"
+ echo
+ echo "  LTSP_DIR     = ${LTSP_DIR}"
+ echo "  SWAP_DIR     = ${SWAP_DIR}"
+@@ -160,7 +162,7 @@
+ echo "  IP_NETMASK   = ${IP_NETMASK}"
+ echo "  IP_BROADCAST = ${IP_BROADCAST}"
+ echo
+-echo "If you want to install LTSP using the above settings,"
++echo "If you want to create the files using the above settings,"
+ echo "enter 'Y' and the installation will proceed.  Any other"
+ echo "response will abort the installation, and you can modify"
+ echo "the CONFIG file and restart the installation."
+@@ -174,6 +176,7 @@
+     echo
+     echo "Installation aborted"
+     echo
++    cd ${pwd}
+     exit
+ fi
+ 
+@@ -184,203 +187,6 @@
+ #
+ . ./install_functions.sh
+ 
+-##############################################################################
+-#
+-# Make sure the ${LTSP_DIR} directory exists
+-#
+-if [ ! -d "${LTSP_DIR}" ]; then
+-    logit "Creating ${LTSP_DIR} directory"
+-    mkdir -p ${LTSP_DIR}
+-    chmod 0755 ${LTSP_DIR}
+-    chown root:root ${LTSP_DIR}
+-fi
+-
+-##############################################################################
+-#
+-# Make sure the ${SWAP_DIR} directory exists
+-#
+-if [ ! -d "${SWAP_DIR}" ]; then
+-    logit "Creating ${SWAP_DIR} directory"
+-    mkdir -p ${SWAP_DIR}
+-    chmod 0777 ${SWAP_DIR}
+-    chown root:root ${SWAP_DIR}
+-fi
+-
+-#
+-# If there is an old i386 directory, then we need to save it
+-#
+-ROOT_DIR=${LTSP_DIR}/i386
+-
+-TARGET=${ROOT_DIR}
+-logit "Setting up ${TARGET}"
+-
+-if [ -e "${TARGET}" ]; then
+-    FILENUM=1
+-    while :; do
+-        if [ -e "${TARGET}.${FILENUM}" ]; then
+-            FILENUM=`expr ${FILENUM} + 1`
+-        else
+-            logit "Saving old ${TARGET} directory to ${TARGET}.${FILENUM}"
+-            mv ${TARGET} ${TARGET}.${FILENUM}
+-            break
+-        fi
+-    done
+-fi
+-
+-if [ -e "${ROOT_DIR}" ]; then
+-
+-    logit "\nAn old i386 directory still exists!"
+-    logit "There must have been at least 9 upgrades installed"
+-    logit "You will need to fix this manually, by removing"
+-    logit "some of the old i386 directories in ${LTSP_DIR}\n"
+-    logit "Install aborted!\n"
+-    exit 1
+-fi
+-
+-#
+-# Create the workstation root directory (If it doesn't exist)
+-#
+-logit "Creating and populating the ${ROOT_DIR} directory..."
+-find i386 -print | cpio -pmud --quiet ${LTSP_DIR}
+-RS=$?
+-if [ ${RS} -ne 0 ]; then
+-    logit "\nCopying of ${ROOT_DIR} failed, errno=${RS}"
+-    logit "\ninstall aborted!\n"
+-    exit 1
+-fi
+-
+-logit ""
+-
+-#######################################################################
+-#
+-# Setup /etc
+-#
+-
+-logit "\nSetting up /etc..."
+-
+-#
+-# Create the lts /etc/version file
+-#
+-(
+-    echo "#"
+-    echo "# Linux Terminal Server Project - LTSP"
+-    echo "# For more info, visit http://www.ltsp.org"
+-    echo "#"
+-    echo "VERSION=${VERSION}"
+-
+-) >${ROOT_DIR}/etc/version
+-
+-###############################################################################
+-#
+-# Create updated configuration files on the server
+-#
+-# We will place them in ${LTSP_DIR}/templates, so that an sysadmin can
+-# review them before putting them in place.
+-#
+-# We build a bunch of small shell scripts to do the work.  The sysadmin
+-# can then take a look at the scripts and modify them if they like, before
+-# executing them with the ltsp_initialize script
+-#
+-
+-TARGET=${TMPL_DIR}
+-
+-if [ -d ${TARGET} ]; then
+-    FILENUM=1
+-    while :; do
+-        if [ -e "${TARGET}.${FILENUM}" ]; then
+-            FILENUM=`expr ${FILENUM} + 1`
+-        else
+-            logit "Saving old ${TARGET} as ${TARGET}.${FILENUM}"
+-            mv ${TARGET} ${TARGET}.${FILENUM}
+-            break
+-        fi
+-    done
+-fi
+-
+-logit "Creating ${TARGET} to hold system config file templates"
+-mkdir           ${TARGET}
+-chmod 0755      ${TARGET}
+-chown root:root ${TARGET}
+-
+-#------------------------------------------------------------------------------
+-#
+-# Put a README file in the template directory, giving the sysadmin a clue
+-# as to what he should do with the files in that directory
+-#
+-
+-TARGET=${TMPL_DIR}/README
+-
+-cat <<"EOF" >${TARGET}
+-The Linux Terminal Server Project (http://www.ltsp.org)
+-
+-The files in this directory are modified copies of the
+-system configuration files.
+-
+-If this server is an LTSP supported platform, such
+-as Redhat 6.0, 6.1 or 6.2, then you should be able to
+-run the './ltsp_initialize' script and it will put all 
+-of the config files in their proper place.
+-
+-Other platforms may require some modification of these files
+-and/or their locations to install properly.
+-
+-
+-*** WARNING *** *** WARNING *** *** WARNING *** *** WARNING *** *** WARNING ***
+-
+-    Some of the configuration files that are modified by these
+-    templates, or the ltsp_initialize script could open up security
+-    holes in the system.  Especially the /etc/hosts.allow and /etc/exports
+-    files.
+-
+-    If you are just trying to install LTSP on a server that is NOT
+-    connected to the internet and you understand the security
+-    issues, and don't care about it for this server, then go ahead
+-    and run the ltsp_initialize script and it should setup the server
+-    for you.
+-
+-    Otherwise, you can make the modifications yourself, using these
+-    files as a guideline.
+-EOF
+-
+-#------------------------------------------------------------------------------
+-#
+-# Copy the ltsp_initialize script into the templates directory
+-#
+-
+-SOURCE=ltsp_initialize
+-TARGET=${TMPL_DIR}/ltsp_initialize
+-
+-cp ${SOURCE}    ${TARGET}
+-
+-chmod 0755      ${TARGET}
+-chown root:root ${TARGET}
+-
+-#------------------------------------------------------------------------------
+-#
+-# Copy the desc.txt script into the templates directory
+-#
+-
+-SOURCE=desc.txt
+-TARGET=${TMPL_DIR}/desc.txt
+-
+-cp ${SOURCE}    ${TARGET}
+-
+-chmod 0644      ${TARGET}
+-chown root:root ${TARGET}
+-
+-#------------------------------------------------------------------------------
+-#
+-# Copy the ltsp logo file into the templates directory
+-#
+-
+-SOURCE=ltsp.gif
+-TARGET=${TMPL_DIR}/ltsp.gif
+-
+-cp ${SOURCE}    ${TARGET}
+-
+-chmod 0644      ${TARGET}
+-chown root:root ${TARGET}
+-
+ #------------------------------------------------------------------------------
+ #
+ # Start building templates
+@@ -391,8 +197,8 @@
+ #
+ # Build the lts.conf file, based on some of the CONFIG variables
+ #
+-sed "s^IP_SERVER^${IP_SERVER}^" \
+-      <${ROOT_DIR}/etc/lts.orig >${ROOT_DIR}/etc/lts.conf
++#sed "s^IP_SERVER^${IP_SERVER}^" \
++#      <${ROOT_DIR}/etc/lts.orig >${ROOT_DIR}/etc/lts.conf
+ 
+ #------------------------------------------------------------------------------
+ # Write some of the important config items to the /etc/ltsp.conf file,
+@@ -400,11 +206,11 @@
+ #
+ CONF=/etc/ltsp.conf
+ 
+-echo ":"                                      >${CONF}
+-echo "#"                                     >>${CONF}
+-echo "# Configuration variables for LTSP"    >>${CONF}
+-echo "#"                                     >>${CONF}
+-echo                                         >>${CONF}
+-echo "LTSP_DIR=${LTSP_DIR}"                  >>${CONF}
+-echo                                         >>${CONF}
+-
++#echo ":"                                      >${CONF}
++#echo "#"                                     >>${CONF}
++#echo "# Configuration variables for LTSP"    >>${CONF}
++#echo "#"                                     >>${CONF}
++#echo                                         >>${CONF}
++#echo "LTSP_DIR=${LTSP_DIR}"                  >>${CONF}
++#echo                                         >>${CONF}
++cd ${pwd}

@@ -1,0 +1,18 @@
+Document: termserv-userguide-_LANG_
+Title: GNU/Linux Terminalserver for schools - Userguide
+Author: Georg Baum, Peter Bingel, Christian Selig
+Abstract: This manual describes the GNU/Linux Terminalserver for schools:
+ Installation, configuration and use.
+Section: admin
+
+Format: postscript
+Files: /usr/share/doc/termserv-doc/_LANG_/ps/userguide._LANG_.ps.gz
+
+Format: pdf
+Files: /usr/share/doc/termserv-doc/_LANG_/pdf/userguide._LANG_.pdf.gz
+
+Format: HTML
+Index: /usr/share/doc/termserv-doc/_LANG_/html/index.html
+Files: /usr//share/doc/ltsp-webmin/_LANG_/html/*.html
+
+  

@@ -1,0 +1,108 @@
+Summary: Webmin module for the Linux Terminalserver Project
+Summary(de): Webmin-Modul für das Linux Terminalserver Project
+Name: ltsp-webmin
+Version: _VERSION_
+Release: 0
+Copyright: GPL
+Source: ltsp-webmin-_VERSION_.tar.gz
+Group: Networking/Admin
+Requires: lts-core, webmin
+Packager: Georg Baum <gbaum@users.sourceforge.net>
+BuildArchitectures: noarch
+BuildRoot: /tmp/ltsp-webmin
+
+%description
+This package contains a webmin module for the configuration of diskless
+workstations setup with the Linux Terminalserver Project (LTSP) package.
+It manages the central configuration file of LTSP, lts.conf. However, it
+does not manage the needed services on your server, use the standard
+webmin modules for this task.
+
+%description -l de
+Dieses Paket enthält ein Webmin-Modul für die Konfiguration von plattenlosen
+Terminals mit Hilfe des Linux Terminalserver Project (LTSP) Paketes.
+Es verwaltet die zentrale LTSP-Konfigurationsdatei, lts.conf. Es verwaltet
+jedoch nicht die benötigten Standarddienste auf Ihrem Server, benutzen Sie 
+die entsprechenden Webmin-Module für diese Aufgabe.
+
+%prep
+  #
+  # Prepare the package for building on the development machine
+  #
+%setup
+
+%build
+  #
+  # Build the package by compiling any source code, producing binaries
+  # On the development machine
+  #
+
+%install
+  #
+  # Put the binaries where they belong on the development machine
+  #
+  make install DESTDIR=${RPM_BUILD_ROOT}
+
+  # This is a HACK! It does only work because currently all config files
+  # for rpm based distros are the same!
+  mkdir -p ${RPM_BUILD_ROOT}/etc/webmin/ltsp
+  cp ltsp/config-redhat-linux ${RPM_BUILD_ROOT}/etc/webmin/ltsp/config
+
+%clean
+  # Cleanup after the build process on the development machine
+  make clean
+  # ${RPM_BUILD_ROOT} could be /, if the user specified it, so be careful!
+  if test "x${RPM_BUILD_ROOT}" = "x/tmp/ltsp-webmin"; then
+      rm -rf ${RPM_BUILD_ROOT}
+  else
+      echo "This package cannot be built with 'rpm --buildroot'".
+      exit 1
+  fi
+
+%files
+  /usr/share/webmin/ltsp
+  %attr(0600, root, root) %config /etc/webmin/ltsp/config
+  %doc CREDITS
+  %doc INSTALL
+  %doc LICENSE
+  %doc README
+  %doc TODO
+
+%pre
+  #
+  # Just before the package is installed, this script will be run
+  #
+
+%post
+  #
+  # After the files in the package have been put in place,
+  # these commands will be run
+  #
+# This is a multi distribution rpm. Therefore we have to link the ltsp directory
+# into the webmin directory if the latter is not /usr/share/webmin.
+# The variable WEBMINDIRS should contain all locations of webmin in any rpm package.
+
+WEBMINDIRS="/usr/libexec/webmin /usr/lib/webmin /opt/webmin /usr/local/webmin"
+for d in ${WEBMINDIRS}
+do
+    test -d ${d} && ln -sf /usr/share/webmin/ltsp ${d}/ltsp
+done
+
+if ! test -f /etc/webmin/ltsp/admin.acl; then
+    touch /etc/webmin/ltsp/admin.acl
+    chown root:root /etc/webmin/ltsp/admin.acl
+    chmod 0600 /etc/webmin/ltsp/admin.acl
+fi
+
+# Tell webmin about the ltsp module.
+# This should be better. Maybe use update-webmin fom Debian?
+if ! grep ltsp /etc/webmin/webmin.acl > /dev/null 2>&1; then
+    sed 's/^root:.*/\0 ltsp/g' < /etc/webmin/webmin.acl > /etc/webmin/webmin.acl.new.$$
+    # to preserve permissions:
+    cat /etc/webmin/webmin.acl.new.$$ > /etc/webmin/webmin.acl
+    rm -f /etc/webmin/webmin.acl.new.$$
+fi
+
+%changelog
+* Mon Jul 16 2001 Georg Baum <gbaum@users.sourceforge.net>
+- Initial release.

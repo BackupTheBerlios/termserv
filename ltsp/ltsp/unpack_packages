@@ -1,0 +1,19 @@
+#! /bin/sh
+
+
+. CONFIG
+
+pushd ${XSERVER_DIR}
+./make.xservers || exit 1
+popd
+
+for d in ${DIRS}
+do
+    cp ${PACKAGES_DIR}/${d}* ${d}/
+    pushd ${d} || exit 1
+    for f in *.dsc
+    do
+	dpkg-source -x ${f}
+    done
+    popd
+done

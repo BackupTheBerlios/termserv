@@ -1,0 +1,63 @@
+
+# The xservers to build
+XSERVERS="3dlabs 8514 agx fbdev i128 mach32 mach64 mach8 mono p9000 s3 s3v svga vga16 w32"
+
+# The version of the ltsp xserver packages
+XSERVER_VERSION="3.0.0"
+
+# The subdirectory where the build script for the xservers resides.
+XSERVER_DIR="ltsp-x-server"
+
+# The prefix for the names of the xserver packages
+XSERVER_NAME="ltsp-x-xserver"
+
+# The prefix of the original xserver packages names
+XSERVER_OLD_NAME="ltsp_x336"
+
+# The version of Xfree86 where the xservers are from. This will go into the xservers package name.
+XFREE_VERSION="3.3.6"
+
+
+CORE_VERSION="3.0.0"
+CORE_NAME="ltsp-core"
+CORE_OLD_NAME="ltsp_core"
+
+X_CORE_VERSION="3.0.0"
+X_CORE_NAME="ltsp-x-core"
+X_CORE_OLD_NAME="ltsp_x_core"
+
+X_FONTS_VERSION="3.0.0"
+X_FONTS_NAME="ltsp-x-fonts"
+X_FONTS_OLD_NAME="ltsp_x_fonts"
+
+LOCALAPPS_VERSION="3.0.0"
+LOCALAPPS_NAME="ltsp-local-apps"
+LOCALAPPS_OLD_NAME="ltsp_local_apps"
+
+DOC_VERSION="3.0.0"
+DOC_NAME="ltsp-doc"
+DOC_OLD_NAME="ltsp-doc"
+
+# Specaisl arguments that will be passed to dpkg-source
+DOC_ARGS="-sn"
+
+KERNEL_VERSION="3.0.0"
+KERNEL_NAME="ltsp-kernel-2.4.9"
+KERNEL_OLD_NAME="ltsp_kernel"
+KERNEL_DIR="ltsp-kernel"
+
+# The client architectures
+ARCHS="i386"
+
+# The lient architecture dependent packages
+ARCH_PACKAGES="CORE X_CORE KERNEL LOCALAPPS X_FONTS"
+
+# The client architecture independant packages
+PACKAGES="DOC"
+
+# A list of directories where unpack_packages tries to extract source packages.
+# Note that the xserver dir is handled separately!
+DIRS="ltsp-core ltsp-kernel ltsp-x-core ltsp-localapps ltsp-x-fonts ltsp-doc"
+
+# The name of the directory where packages are stored
+PACKAGES_DIR=packages

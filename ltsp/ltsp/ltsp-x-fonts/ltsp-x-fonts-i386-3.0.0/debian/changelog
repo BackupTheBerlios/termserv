@@ -1,0 +1,91 @@
+ltsp-x-fonts-i386 (3.0.0-0) unstable; urgency=low
+
+  * new package name to reflect upstream change as well as the fact that
+    we are now fully prepared to support different client architectures
+    in parallel.
+  * Sorry folks, but versions 2.08-2 to 2.09-0.pre4-0 were never released
+    publically, because every time a new upstream release came out before
+    I had them in a workable state.
+  * new upstream release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat,  5 Dec 2001 17:10:04 +0100
+
+lts-x-fonts (2.09-0.pre4-0) unstable; urgency=low
+
+  * split package off lts-x-core
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Mon,  27 Nov 2001 20:59:53 +0100
+
+lts-x-core (2.09-0.pre2-3) unstable; urgency=low
+
+  * new standards version: 3.5.6.0
+  * changed section to non-free/net because sources are not directly
+    available for all parts
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Mon,  24 Sep 2001 21:49:45 +0200
+
+lts-x-core (2.09pre1-1) unstable; urgency=low
+
+  * split package off lts-core
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Mon,  9 Jul 2001 16:48:23 +0200
+
+lts-core (2.08-2) unstable; urgency=low
+
+  * prepared future change of LTSP_DIR. All files which depend on it are now
+    generated from templates.
+  * depends no longer on bootp | dhcp, but recommends it, since it is possible
+    to use another machine for that (thanks joel.amoros@education.gouv.fr)
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sun,  8 Jul 2001 08:44:54 +0200
+
+lts-core (2.08-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Thu,  21 Jun 2001 12:34:23 +0200
+
+lts-core (2.08pre1-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Thu,  24 May 2001 21:15:58 +0200
+
+lts-core (2.03-2) unstable; urgency=low
+
+  * changes for potato
+  * fixed a typo in postinst
+  * added nfs-common and portmap in postinst
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Fri,  20 Oct 2000 21:15:58 +0200
+
+lts-core (2.03-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Tue,  15 Aug 2000 21:15:58 +0200
+
+lts-core (2.02-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Sun,  13 Aug 2000 10:54:40 +0200
+
+lts-core (2.00-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Sat,  12 Aug 2000 20:34:50 +0200
+
+lts-core (1.92-2) unstable; urgency=low
+
+  * added /usr/X11R6/lib/X11/XKeysymDB.
+  * updated documentation.
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Sat,  24 Jun 2000 10:21:10 +0200
+
+lts-core (1.92-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Georg Baum <Georg.Baum@gmx.de>  Sun,  2 Apr 2000 08:41:10 +0200

@@ -1,0 +1,34 @@
+This module contains everything that is needed for building the Debian packages
+of LTSP out of the binary .tgz packages. It does only exist because LTSP does not use
+CVS right now and I want to keep the debioan thins in CVS.
+This module might be folded into the main LTSP CVS and disappear from here once
+the LTSP CVS is set up.
+
+The contents of this module is not useful for you unless you want to experiment
+with building your own LTSP .debs.
+
+In order to build the whole thing, you have to do this:
+
+
+./get_packages
+
+Then unpack the files in the packages directory into the appropriate
+directories (unpack_packages won´t work, it expects .dsc and .diff.gz files). 
+
+Then:
+
+pushd ltsp-x-server
+./make.xservers
+oopd
+./make.lts
+
+
+Please don´t forget to add a changelog entry if you did any local modifications
+so that the package management does not get confused.
+
+
+More documentation is not available, since the building scripts are primaryly intended
+for my own personal use. Look at the scripts if you want to understand more.
+
+
+Georg Baum <gbaum@users.sourceforge.net>

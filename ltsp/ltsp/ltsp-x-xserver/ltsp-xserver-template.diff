@@ -1,0 +1,198 @@
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/copyright
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/copyright
+@@ -0,0 +1,32 @@
++This package was debianized by Georg Baum <gbaum@users.sourceforge.net> on
++Tue, 15 Aug 2000 21:41:10 +0200.
++
++It was downloaded from ftp://ftp.ltsp.org/pub/download/lts/lts_x_:template:_-2.0.tgz
++
++
++Upstream Author(s): The X Consortium (the xserver)
++and Jim McQuillan <jam@ltsp.org> (the packaging)
++
++Copyright:
++
++The xserver that is included in this package is protected 
++by the copyright specified in the file: COPYING.XFree86
++
++The scripts and other pieces of this package are protected
++by the copyright specified in the file: COPYING
++
++The latter contains a copy of the GNU General Public License:
++
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program; if not, write to the Free Software
++Foundation, 59 Temple Place - Suite 330,
++Boston, MA 02111-1307, USA.
++
++On Debian GNU/Linux systems, the complete text of the GNU General
++Public License can be found in `/usr/share/common-licenses/GPL'.
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/dirs
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/dirs
+@@ -0,0 +1,2 @@
++opt/ltsp/_:arch:_/etc
++opt/ltsp/_:arch:_/usr/X11R6/bin
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/docs
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/docs
+@@ -0,0 +1,2 @@
++COPYING.XFree86
++README 
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/control
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/control
+@@ -0,0 +1,12 @@
++Source: ltsp-x-xserver-_:template:_-3.3.6-_:arch:_
++Section: non-free/net
++Priority: optional
++Maintainer: Georg Baum <gbaum@users.sourceforge.net>
++Standards-Version: 3.5.6.0
++
++Package: ltsp-x-xserver-_:template:_-3.3.6-_:arch:_
++Architecture: all
++Depends: ltsp-x-core-_:arch:_ (>= 3.0.0)
++Provides: ltsp-x-xserver-_:arch:_
++Description: Linux Terminal Server Project (ltsp.org) xserver binary
++ This package contains an xserver from XFree 3.3.6
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/rules
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/debian/rules
+@@ -0,0 +1,90 @@
++#!/usr/bin/make -f
++# MAde with the aid of dh_make, by Craig Small
++# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
++# Some lines taken from debmake, by Cristoph Lameter.
++
++# Uncomment this to turn on verbose mode.
++#export DH_VERBOSE=1
++
++build: build-stamp
++build-stamp:
++	dh_testdir
++
++	
++	$(MAKE) 
++
++	touch build-stamp
++
++clean:
++	dh_testdir
++	dh_testroot
++	rm -f build-stamp install-stamp
++
++	-$(MAKE) clean
++
++	dh_clean
++
++install: install-stamp
++install-stamp: build-stamp
++	dh_testdir
++	dh_testroot
++	dh_clean -k
++	dh_installdirs
++
++	$(MAKE) install DESTDIR=`pwd`/debian/tmp
++
++#	dh_movefiles
++	touch install-stamp
++
++# Build architecture-independent files here.
++binary-indep: build install
++#	dh_testversion
++	dh_testdir -i
++	dh_testroot -i
++	dh_installdocs -i
++	dh_installexamples -i
++	dh_installmenu -i
++#	dh_installemacsen -i
++#	dh_installinit -i
++	dh_installcron -i
++#	dh_installmanpages -i
++#	dh_undocumented
++	dh_installchangelogs -i
++	dh_compress -i
++	dh_fixperms -i
++#	dh_suidregister -i
++	dh_installdeb -i
++	dh_gencontrol -i
++	dh_md5sums -i
++	dh_builddeb -i
++
++# Build architecture-dependent files here.
++binary-arch: build install
++#	dh_testversion
++#	dh_testdir -a
++#	dh_testroot -a
++#	dh_installdocs -a
++#	dh_installexamples -a
++#	dh_installmenu -a
++#	dh_installemacsen -a
++#	dh_installinit -a
++#	dh_installcron -a
++#	dh_installmanpages -a
++#	dh_undocumented
++#	dh_installchangelogs -a
++#	dh_strip -a
++#	dh_compress -a
++#	dh_fixperms -a
++##	dh_suidregister -a
++#	dh_installdeb -a
++#	dh_shlibdeps -a
++#	dh_gencontrol -a
++#	dh_makeshlibs -a
++#	dh_md5sums -a
++#	dh_builddeb -a
++
++source diff:                                                                  
++	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
++
++binary: binary-indep binary-arch
++.PHONY: build clean binary-indep binary-arch binary
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/Makefile
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/Makefile
+@@ -0,0 +1,14 @@
++CP = cp
++MV = mv
++RM = rm
++
++all:
++# need to do this because install.sh would be treated specially by debian/rules
++	if test -f install.sh; then $(MV) install.sh inst.sh; fi
++
++install:
++	./inst.sh
++
++clean:
++#see above (target all)
++	if test -f inst.sh; then $(MV) inst.sh install.sh; fi
+--- ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/install.sh	Sat Nov 24 20:21:31 2001
++++ ltsp-x-xserver-_:template:_-_:arch:_-_:version:_/install.sh	Sat Nov 24 20:25:25 2001
+@@ -28,7 +28,7 @@
+ #
+ # Make sure this script is being run by the superuser.
+ #
+-if [ "${LOGNAME}" != "root" ]; then
++if [ `id -u` != "0" ]; then
+     echo
+     echo "You MUST run this script as superuser!"
+     echo
+@@ -39,15 +39,7 @@
+     exit 1
+ fi
+ 
+-if [ ! -f /etc/ltsp.conf ]; then
+-    echo 
+-    echo "Couldn't find /etc/ltsp.conf, probably indicates that"
+-    echo "lts_core hasn't been installed yet"
+-    echo
+-    exit 1
+-fi
+-
+-. /etc/ltsp.conf
++. ./CONFIG
+ 
+ if [ ! -d ${LTSP_DIR} ]; then
+     echo 

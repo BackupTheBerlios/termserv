@@ -1,0 +1,16 @@
+Source: ltsp-x-fonts-i386
+Section: non-free/net
+Priority: optional
+Maintainer: Georg Baum <gbaum@users.sourceforge.net>
+Standards-Version: 3.5.6.0
+Build-Depends: cpio, findutils, debhelper
+
+Package: ltsp-x-fonts-i386
+Architecture: all
+Depends: ltsp-x-core-i386 (>= 3.0.0)
+Description: X fonts for the Linux Terminal Server Project (ltsp.org)
+ This package contains fonts for runnig X on an LTSP workstation.
+ This package is not needed if you have a font server on your network.
+ However, some font servers become unreliable if used by more than
+ a few dozen clients. If this is the case you can use this package
+ instead of the font server.
