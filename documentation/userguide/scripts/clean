@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR=`pwd`
+cd `dirname $0`
+
+cd ../src
+
+rm *aux
+rm *log
+rm *toc
+rm *pdf
+rm *dvi
+
+cd $DIR

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if test -z $1; then
+  echo You have to specify a language, i.e. "./builddocs fr".
+  exit
+fi
+
+LANG=$1
+
+DIR=`pwd`
+cd `dirname $0`
+
+cd ../src
+latex userguide.$LANG.tex
+latex userguide.$LANG.tex
+pdflatex userguide.$LANG.tex
+
+mv userguide.$LANG.dvi ../out
+mv userguide.$LANG.pdf ../out
+
+cd $DIR

@@ -1,0 +1,24 @@
+\section{Vorgänge beim Starten eines Terminals}
+ 
+\begin{itemize}
+\item Das Terminal bootet. Nun wird ein Code auf dem Boot-ROM der Netzwerkkarte ausgeführt,
+der alternativ auch von Diskette oder als DOS-Programm ausgeführt werden kann.
+\item Der Code des Boot-ROMs versucht über das sogenannte BOOTP-Protokoll einen Server
+im Netzwerk zu finden, der dem Terminal anhand seiner Hardware-Ethernet-Adresse
+eine IP-Adresse zuweisen und weiteren Code zur Ausführung bereitstellen kann.
+\item Der Server, i.d.R. der gleiche Rechner wie der Terminalserver, stellt dem suchenden
+Terminal seine IP-Adresse, die IP-Adresse eines Boot-Servers sowie ein vom Boot-Server
+zu ladender Startcode zur Verfügung.
+\item Der Terminal lädt den Startcode mit dem TFTP-Protokoll, einem vereinfachten FTP-Protokoll.
+Dieser Startcode ist ein entsprechend modifizierter Linux-Kernel.
+\item Der Linux-Kernel wird auf den Terminal geladen und ausgeführt. Nachdem er gestartet
+ist, holt er sich sein gesamtes Dateisystem vom Terminalserver mit Hilfe des
+NFS-Protokolls.
+\item Innerhalb dieses Dateisystems liegen Startscripts. Sie werden ausgeführt und
+starten die graphische Oberfläche.
+\item Die graphische Oberfläche X11 sucht einen XDMCP-Server, das ist ein Rechner,
+der in der Lage ist, die Graphikbefehle der laufenden Programme auf die Terminals
+zu übertragen.
+\item Wenn ein solcher Server gefunden ist, verbindet sich der Terminal mit ihm. Ab
+diesem Punkt arbeitet der Benutzer auf dem Server.
+\end{itemize}     
