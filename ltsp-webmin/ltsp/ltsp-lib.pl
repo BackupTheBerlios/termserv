@@ -55,7 +55,7 @@ sub ltsp_read_version($) {
 
   my $version_file = shift(@_);
   my $vers = "unknown";
-  open (LST, "<$version_file") or die "couldn't open version file";
+  open (LST, "<$version_file") or print "Please set the LTSP path in the module configuration.";
   my @lines = (<LST>);
   close (LST);
   # for ($i = 0; $i<$#lines; $i++) does not work, it does not get all lines.

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-$DEBUG = 1;
-$EXPERIMENTAL = 1;
+$DEBUG = 0;
+$EXPERIMENTAL = 0;
 
 # LTSP versions. We use a hash for comparison, because unfortunately
 # the pre versions often differ very much from the final ones and
@@ -24,7 +24,16 @@ $EXPERIMENTAL = 1;
   "2.09pre3" => 2083,
   "2.09pre4" => 2084,
   "2.09"     => 2090,
-  "3.0.0"    => 3000
+  "3.0.0"    => 3000,
+  "3.0.1"    => 3001,
+  "3.0.2"    => 3002,
+  "3.0.3"    => 3003,
+  "3.0.4"    => 3004,
+  "3.0.5"    => 3005,
+  "3.0.6"    => 3006,
+  "3.0.7"    => 3007,
+  "3.0.8"    => 3008,
+  "3.0.9"    => 3009
 );
 
 return TRUE;
