@@ -134,10 +134,6 @@ sub ltsp_get_option_groups() {
 
 sub ltsp_get_options() {
 
-#  opendir (DIR, "./options");
-#  @options = grep { (not /^\./) && -d "./options/$_" } readdir (DIR);
-#  closedir (DIR);
-
   print "ltsp_get_options called<br>\n" if $DEBUG;
 
   my $option = shift(@_);
