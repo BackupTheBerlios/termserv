@@ -39,9 +39,10 @@ sub ltsp_read_config($) {
 
     $_ = $lines[$i];
 
-    # If current line is just a comment, leave the rest out
+    # If current line is just a comment or empty, leave the rest out
 
     if (/^\#/) { next; }
+#    if (length($_) != "0") { next; }
 
     # If the current line is the beginning of a host
     # configuration entry (="hce")
@@ -58,6 +59,7 @@ sub ltsp_read_config($) {
         # If line is not empty or a comment
         if ((length($lines[$i]) != "0") and (!($lines[$i] =~ /^\#/))) {
           ($key, $value) = split(/=/, $lines[$i]);
+          # RESPECT NOQUOTE!
           $value =~ s/\"//g;
           $profiles{"$cur_hce"} .= ";$key,$value";
         }
@@ -72,13 +74,46 @@ sub ltsp_read_config($) {
 
 }
 
+sub _ltsp_modify_entry_on_write(@, %) {
+
+  # This function reads a list, which contains the entry in the
+  # config file, and a hash, which contains the configuration
+  # information of the entry; it returns the modified list
+
+  @lines = shift(@_);
+  %conf = shift(@_);
+
+  %cur_conf = ();
+  
+  for ($i = 0; $i<$#lines; $i++) {
+
+    $_ = $lines[$i];
+    chomp;
+    if (/^\#/) { next; }
+    if (length($_) == "0") { next; }
+    if (/^\[(.*)?\]/) { next; }
+
+    $lines[$i] =~ s/ //g;
+    chop($lines[$i]);
+
+    ($key, $value) = split(/=/, $lines[$i]);
+    chomp($key); $key =~ s/( *)?//;
+    chomp($value); $value =~ s/( *)?//;
+    $value =~ s/\"//g;
+    $cur_conf{"$key"} .= $value;
+  }
+
+  foreach $key (keys(%cur_conf)) {
+    print "$key is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
+  }
+
+}
+
 sub ltsp_write_config($) {
 
   print "ltsp_write_config: procedure called\n<br>" if $DEBUG;
 
   my $config_file = shift(@_);
-
-  print "ltsp_write_config: reading configuration file\n<br>" if $DEBUG;
 
   &lock_file("$config_file");
   open (LST, "<$config_file");
@@ -87,19 +122,14 @@ sub ltsp_write_config($) {
   &unlock_file("$config_file");
   &webmin_log("read", "file", $config_file, );
 
-  # We'll do a test drive to stdout
-
   # Do we have any hosts deleted?
-  print "ltsp_write_config: hosts deleted: $#deleted_hosts, @deleted_hosts<br>\n" if $DEBUG;
   if ($#deleted_hosts != -1) {
     foreach (@deleted_hosts) {
       $i = 0;
 
-      print "ltsp_write_config: looking for $_<br>\n" if $DEBUG;
       # Find out where to begin deletion
       BEGINDELETE: for ($i = 0; $i < $#lines; $i++) {
         if ($lines[$i] =~ /^\[$_\]/) {
-          print "ltsp_write_config: begin delete at $i<br>\n" if $DEBUG;
           $begin_delete = $i;
           last BEGINDELETE;
         }
@@ -108,7 +138,6 @@ sub ltsp_write_config($) {
       ENDDELETE: while ($i < $#lines) {
         $i++;
         if ($lines[$i] =~ /^\[(.*)?\]/) {
-          print "ltsp_write_config: end delete at $i<br>\n" if $DEBUG;
           $end_delete = $i-1;
           last ENDDELETE;
         }
@@ -116,21 +145,61 @@ sub ltsp_write_config($) {
       # In case of EOF
       if ($end_delete != $i) { $end_delete = $i; }
       print "ltsp_write_config: delete lines $begin_delete to $end_delete\n<br>" if $DEBUG;
+      splice (@lines, $begin_delete, $end_delete-$begin_delete);
     }
   }
 
+  #
+  # Do we have modified hosts?
+  #
+
+  if ($#modified_hosts ne -1) {
+
+    foreach (@modified_hosts) {
+      $i = 0;
+
+      # Find out where to begin modification
+      BEGINMODIFY: for ($i = 0; $i < $#lines; $i++) {
+        if ($lines[$i] =~ /^\[$_\]/) {
+          $begin_modify = $i;
+          last BEGINMODIFY;
+        }
+      }
+      # Find out where to stop deletion
+      ENDMODIFY: while ($i < $#lines) {
+        $i++;
+        if ($lines[$i] =~ /^\[(.*)?\]/) {
+          $end_modify = $i-1;
+          last ENDMODIFY;
+        }
+      }
+      # In case of EOF
+      if ($end_modify != $i) { $end_modify = $i; }
+      print "ltsp_write_config: modifying lines $begin_modify to $end_modify\n<br>" if $DEBUG;
+      # TMTOWTDI - har har - lick my shiny metal a**, Larry!
+      for ($i = $begin_modify; $i < $end_modify; $i++) { 
+        print "ltsp_write_config: " . $lines[$i] . "\n<br>" if $DEBUG;
+        push (@mod_lines, $lines[$i]); 
+      }
+      # MODIFICATION ROUTINE CALL IT HERE
+      #&_ltsp_modify_entry_on_write(
+    }
+
+  }
+
+  #
   # Do we have any new hosts?
+  #
+
   if ($#added_hosts ne -1) {
     foreach (@added_hosts) {
       my $cur_hce = $_;
       if (&ltsp_get_configuration($cur_hce) != 0) {
         %conf = &ltsp_get_configuration($cur_hce);
-        print "ltsp_write_config: added hce is $cur_hce\n<br>" if $DEBUG;
-        #print LST "[$cur_hce]\n";
-        print "<tt>added LST: [$cur_hce]</tt><br>\n" if $DEBUG;
-        foreach (keys(%conf)) {
-          #print LST "$_ = \"" . $conf{"$_"} . "\"\n";
-          print "<tt>added LST $_ = \"" . $conf{"$_"} . "\"</tt><br>\n" if $DEBUG;
+        push (@lines, "[$cur_hce]\n");
+        foreach (keys(%conf)) { 
+          # RESPECT NOQUOTE!
+          push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n"); 
         } 
       }
     }
@@ -140,6 +209,12 @@ sub ltsp_write_config($) {
   #open (LST, ">$conf_file");
 
   # Insert file writing operation code here
+ 
+  if ($DEBUG) {
+    foreach (@lines) {
+      print "<tt>$_</tt><br>\n";
+    }
+  }
 
   #close (LST);
   #&unlock_file("$conf_file");
