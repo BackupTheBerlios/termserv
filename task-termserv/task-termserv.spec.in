@@ -18,7 +18,7 @@ this package, and all the Terminalserver packages will be selected and
 installed automatically, too.
 
 %description -l de
-Dieses Paket ein Metapaket und enthält keine Dateien. Sein Zweck ist,
+Dieses Paket ist ein Metapaket und enthält keine Dateien. Sein Zweck ist,
 daß es von allen Paketen abhängig ist, die für den Terminalserver
 gebraucht werden. Damti wird die Paketauswahl einfacher: Wenn dieses Paket
 installiert ist, ist automatisch sichergestellt, daß alle
