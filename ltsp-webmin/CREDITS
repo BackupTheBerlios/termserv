@@ -16,9 +16,10 @@ Georg Baum <Georg.Baum@post.rwth-aachen.de>
 
   who gave valuable input on documentation issues and clarification
   about the Linux Filesystem Hierarchy Standard, 
-  wrote the Makefile, 
+  wrote the Makefile and helpful scripts, 
   criticized the program structure, 
-  gave valuable design input
+  gave valuable design input,
+  added support for different LTSP versions
 
 Jason Bechtel <jason@uniqsys.com>
 
