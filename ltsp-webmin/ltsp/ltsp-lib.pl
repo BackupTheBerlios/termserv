@@ -42,7 +42,6 @@ sub ltsp_read_config($) {
     # If current line is just a comment or empty, leave the rest out
 
     if (/^\#/) { next; }
-#    if (length($_) != "0") { next; }
 
     # If the current line is the beginning of a host
     # configuration entry (="hce")
@@ -85,8 +84,6 @@ sub _ltsp_modify_entry_on_write(@) {
 
   *lines = shift(@_);
 
-  for ($i = 0; $i <= $#lines; $i++) { $lines[$i] =~ s/\n//; }
-
   %cur_conf = ();
   
   for ($i = 0; $i<=$#lines; $i++) {
@@ -123,7 +120,12 @@ sub _ltsp_modify_entry_on_write(@) {
  
     foreach (@deleted) {
       if ($_ eq $key) {
-        splice(@lines, $i, 1);
+        print "delete?: $_<br>\n" if $DEBUG;
+        if (&_ltsp_option_exists($_)) {
+          splice(@lines, $i, 1);
+        } else {
+          print "i don't know this $_, so I refuse to delete the bastard!<br>\n" if $DEBUG;
+        }
       }
     }    
 
@@ -158,8 +160,6 @@ sub _ltsp_modify_entry_on_write(@) {
     }
   }
 
-  foreach ($i = 0; $i<=$#lines; $i++) { $lines[$i] .= "\n"; }
-
   print "_ltsp_modify_entry_on_write says bye-bye<br>\n" if $DEBUG;
 
 }
@@ -174,6 +174,8 @@ sub ltsp_write_config($) {
   close (LST);
   &unlock_file("$config_file");
   &webmin_log("read", "file", $config_file, );
+
+  for ($i = 0; $i <= $#lines; $i++) { $lines[$i] =~ s/\n$//; } 
 
   # Do we have any hosts deleted?
   if ($#deleted_hosts != -1) {
@@ -231,7 +233,18 @@ sub ltsp_write_config($) {
       for ($i = $begin_modify; $i < $end_modify; $i++) { 
         push (@mod_lines, $lines[$i]); 
       }
+
+      # Okay, I give no business about empty lines and comments at the end of an entry
+      #for ($i = $end_modify; $i > $begin_modify; $i--) {
+      #  print "line is: <font color=#00ff00>" . $mod_lines[$i] . "</font><br>" if $DEBUG;
+      #  if (($mod_lines[$i] =~ /^\s*?$/) || ($mod_lines[$i] =~ /^\s*?\#/)) {
+      #    print "and it contains nonsense<br>" if $DEBUG;
+      #    splice(@mod_lines, $i, 1);
+      #  }
+      #}
+
       # That's the only interesting subroutine here, believe me
+
       &_ltsp_modify_entry_on_write(\@mod_lines);
       splice(@lines, $begin_modify, $end_modify-$begin_modify, @mod_lines);
     }
@@ -247,12 +260,12 @@ sub ltsp_write_config($) {
       my $cur_hce = $_;
       if (&ltsp_get_configuration($cur_hce) != 0) {
         %conf = &ltsp_get_configuration($cur_hce);
-        push (@lines, "[$cur_hce]\n");
+        push (@lines, "[$cur_hce]");
         foreach (keys(%conf)) { 
           if (&ltsp_value_needs_quotes("$_")) {
-            push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n"); 
+            push (@lines, "$_ = \"" . $conf{"$_"}. "\""); 
           } else {
-            push (@lines, "$_ = " . $conf{"$_"} . "\n"); 
+            push (@lines, "$_ = " . $conf{"$_"}); 
           }
         } 
       }
@@ -265,7 +278,7 @@ sub ltsp_write_config($) {
   # Insert file writing operation code here
  
   foreach (@lines) { 
-    print LST "$_"; 
+    print LST "$_\n"; 
     print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n" if $DEBUG;
   }
 
@@ -415,6 +428,21 @@ sub ltsp_modify_entry($, %) {
   if ($profiles{"$entry"} eq "") {
     push (@deleted_hosts, $entry);
   }
+
+}
+
+sub _ltsp_option_exists($) {
+
+  my $option = shift(@_);
+
+  print "_ltsp_option_exists called, argument is $_<br>\n" if $DEBUG;
+
+  if (-d "./options/$option/") {
+    print "_ltsp_option_exists called, argument is $_ and exists<br>\n" if $DEBUG;
+    return 1;
+  }
+  print "_ltsp_option_exists called, argument is $_ and doesn't exist<br>\n" if $DEBUG;
+  return 0;
 
 }
 
