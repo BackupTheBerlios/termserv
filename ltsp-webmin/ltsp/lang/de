@@ -130,6 +130,11 @@ se=Schwedisch
 th=Thai
 us=US
 
+P=Parallel
+S=Seriell
+E=Even
+O=Odd
+
 network_settings=Netzwerk- und Starteinstellungen
 loadable_module_settings=Kernelmodule
 graphics_card_settings=Grafikkarten-Einstellungen
