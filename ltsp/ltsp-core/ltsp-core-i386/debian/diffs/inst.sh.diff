@@ -1,6 +1,6 @@
 --- inst.sh	Sat Nov 24 16:42:42 2001
 +++ inst.sh	Sat Nov 24 19:40:24 2001
-@@ -166,16 +166,6 @@
+@@ -169,16 +169,6 @@
  echo "the CONFIG file and restart the installation."
  echo
  echo -n "Continue with installation (y/n)? "
@@ -17,7 +17,7 @@
  
  ##############################################################################
  #
-@@ -383,12 +373,6 @@
+@@ -386,12 +376,6 @@
  
  #------------------------------------------------------------------------------
  #
@@ -30,7 +30,7 @@
  # Build the lts.conf file, based on some of the CONFIG variables
  #
  sed "s^IP_SERVER^${IP_SERVER}^" \
-@@ -398,13 +382,13 @@
+@@ -401,13 +385,13 @@
  # Write some of the important config items to the /etc/ltsp.conf file,
  # so that additional installations can use those values
  #

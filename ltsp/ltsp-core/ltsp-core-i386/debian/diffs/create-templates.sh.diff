@@ -1,21 +1,44 @@
---- create-templates.sh	Sat Nov 24 16:42:42 2001
-+++ create-templates.sh	Sat Nov 24 19:04:29 2001
+--- create-templates.sh	Thu May  9 09:41:47 2002
++++ create-templates.sh	Thu May  9 13:37:25 2002
 @@ -1,4 +1,4 @@
 -:
 +#! /bin/sh
  #
  # Copyright (c) 2001 by James A. McQuillan (McQuillan Systems)
  #
-@@ -140,6 +140,8 @@
- #
- ##############################################################################
+@@ -124,6 +124,9 @@
+ 
+ fi
  
 +pwd=`pwd`
 +cd `dirname $0`
++
+ #
+ # so if we have found a well known DISTRO, post a short
+ # message and start the second script
+@@ -131,19 +134,20 @@
+ if [ -z "${DISTRO_VERSION}" ] && [ -z "${DISTRO_NAME}" ]; then
  
+    echo "Sorry, there is currently no support for this platform :-("
++   cd ${pwd}
+    exit   
+ else
+     if test -f ./${TEMPLATE_FILE}; then
+ 	echo "Good! We have found ${DISTRO_NAME} version ${DISTRO_VERSION}"
+     else
+ 	echo "Sorry, but ${DISTRO_NAME} version ${DISTRO_VERSION} not supported :-("
++	cd ${pwd}
+ 	exit
+     fi
+ fi
+ #
+ ##############################################################################
+ 
+-
  ##############################################################################
  #
-@@ -150,7 +152,7 @@
+ # Read the global settings...
+@@ -153,7 +157,7 @@
  ##############################################################################
  
  echo
@@ -24,7 +47,7 @@
  echo
  echo "  LTSP_DIR     = ${LTSP_DIR}"
  echo "  SWAP_DIR     = ${SWAP_DIR}"
-@@ -160,7 +162,7 @@
+@@ -163,7 +167,7 @@
  echo "  IP_NETMASK   = ${IP_NETMASK}"
  echo "  IP_BROADCAST = ${IP_BROADCAST}"
  echo
@@ -33,7 +56,7 @@
  echo "enter 'Y' and the installation will proceed.  Any other"
  echo "response will abort the installation, and you can modify"
  echo "the CONFIG file and restart the installation."
-@@ -174,6 +176,7 @@
+@@ -177,6 +181,7 @@
      echo
      echo "Installation aborted"
      echo
@@ -41,7 +64,7 @@
      exit
  fi
  
-@@ -184,203 +187,6 @@
+@@ -187,203 +192,9 @@
  #
  . ./install_functions.sh
  
@@ -164,7 +187,9 @@
 -chown root:root ${TARGET}
 -
 -#------------------------------------------------------------------------------
--#
++# Create the logfile
++logit create-templates.sh run on ${TODAY}
+ #
 -# Put a README file in the template directory, giving the sysadmin a clue
 -# as to what he should do with the files in that directory
 -#
@@ -245,7 +270,7 @@
  #------------------------------------------------------------------------------
  #
  # Start building templates
-@@ -391,8 +197,8 @@
+@@ -394,8 +205,8 @@
  #
  # Build the lts.conf file, based on some of the CONFIG variables
  #
@@ -256,7 +281,7 @@
  
  #------------------------------------------------------------------------------
  # Write some of the important config items to the /etc/ltsp.conf file,
-@@ -400,11 +206,11 @@
+@@ -403,11 +214,11 @@
  #
  CONF=/etc/ltsp.conf
  
