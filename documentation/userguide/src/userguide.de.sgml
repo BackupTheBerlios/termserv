@@ -11,9 +11,7 @@ Christian Selig <tt/christian.selig@bnv-bamberg.de/
 
 <toc>
  
-<sect>Vorwort
-
-<sect>Der Terminalserver
+<sect>Einführung
 
 <p>
 Die Situation ist bekannt: Die Netzwerke an Schulen werden größer und 
@@ -108,17 +106,32 @@ den Verwaltungsaufwand des Systemamdministrators enorm. Aber nicht nur das:
 <sect>Grundlagen eines Terminalserver-Netzwerks
 
 <p> 
-Ein Terminalserver funktioniert nach einem sehr simplen Prinzip. Jedoch sollten Sie für ein besseres Verständnis die zu Grunde liegenden Schemata kennen, damit Sie ihr Netzwerk im Überblick haben und im Problemfall gezielter nach dem Fehler suchen können.     
+Ein Terminalserver funktioniert nach einem sehr simplen Prinzip. 
+Jedoch sollten Sie für ein besseres Verständnis die zu Grunde 
+liegenden Schemata kennen, damit Sie ihr Netzwerk im Überblick 
+haben und im Problemfall gezielter nach dem Fehler suchen können.     
 </p>
 
-<sect1>Adressierungen
+<sect1>Protokolle
  
 <p>
-Die Rechner in einem Netzwerk benötigen eindeutige Adressen. Dies ist vergleichbar
-mit der Post, die ebenfalls eindeutige Adressen zum Befördern benötigt.
+Für die Kommunikation in einem Netzwerk sind Protokolle vonnöten. Sie schreiben
+vor, wie etwa die Adressierung in einem Netzwerk aussehen muss und wie Rechner
+innerhalb des Netzwerks Daten austauschen.
 </p>
  
-<sect2>MAC-Adressen
+<p>
+Solche Protokolle existieren mehrschichtig, das heißt, ein Protokoll baut
+auf grundlegenderen Protokollen auf. Im Folgenden werden einige Protokolle
+beschrieben, deren Schichtung (von ''tief'' nach ''hoch'') wie folgt aussieht:
+<enum>
+<item><ref id="mac-addresses" name="MAC-Adressen"></item>
+<item>IP-Adressen</item>
+<item>DNS, <ref id="dhcp-protocol" name="DHCP">, TFTP, NFS, X11</item>
+</enum>
+</p>
+
+<sect2>MAC-Adressen<label id="mac-addresses">
  
 <p>
 MAC-Adressen sind Netzwerk-Adressierungen auf der technisch untersten Ebene.
@@ -154,7 +167,7 @@ die IP <em/192.168.1.2/. Die Terminals bekommen <em/192.168.1.10/, <em/192.168.1
 usw.
 </p>
  
-<sect2>Rechnernamen und Domänen
+<sect2>Rechnernamen und Domänen (DNS)
 
 <p> 
 IP-Adressen sind zur Strukturierung ganz nützlich, jedoch können in einem IP-Netzwerk
@@ -172,16 +185,7 @@ mit dem Namen <em/arktur/. Das Länderkürzel heißt Top-Level-Domain (kurz TLD),
 davor kommt die Domäne, davor dann entweder Rechner oder weitere Domänen.
 </p> 
 
-<sect1>Protokolle
-
-<p>
-Protokolle sind Übereinkünfte zweier oder mehrerer Parteien, wie sie miteinander kommunizieren.
-Ein menschliches ''Protokoll'' beispielsweise ist eine Sprache. Sie übermittelt mit Hilfe von
-Satzbau und Wortbedeutungen bestimmte Inhalte. Gleiches gilt für Protokolle auf Computern oder
-innerhalb von Rechnernetzen.
-</p>
- 
-<sect2>DHCP
+<sect2>DHCP<label id="dhcp-protocol">
 
 <p>
 DHCP, das ''Dynamic Host Configuration Protocol'' ist ein Protokoll, welches einen kleinen
@@ -235,28 +239,17 @@ Dateien vom Server exportiert und vom Terminal importiert:
 <p>
 <figure>
 <eps file="userguide-networkbasics-protocols-x-flow.eps">
-<caption>Funktionsweise des X11-Protokolls</caption>
+<caption>Funktionsweise des X11-Protokolls<label id="x-flow-diag">
 </figure>
 </p>
-
-<!--\begin{figure}
-
-\begin{center}
-\resizebox*{!}{7cm}{\includegraphics{userguide-networkbasics-protocols-x-flow.eps}}
-\end{center}
-
-\caption{Funktionsweise des X11-Protokolls
-\label{userguide-networkbasics-protocols-x-flow}}
-
-\end{figure}-->
 
 <p>
 X11 ist ein System, welches unter GNU/Linux- und Unix-Systemen die Grafikausgabe regelt.
 Das Besondere an ihm ist seine Netzwerkfähigkeit. So kann ein Programm auf einem bestimmten Rechner
 laufen, die Anzeige und Bedienung des Programms findet aber auf einem anderen Rechner statt! Im
 GNU/Linux- bzw. Unix-Mehrbenutzerbetrieb können also beliebig viele Rechner
-Programme auf einem einzigen Server starten und bei sich anzeigen lassen. <!--Die Zeichnung
-\ref{userguide-networkbasics-protocols-x-flow} gibt einen schematischen Überblick.-->
+Programme auf einem einzigen Server starten und bei sich anzeigen lassen.
+<ref id="x-flow-diag" name="Eine Zeichnung"> gibt einen schematischen Überblick.
 </p>
 
 <p>
