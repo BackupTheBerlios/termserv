@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+$DEBUG = 0;
+
 # This file contains some routines that can be used in
 # a general fashion.
 
@@ -14,17 +16,17 @@ sub compare_hashes {
 
   local @added, @deleted, @modified, @notmodified;
 
-  # item added
   foreach (keys(%old)) {
     if (!(exists $new{"$_"} )) {
-      push (@added, "$_");
+      push (@deleted, "$_");
+      print "compare_hashes: old key exists, new key does not -> $_ deleted<br>\n" if $DEBUG;
     }
   }
 
-  # item deleted
   foreach (keys(%new)) {
     if (!(exists $old{"$_"} )) {
-      push (@deleted, "$_");
+      push (@added, "$_");
+      print "compare_hashes: new key exists, old key does not -> $_ added<br>\n" if $DEBUG;
     }
   }
 
@@ -32,6 +34,7 @@ sub compare_hashes {
   foreach (keys(%new)) {
     if ((exists $old{"$_"} ) && (exists $new{"$_"} ) && ($new{"$_"} ne $old{"$_"})) {
       push (@modified, "$_");
+      print "compare_hashes: same keys, different -> $_ is modified<br>\n" if $DEBUG;
     }
   }
 
