@@ -1,7 +1,9 @@
 name=ltsp
 desc=LTSP Configuration
 desc_de=LTSP-Konfiguration
+desc_es=Configuración LTSP 
 desc_fr=Configuration LTSP
+desc_it=LTSP Configurazione
 desc_se=LTSP Konfiguration
 os_support=corel-linux debian-linux mandrake-linux open-linux redhat-linux slackware-linux suse-linux
 category=servers
