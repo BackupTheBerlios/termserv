@@ -7,7 +7,7 @@ Build-Depends: cpio, findutils
 
 Package: ltsp-local-apps-i386
 Architecture: all
-Depends: ltsp-core (>= 3.0.0)
+Depends: ltsp-core-i386 (>= 3.0.0)
 Description: Local Apps for the Linux Terminal Server Project (ltsp.org)
  This package contains the supporting files for running Local apps on
  an LTSP workstation.
