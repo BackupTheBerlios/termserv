@@ -13,7 +13,7 @@ cd `dirname $0`
 cd ../src
 latex userguide.$LANG.tex
 latex userguide.$LANG.tex
-dvips -t a4 userguide.$LANG.tex -o userguide.$LANG.ps
+dvips -t a4 userguide.$LANG.dvi -o userguide.$LANG.ps
 ps2pdf userguide.$LANG.ps
 
 mv userguide.$LANG.dvi ../out
