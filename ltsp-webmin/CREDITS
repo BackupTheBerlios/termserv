@@ -1,22 +1,57 @@
-In no particular order:
+Christian Selig <christian.selig@bnv-bamberg.de>
 
-Georg Baum <Georg.Baum@post.rwth-aachen.de>
+  I consider myself to be the main author of the program.
+  This software would be possible but NO FUN without
+  all the nice people out there. I'll take the chance and
+  give credit to them.
 
-  for valuable input on documentation issues and clarification
-  about the Linux Filesystem Hierarchy Standard
-
-  for critics of the program structure and valuable design input
+In alphabetical order lots of thanks to:
 
 Joel Amoros <joel.amoros@education.gouv.fr>
 
-  for taking on the French translation and helping to improve
+  who took on the French translation and helped to improve
   my French
 
-Michael Habbe <2habbe@home.com>
+Georg Baum <Georg.Baum@post.rwth-aachen.de>
 
-  for the swedish translation.
+  who gave valuable input on documentation issues and clarification
+  about the Linux Filesystem Hierarchy Standard, 
+  wrote the Makefile, 
+  criticized the program structure, 
+  gave valuable design input
 
 Jason Bechtel <jason@uniqsys.com>
 
-  for anything in advance. :-)
+  :-)
+
+Peter Bingel <peter.bingel@aventa.de>
+
+  who gave personal advice,
+  contributed german documentation
+
+Michael Habbe <2habbe@home.com>
+
+  who created the swedish translation.
+
+Doug Loss <dloss@suscom.net>
+
+  who published the our project in the SEUL/edu report
+ 
+Jim McQuillan <jam@mcquil.com>
+
+  who added the module to the LTSP Contributions page,
+  gave advice on the configuration file format
+
+Angel Eduardo Porras Meza <aporras@tutopia.com>
+
+  who added a spanish translation
+
+Rasmus Ory Nielsen <ron@ron.dk>
+
+  who contributed quite a few important bug reports
+
+Tom Schouteden <tom.schouteden@linugen.com>
+
+  who wrote an encouraging mail to switch the
+  module's license to GPL
 
