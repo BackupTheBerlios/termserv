@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$DEBUG = 1;
+$DEBUG = 0;
 $EXPERIMENTAL = 0;
 
 return TRUE;
