@@ -570,13 +570,9 @@ sub _ltsp_option_exists($) {
 
   my $option = shift(@_);
 
-  print "_ltsp_option_exists called, argument is $_<br>\n" if $DEBUG;
-
   if (-d "./options/$option/") {
-    print "_ltsp_option_exists called, argument is $_ and exists<br>\n" if $DEBUG;
     return 1;
   }
-  print "_ltsp_option_exists called, argument is $_ and doesn't exist<br>\n" if $DEBUG;
   return 0;
 
 }
