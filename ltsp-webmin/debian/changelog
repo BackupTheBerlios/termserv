@@ -1,9 +1,12 @@
 ltsp-webmin (0.5.3-1) unstable; urgency=low
 
   * rpm now available
-  * depends now on webmin >= 0.87, to make sure we are using the official
-    package and not the old one from opal@debian.org
+  * depends now on webmin (>= 0.87) | webmin-ssl (>= 0.87), to make sure
+    we are using the official package and not the old one from
+    opal@debian.org. Unfortunately versioned dependencies don't work with
+    virtual packages;-(
   * added postinst and prerm with a call to update-webmin
+  * module.info: we depend now on webmin >= 0.81, because we use file locking
 
  -- Georg Baum <gbaum@users.sourceforge.net>  Tue, 17 Jul 2001 08:30:58 +0200
 
