@@ -1,0 +1,20 @@
+\section{Installation über das Internet}
+
+Die Installation über das Internet ist nur mit Debian GNU/Linux-Systemen
+und Abkömmlingen möglich. Selbstverständlich geht das nur, wenn Ihr 
+zukünftiger Terminalserver eine Verbindung zum Internet hat.
+
+Tragen Sie
+\begin{verbatim}
+deb http://termserv.berlios.de/debian main
+\end{verbatim}
+in die Datei \texttt{/etc/apt/sources.list} ein. Das Paketmanagementsystem
+muss nun diee zusätzliche Quelle für Pakete auswerten. Rufen Sie dazu
+\begin{verbatim}
+apt-get update
+\end{verbatim}
+auf. Den Terminalserver können Sie jetzt mit
+\begin{verbatim}
+apt-get install task-termserv
+\end{verbatim}
+installieren.
