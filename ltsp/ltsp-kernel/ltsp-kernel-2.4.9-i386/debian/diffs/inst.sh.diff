@@ -1,6 +1,6 @@
 --- inst.sh	Mon Dec  3 04:32:24 2001
 +++ inst.sh	Sun Dec  9 10:29:25 2001
-@@ -33,7 +33,7 @@
+@@ -40,7 +40,7 @@
  #
  # Make sure this script is being run by the superuser.
  #
@@ -9,7 +9,7 @@
      echo
      echo "You MUST run this script as superuser!"
      echo
-@@ -44,31 +44,10 @@
+@@ -51,31 +51,10 @@
      exit 1
  fi
  
@@ -37,10 +37,10 @@
 -    mkdir -p /tftpboot/lts
 -fi
 -
--cp vmlinuz-2.4.9-ltsp-5      /tftpboot/lts/vmlinuz-2.4.9-ltsp-5
--cp vmlinuz-2.4.9-ltsp-lpp-5  /tftpboot/lts/vmlinuz-2.4.9-ltsp-lpp-5
-+cp vmlinuz-2.4.9-ltsp-5      ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.9-ltsp-5
-+cp vmlinuz-2.4.9-ltsp-lpp-5  ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.9-ltsp-lpp-5
+-cp vmlinuz-2.4.9-ltsp-6      /tftpboot/lts/vmlinuz-2.4.9-ltsp-6
+-cp vmlinuz-2.4.9-ltsp-lpp-6  /tftpboot/lts/vmlinuz-2.4.9-ltsp-lpp-6
++cp vmlinuz-2.4.9-ltsp-6      ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.9-ltsp-6
++cp vmlinuz-2.4.9-ltsp-lpp-6  ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.9-ltsp-lpp-6
  
  find i386 -print | cpio -pmud --quiet ${LTSP_DIR}
  RS=$?

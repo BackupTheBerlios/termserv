@@ -1,3 +1,9 @@
+ltsp-kernel-2.4.9-i386 (3.0.3-0) unstable; urgency=low
+
+  * new upstream release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Mon,  8 Apr 2002 13:02:24 +0200
+
 ltsp-kernel-2.4.9-i386 (3.0.1-0) unstable; urgency=low
 
   * new upstream release.
