@@ -44,7 +44,7 @@ sub ltsp_header {
 #    }
 #  }
   $version = ltsp_read_version($config{"ltsconf_path"} . "/version");
-  print "version $version is unknown, because it's value in the hash table is " . $versions{$version} . "<br>" if $DEBUG;
+  print "version $version read from file '" . $config{"ltsconf_path"} . "/version'" . " is unknown, because it's value in the hash table is " . $versions{$version} . "<br>" if $DEBUG;
   error($text{"unknown_version"} . " $version.") unless ($versions{$version});
   if($DEBUG) {
     &ltsp_check_options();
@@ -55,7 +55,7 @@ sub ltsp_read_version($) {
 
   my $version_file = shift(@_);
   my $vers = "unknown";
-  open (LST, "<$version_file");
+  open (LST, "<$version_file") or die "couldn't open version file";
   my @lines = (<LST>);
   close (LST);
   # for ($i = 0; $i<$#lines; $i++) does not work, it does not get all lines.
@@ -409,7 +409,7 @@ sub ltsp_get_options() {
     if (/^$option_group/) {
       s/^(.*)?=//;
       foreach (split(/\,/)) {
-	push (@options, $_) if ltsp_is_option_supported($_);
+	push (@options, $_) if ltsp_is_option_supported($_) and ltsp_is_option_at_userlevel($_);
       }
     }
   }
@@ -498,19 +498,19 @@ sub ltsp_is_option_supported($) {
 
 sub ltsp_is_option_at_userlevel() {
 
-#  my $option = shift;
-#  if (-e "./options/$option/userlevel") {
-#    open LST, "<./options/$option/userlevel";
-#    $ul = <LST>;
-#    close LST;
-#    if ($ul le $config{"userlevel"}) {
-#      return 1;
-#    } else {
-#      return 0;
-#    }
-#  else {
+  my $option = shift;
+  if (-e "./options/$option/userlevel") {
+    open LST, "<./options/$option/userlevel";
+    $ul = <LST>;
+    close LST;
+    if ($ul <= $config{"userlevel"}) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else {
     return 1;
-#  }
+  }
 }
 
 sub ltsp_need_value_translation($) {

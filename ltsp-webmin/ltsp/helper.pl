@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$DEBUG = 0;
+$DEBUG = 1;
 
 # This file contains some routines that can be used in
 # a general fashion.
