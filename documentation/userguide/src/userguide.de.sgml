@@ -387,7 +387,7 @@ tulip		&lts\_kernel\_tulip-2.2-0.i386.rpm	&lts-kernel-tulip\_2.2-1\_all.deb\\
 -->
 
 <p>
-Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel \texttt{all}
+Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <tt/all/
 enthält alle Netzwerkkartentreiber. Wenn für die gewüsnchte Karte
 kein Kernel vorhanden ist, und der <tt/all/-Kernel nicht funktioniert, muß ein
 Kernel selber erstellt werden und nach <tt>/tftpboot/lts/</tt> kopiert werden. Wie das

@@ -1,0 +1,21 @@
+Document: termserv-userguide
+Title: GNU/Linux Terminalserver for schools - Userguide
+Author: Georg Baum, Peter Bingel, Christian Selig
+Abstract: This manual describes the GNU/Linux Terminalserver for schools:
+ Installation, configuration and use.
+Section: admin
+
+Format: debiandoc-sgml
+Files: /usr/share/doc/termserv-doc/userguide.de.sgml.gz
+
+Format: postscript
+Files: /usr/share/doc/termserv-doc/userguide.de.ps.gz
+
+Format: pdf
+Files: /usr/share/doc/termserv-doc/userguide.de.pdf.gz
+
+Format: HTML
+Index: /usr/share/doc/termserv-doc/html/userguide.de.html
+Files: /usr//share/doc/ltsp-webmin/html/*.html
+
+  
