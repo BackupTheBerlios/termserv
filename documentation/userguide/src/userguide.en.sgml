@@ -601,12 +601,17 @@ Terminals mitzubenutzen. Dazu sind folgende Änderungen in der Datei
 <item>Eine Gruppe
 <code>
 group {
-    option next-server termserv;
+    next-server termserv;
+    use-host-decl-on;
 }
 </code>
 ist zu erstellen. <tt/termserv/ ist hierbei der Name des Terminalservers.
-Hiermit wird allen Terminals, die sich innerhalb dieser Gruppe befinden,
-mitgeteilt, wie der nächste Server (von dem der Linuxkernel geholt wird) heißt.
+Mit <tt/next-server termserv;/ wird allen Terminals, die sich innerhalb dieser
+Gruppe befinden mitgeteilt, wie der nächste Server (von dem der Linuxkernel
+geholt wird) heißt.
+<tt/use-host-decl-on;/ sorgt dafür, daß den Terminals ihr eigener Name zusätzlich
+zur IP-Adresse bekanntgegeben wird. Fehlt dieser Eintrag, können die Terminals
+ihren eigenen Abschnitt in <tt>/tftpboot/lts/ltsroot/etc/lts.conf</tt> nicht finden.
 Werden mehrere Terminalserver benutzt, bekommt jeder seine eigene Gruppe.
 <item>Pro Terminal ist innerhalb dieser Gruppe ein Eintrag der Form
 <code>
