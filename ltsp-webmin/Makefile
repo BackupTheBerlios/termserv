@@ -60,10 +60,70 @@ install:
 	@find $(WEBMINDIR)/ltsp -name "*.cgi" -exec chmod +x {} \;
 
 clean:
-	rm -rf tmp
+	rm -rf tmp files_not_in_cvs
 	rm -f $(PACKAGE).spec
 
 deb-clean:
 	$(FAKEROOT) debian/rules clean
 
-.PHONY: clean deb deb-clean install rpm tgz wbm
+# The following is stolen from KDE (admin/Makefile.common)
+cvs-clean:
+	@if test ! -d CVS; then \
+	  echo "You don't have a toplevel CVS directory."; \
+	  echo "You most certainly didn't use cvs to get these sources."; \
+	  echo "But this function depends on cvs's information."; \
+	  exit 1 ;\
+	fi;\
+	pwd=`pwd` ;\
+	dirs=`find . -type d | grep -v CVS | sed -e "s#^./##"` ;\
+	for i in $$dirs; do \
+	  if test ! -d "$$pwd/$$i/CVS"; then \
+	    echo "D $$i" ;\
+	    rm -rf "$$pwd/$$i"; \
+	    continue; \
+	  fi ;\
+	  cd $$pwd/$$i ;\
+	  for f in * .*; do \
+	    if test ! -d "$$f"; then \
+	      if grep "^/$$f/" CVS/Entries > /dev/null; then \
+		a="b"; \
+	      else \
+	        echo "F $$i/$$f"; \
+		rm -f "$$pwd/$$i/$$f"; \
+	      fi; \
+	    fi ; \
+	  done; \
+	done
+
+# Build a list for checking in many new files
+# This is based on cvs-clean
+files_not_in_cvs: clean deb-clean
+	@if test ! -d CVS; then \
+	  echo "You don't have a toplevel CVS directory."; \
+	  echo "You most certainly didn't use cvs to get these sources."; \
+	  echo "But this function depends on cvs's information."; \
+	  exit 1 ;\
+	fi;\
+	rm -f $@; \
+	pwd=`pwd` ;\
+	dirs=`find . -type d | grep -v CVS | sed -e "s#^./##"` ;\
+	for i in $$dirs; do \
+	  if test ! -d "$$pwd/$$i/CVS"; then \
+	    echo "D $$i" ;\
+	    echo "$$i" >> $$pwd/$@; \
+	  fi ;\
+	  cd $$pwd/$$i ;\
+	  for f in * .*; do \
+	    if test ! -d "$$f"; then \
+	      if grep "^/$$f/" CVS/Entries > /dev/null 2>&1; then \
+		a="b"; \
+	      else \
+	        echo "F $$i/$$f"; \
+		echo "$$i/$$f" >> $$pwd/$@; \
+	      fi; \
+	    fi ; \
+	  done; \
+	done
+
+
+.PHONY: clean cvs-clean deb deb-clean install rpm tgz wbm

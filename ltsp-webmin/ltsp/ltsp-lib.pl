@@ -19,6 +19,39 @@ require "./globals.pl";
 @modified_hosts = ();
 @deleted_hosts = ();
 
+$version = "unknown";
+
+# This has to be used instead of header() by all cgis!
+sub ltsp_header {
+  &header(@_);
+  $version = ltsp_read_version($config{"ltsconf_path"} . "/version");
+  error($text{"unknown_version"} . " $version.") unless ($versions{$version});
+  if($DEBUG) {
+    &ltsp_check_options();
+  }
+}
+
+sub ltsp_read_version($) { 
+
+  my $version_file = shift(@_);
+  my $vers = "unknown";
+  open (LST, "<$version_file");
+  my @lines = (<LST>);
+  close (LST);
+  # for ($i = 0; $i<$#lines; $i++) does not work, it does not get all lines.
+  # Why? But foreach is more elegant anyway.
+  foreach $_ (@lines) {
+    # If current line is just a comment or empty, leave the rest out
+    if (/^\#/) { next; }
+    if(/^\s*VERSION\s*=\s*(.+)\s*/) {
+      $vers = "$1";
+      last;
+    }
+  }
+  print "version: $vers<br>\n";
+  return $vers;
+}
+
 # Reads the configuration file
 # puts information into %profiles
 
@@ -117,7 +150,17 @@ sub _ltsp_modify_entry_on_write(@) {
     # And once again Larry gets on my ****. He is too stupid to invent
     # the "a in b" operator which returns true when string a is in array b
     # even the squichie eaters languages from Wirth have this simple operation!
- 
+# It's not an operator, but it works like this:
+# if grep /^$a$/, @b
+# returns true if and only if $a is in @b.
+# So this should work:
+#   if grep /^$key$/, @deleted {
+#      if (&_ltsp_option_exists($key)) {
+#        splice(@lines, $i, 1);
+#      }
+#    }
+# etc.
+  
     foreach (@deleted) {
       if ($_ eq $key) {
         print "delete?: $_<br>\n" if $DEBUG;
@@ -333,16 +376,18 @@ sub ltsp_get_option_groups() {
 
 sub ltsp_get_options() {
 
-  my $option = shift(@_);
+  my $option_group = shift(@_);
   my @options = ();
+  my @order_options = ();
+  my @existing_options = ();
 
   open (LST, "./options/order");
   foreach (<LST>) {
     chop;
-    if (/^$option/) {
+    if (/^$option_group/) {
       s/^(.*)?=//;
       foreach (split(/\,/)) {
-        push (@options, $_);
+	push (@options, $_) if ltsp_is_option_supported($_);
       }
     }
   }
@@ -350,6 +395,32 @@ sub ltsp_get_options() {
 
   return @options;
 
+}
+
+sub ltsp_check_options() {
+
+  my $option;
+  my @order_options = ();
+  my @existing_options = ();
+
+  open (LST, "./options/order");
+  foreach (<LST>) {
+    chop;
+    s/^(.*)?=//;
+    foreach (split(/\,/)) {
+      error("unknown option $_ in options/order!") unless _ltsp_option_exists($_);
+      push (@order_options, $_);
+    }
+  }
+  close (LST);
+
+  opendir (LST, "./options");
+  @existing_options = grep !/^\.\.?$/, readdir LST;
+  foreach $option (@existing_options) {
+    if (-d "./options/$option") {
+      error("Option $option exists but is not in options/order!") unless grep /$option/, @order_options;
+    }
+  }
 }
 
 sub ltsp_get_option_type($) {
@@ -376,6 +447,31 @@ sub ltsp_get_possible_values($) {
 
   return @values;
 
+}
+
+sub ltsp_is_option_supported($) {
+
+  my $option = shift(@_);
+  
+  if (-e "./options/$option/required_version") {
+    open (LST, "<./options/$option/required_version");
+    my $req_version = (<LST>);
+    chop($req_version);
+    close (LST);
+    error("unknown version $req_version for option $option") unless $versions{$req_version};
+    my $min_version = $versions{$req_version};
+    return 0 unless ($min_version le $versions{"$version"});
+  }
+  if (-e "./options/$option/deprecated_by_version") {
+    open (LST, "<./options/$option/deprecated_by_version");
+    my $dep_version = (<LST>);
+    chop($dep_version);
+    close (LST);
+    error("unknown version $dep_version for option $option") unless $versions{$dep_version};
+    my $max_version = $versions{$dep_version};
+    return 0 unless ($versions{"$version"} lt $max_version);
+  }
+  return 1;
 }
 
 sub ltsp_need_value_translation($) {

@@ -1,5 +1,6 @@
 ltsp-webmin (0.5.3-1) unstable; urgency=low
 
+  * new options for LTSP 2.09pre2 from Robert Stanford
   * rpm now available
   * depends now on webmin (>= 0.87) | webmin-ssl (>= 0.87), to make sure
     we are using the official package and not the old one from

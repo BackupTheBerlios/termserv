@@ -1,5 +1,7 @@
 0.6:
 
+ - handle new LTS_ROOT (/opt/ltsp/i386)
+
  - add support for Etherboot ROM image creation
 
 0.7:
@@ -8,3 +10,23 @@
 
  - add support for automatic dhcp update
 
+no particular version:
+ - handle 8bit chars (for example umlauts) in the translated files
+   correctly, that means don't display "ü" but "&uuml;". This should
+   be a function of webmin.
+ - resolve the problem with the same string to be translated twice (or more),
+   for example "N" means "None" in PRINTER_0_PARITY and "No" somewhere else.
+   Idea: When looking up the translation first search for the value prepended
+   with the option name (here "PRINTER_0_PARITY_N"), and only if that fails,
+   look for the value (here "N"). Then we should translate "PRINTER_0_PARITY_N"
+   to "None" and "N" to "No". This is not elegant, but should work.
+ - Handle multiple occurences of the same option like PRINTER_0_TYPE ..
+   PRINTER_2_TYPE more intelligently, that means without having to specify
+   each options seperately.
+ - Improve the UI. That means, display some options only if some others are
+   set / not set. Example: If XF86CONFIG_FILE is set, display none of
+   the X options.
+   Problem: We need something like an "Update" button or a solution with
+   javascript.
+ - write script that checks wether all possible values of translated options
+   are in the language files.

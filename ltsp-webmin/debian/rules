@@ -55,6 +55,7 @@ install:
 	$(MAKE) install DESTDIR=`pwd`/debian/$(PACKAGE)
 	mkdir $(CONFDIR)
 	cp $(DEST)/ltsp/config-debian-linux $(CONFDIR)/config
+	rm -f $(DEST)/ltsp/config-*-linux
 	chmod 600 $(CONFDIR)/config
 	touch $(CONFDIR)/admin.acl
 	chmod 600 $(CONFDIR)/admin.acl

@@ -9,7 +9,7 @@ require "./ltsp-etherboot-lib.pl";
 
 &ReadParse();
 
-&header($text{'select_rom_image'}, "", undef);
+&ltsp_header($text{'select_rom_image'}, "", undef);
 
 print "<hr><br>\n";
 

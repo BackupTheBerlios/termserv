@@ -7,7 +7,7 @@ require './ltsp-lib.pl';
 
 &ReadParse();
 
-&header($text{'edit_host'}, "", undef);
+&ltsp_header($text{'edit_host'}, "", undef);
 
 print "<hr><br>\n";
 
@@ -73,9 +73,13 @@ foreach (&ltsp_get_option_groups()) {
     if (&ltsp_get_option_type($cur_option) eq "select") {
 
       print "<tr><td>" . $text{"$_"} . "</td>\n";
-      print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
-      print ">" . $text{"default"} . "</td>\n";
-      print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      if ($in{"name"} ne "Default") {
+        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
+        print ">" . $text{"default"} . "</td>\n";
+        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      } else {
+        print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      }
       print "><select name=\"$cur_option\" size=\"1\">\n";
       $has_selected = 0;
       foreach (&ltsp_get_possible_values($cur_option)) { 
@@ -100,9 +104,13 @@ foreach (&ltsp_get_option_groups()) {
       print "</select></td></tr>\n";
     } else {
       print "<tr><td>" . $text{"$_"} . "</td>\n";
-      print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
-      print ">" . $text{"default"} . "</td>\n";
-      print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      if ($in{"name"} ne "Default") {
+        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
+        print ">" . $text{"default"} . "</td>\n";
+        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      } else {
+        print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+      }
       print ">\n";
 
       print "<input type=\"text\" name=\"$_\" value=\"" . $conf{"$_"} . "\">\n";

@@ -3,6 +3,6 @@ desc=LTSP Configuration
 desc_de=LTSP-Konfiguration
 desc_fr=Configuration LTSP
 desc_se=LTSP Konfiguration
-os_support=open-linux redhat-linux debian-linux suse-linux corel-linux slackware-linux
+os_support=corel-linux debian-linux mandrake-linux open-linux redhat-linux slackware-linux suse-linux
 category=servers
 depends=0.81

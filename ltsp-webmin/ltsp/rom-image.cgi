@@ -20,7 +20,7 @@ if ($format eq "floppy_loadable_image") {
     print "Content-type: application/octet-stream\n\n";
     &include($config{"path_to_etherboot"} . "/boot1a.bin");
   } else {
-    &header("Error");
+    &ltsp_header("Error");
     $whatfailed = &text("error_finding_floppy_boot_sector");
     &error(&text("file_not_found"));
     exit;

@@ -9,7 +9,7 @@ require './ltsp-check-lib.pl';
 
 &ReadParse();
 
-&header($text{'configuration_check'}, "", undef);
+&ltsp_header($text{'configuration_check'}, "", undef);
 
 print "<hr><br>\n";
 

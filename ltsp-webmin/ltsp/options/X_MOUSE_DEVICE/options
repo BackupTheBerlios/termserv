@@ -2,3 +2,4 @@
 /dev/ttyS0
 /dev/ttyS1
 /dev/mouse
+/dev/input/mice
