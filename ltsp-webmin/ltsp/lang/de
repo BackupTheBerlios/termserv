@@ -21,6 +21,9 @@ binary_image=Binäre Image-Datei
 floppy_loadable_image=Von Diskette ladbares Image
 get_rom_image=ROM-Image laden
 
+error_finding_floppy_boot_sector=Der Bootsektor für Disketten konnte nicht in ihrem Etherboot-Paket gefunden werden.
+file_not_found=Datei konnte nicht gefunden.
+
 DNS_SERVER=DNS-Server
 LOCAL_APPS=Lokale Anwendungen
 LOCAL_WM=Lokaler Window-Manager

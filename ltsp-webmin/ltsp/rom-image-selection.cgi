@@ -32,8 +32,8 @@ print "</select>\n";
 print "</td></tr><tr $cb><td>" . $text{"rom_output_format"} . "</td>";
 
 print "<td><select name=\"output\">\n";
-print "<option>" . $text{"binary_image"};
-print "<option>" . $text{"floppy_loadable_image"};
+print "<option value=\"binary_image\">" . $text{"binary_image"};
+print "<option value=\"floppy_loadable_image\">" . $text{"floppy_loadable_image"};
 print "</select>\n";
 
 print "</td></tr>\n";

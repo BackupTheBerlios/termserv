@@ -20,6 +20,9 @@ binary_image=Binary image
 floppy_loadable_image=Floppy loadable image
 get_rom_image=Get ROM image
 
+error_finding_floppy_boot_sector=Error finding the floppy boot sector in your Etherboot package.
+file_not_found=File not found.
+
 yes=Yes
 no=No
 
