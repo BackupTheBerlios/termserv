@@ -1,3 +1,9 @@
+ltsp-webmin (0.5.3-1) unstable; urgency=low
+
+  * rpm now available
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Tue, 17 Jul 2001 08:30:58 +0200
+
 ltsp-webmin (0.5.2-2) unstable; urgency=low
 
   * Depends now on lts-core, since it is available now.

@@ -30,8 +30,16 @@ deb: tgz
 	cd tmp; $(FAKEROOT) dpkg-source -b $(PACKAGE)-$(VERSION) ""; mv *.dsc *.gz ../../
 	$(FAKEROOT) debian/rules binary
 
+# rpm specfile
+$(PACKAGE).spec: $(PACKAGE).spec.in
+	sed s/_VERSION_/$(VERSION)/g < $< > $@
+
+# rpm package
+rpm: tgz
+	rpm -ta ../$(PACKAGE)-$(VERSION).tar.gz
+
 # source package
-tgz: clean deb-clean
+tgz: clean deb-clean $(PACKAGE).spec
 	@echo Building source package ../$(PACKAGE)-$(VERSION).tar.gz
 	@mkdir -p tmp/$(PACKAGE)-$(VERSION)
 	@find . ! \( -name "tmp" -o -path '*tmp/*' -o -name ".cvsignore" -o -path '*CVS/*' -o -name "CVS" -a -type d \) -print | cpio -pmud --quiet tmp/$(PACKAGE)-$(VERSION)
@@ -42,19 +50,20 @@ install:
 # does anymody know a more elegant way? 
 	@find ltsp ! \( -name ".cvsignore" -o -path '*CVS/*' -o -name "CVS" -a -type d \) -print | cpio -pmud --quiet $(WEBMINDIR)
 # make sure the permissions are right
-	@find $(WEBMINDIR) -name "*.gif" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "lang/*" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "pt" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "*lib.pl" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "*.java" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "mime.types" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "config-*" -exec chmod -x {} \;
-	@find $(WEBMINDIR) -name "*.cgi" -exec chmod +x {} \;
+	@find $(WEBMINDIR)/ltsp -name "*.gif" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "lang/*" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "pt" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "*lib.pl" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "*.java" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "mime.types" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "config-*" -exec chmod -x {} \;
+	@find $(WEBMINDIR)/ltsp -name "*.cgi" -exec chmod +x {} \;
 
 clean:
 	rm -rf tmp
+	rm -f $(PACKAGE).spec
 
 deb-clean:
 	$(FAKEROOT) debian/rules clean
 
-.PHONY: clean deb deb-clean install tgz wbm
+.PHONY: clean deb deb-clean install rpm tgz wbm
