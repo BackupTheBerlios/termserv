@@ -1,3 +1,9 @@
+ltsp-kernel-2.4.22-i386 (3.0.11-0) unstable; urgency=low
+
+  * new upstream release.
+
+ -- Georg Baum <gbaum@users.sf.net>  Sat, 04 Oct 2003 11:59:33 +0200
+
 ltsp-kernel-2.4.21-i386 (3.0.10-0) unstable; urgency=low
 
   * new upstream release.

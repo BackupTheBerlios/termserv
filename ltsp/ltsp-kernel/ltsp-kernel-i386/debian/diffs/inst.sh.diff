@@ -1,6 +1,6 @@
---- inst.sh	Mon Dec  3 04:32:24 2001
-+++ inst.sh	Sun Dec  9 10:29:25 2001
-@@ -58,7 +58,7 @@
+--- inst.sh	Wed Sep 24 05:36:21 2003
++++ inst.sh	Sat Oct  4 18:28:06 2003
+@@ -63,7 +63,7 @@
  #
  # Make sure this script is being run by the superuser.
  #
@@ -9,11 +9,9 @@
      echo
      echo "You MUST run this script as superuser!"
      echo
-@@ -69,31 +69,10 @@
-     exit 1
+@@ -75,53 +75,33 @@
  fi
  
-+. CONFIG
  
 -if [ ! -f /etc/ltsp.conf ]; then
 -    echo
@@ -36,12 +34,59 @@
 -if [ ! -d /tftpboot/lts ]; then
 -    mkdir -p /tftpboot/lts
 -fi
--
--cp vmlinuz-2.4.21-ltsp-1      /tftpboot/lts/vmlinuz-2.4.21-ltsp-1
--cp vmlinuz-2.4.21-ltsp-lpp-1  /tftpboot/lts/vmlinuz-2.4.21-ltsp-lpp-1
-+cp vmlinuz-2.4.21-ltsp-1      ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.21-ltsp-1
-+cp vmlinuz-2.4.21-ltsp-lpp-1  ${DESTDIR}/tftpboot/lts/vmlinuz-2.4.21-ltsp-lpp-1
++. CONFIG
  
- find i386 -print | cpio -pmud --quiet ${LTSP_DIR}
- RS=$?
-
+ #
+ # Setup the Etherboot kernel
+ #
+ EB_KERNEL=vmlinuz-2.4.22-ltsp-1
+ 
+-cp ${EB_KERNEL}     /tftpboot/lts/${EB_KERNEL}
+-chmod 444 /tftpboot/lts/${EB_KERNEL}
++cp ${EB_KERNEL}     ${DESTDIR}/tftpboot/lts/${EB_KERNEL}
++chmod 444 ${DESTDIR}/tftpboot/lts/${EB_KERNEL}
+ 
+ #
+ # Setup the PXE kernel
+ #
+-PXEDIR=/tftpboot/lts/2.4.22-ltsp-1
++PXEDIR=${DESTDIR}/tftpboot/lts/2.4.22-ltsp-1
+ 
+ if [ ! -d ${PXEDIR} ]; then
+     mkdir ${PXEDIR}
+ fi
+ 
+-mv pxelinux.0 ${PXEDIR}
++cp -a pxelinux.0 ${PXEDIR}
+ 
+-if [ ! -d ${PXEDIR}/pxelinux.cfg ]; then
+-    mkdir ${PXEDIR}/pxelinux.cfg
++if [ ! -d ${DESTDIR}/etc/ltsp/pxelinux.cfg ]; then
++    mkdir -p ${DESTDIR}/etc/ltsp/pxelinux.cfg
+ fi
++ln -s /etc/ltsp/pxelinux.cfg ${PXEDIR}/pxelinux.cfg
+ 
+-mv pxe.default ${PXEDIR}/pxelinux.cfg/default
+-mv README.pxe  ${PXEDIR}
++cp -a pxe.default ${DESTDIR}/etc/ltsp/pxelinux.cfg/default
+ 
+ 
+ #
+@@ -133,7 +113,7 @@
+ echo "Extracting un-tagged kernel"
+ OFFSET=5632
+ LEN=745995
+-dd if=/tftpboot/lts/${EB_KERNEL}	\
++dd if=${DESTDIR}/tftpboot/lts/${EB_KERNEL}	\
+    bs=1					\
+    skip=${OFFSET}			\
+    count=${LEN}				\
+@@ -143,7 +123,7 @@
+ echo "Extracting un-tagged initrd"
+ OFFSET=752128
+ LEN=922954
+-dd if=/tftpboot/lts/${EB_KERNEL}	\
++dd if=${DESTDIR}/tftpboot/lts/${EB_KERNEL}	\
+    bs=1					\
+    skip=${OFFSET}			\
+    count=${LEN}				\

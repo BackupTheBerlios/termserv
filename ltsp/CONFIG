@@ -41,8 +41,8 @@ DOC_OLD_NAME="ltsp-doc"
 # Special arguments that will be passed to dpkg-source
 DOC_ARGS="-sn"
 
-KERNEL_VERSION="3.0.10"
-KERNEL_NAME="ltsp-kernel-2.4.21"
+KERNEL_VERSION="3.0.11"
+KERNEL_NAME="ltsp-kernel-2.4.22"
 KERNEL_OLD_NAME="ltsp_kernel"
 KERNEL_DIR="ltsp-kernel"
 
