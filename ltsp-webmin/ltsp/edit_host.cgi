@@ -18,13 +18,31 @@ print "<table cellpadding=\"5\" border width=100%>\n";
 print "<tr $tb> <td><b>" . $text{'settings_for'} . " " . $text{'host'} . " " . $in{"name"} . "</b></td></tr>\n";
 print "<tr $cb> <td>";
 
+
+#
+# Delete button
+# 
+
+if (($in{"name"} ne "Default") && ($in{"action"} ne "add")) { 
+  print "<form action=\"index.cgi\" method=\"post\">\n";
+  print "<input type=\"hidden\" name=\"action\" value=\"delete\">\n";
+  print "<input type=\"hidden\" name=\"name\" value=\"" . $in{"name"} . "\">\n";
+  print "<input type=\"submit\" value=\"" . $text{'delete_host'} . "\">\n</form>\n"; 
+}
+
+print "<form action=\"index.cgi\" method=\"post\">\n";
+
+#
+# Submit button
+# 
+print "<input type=\"submit\" value=\"" . $text{'save_settings'} . "\">\n";
+
 # A table that helps the two buttons to be displayed without borders around them
 
 print "<table><tr><td>\n";
 
 %conf = &ltsp_get_configuration($in{'name'});
 
-print "<form action=\"index.cgi\" method=\"post\">\n";
 print "<input type=\"hidden\" name=\"name\" value=\"" . $in{"name"} . "\">\n";
 
 if ($in{"action"} eq "add") {
