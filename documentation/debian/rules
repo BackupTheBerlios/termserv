@@ -14,6 +14,23 @@ export DH_COMPAT=2
 
 export PACKAGE=termserv-doc
 
+# Define the languages to build.
+# manually:
+# LANGUAGES := de en
+# or automatically:
+LANGUAGES := $(patsubst userguide/src/userguide.%.sgml,%,$(wildcard userguide/src/userguide.*.sgml))
+
+doc-base: $(foreach LANG,$(LANGUAGES),debian/doc-base.$(LANG))
+
+debian/doc-base.%: debian/in.doc-base
+	sed "s/_LANG_/$*/g" < $< > $@
+
+debian/docs: $(foreach LANG,$(LANGUAGES),docs-$(LANG))
+
+docs-%:
+	grep userguide/out/$* debian/docs > /dev/null 2>&1 || echo userguide/out/$* >> debian/docs
+
+
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
@@ -39,6 +56,8 @@ clean:
 	if test -f /etc/debian_version; then dh_testdir; fi
 	if test -f /etc/debian_version; then dh_testroot; fi
 	rm -f debian/build-stamp debian/configure-stamp
+	rm -f debian/doc-base.*
+	rm -f debian/docs
 
 # Add here commands to clean up after the build process.
 #	-$(MAKE) clean
@@ -60,7 +79,7 @@ install: build
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.
 binary-indep: DH_OPTIONS=-i
-binary-indep: build install
+binary-indep: build install doc-base debian/docs
 # Need this version of debhelper for DH_OPTIONS to work. (INDEP)
 	dh_testversion 1.1.17
 	dh_testdir
@@ -91,7 +110,7 @@ binary-indep: build install
 # Build architecture-dependent files here.
 # Pass -a to all debhelper commands in this target to reduce clutter.
 binary-arch: DH_OPTIONS=-a
-binary-arch: build install
+binary-arch: build install doc-base debian/docs
 #	# Need this version of debhelper for DH_OPTIONS to work.
 #	dh_testversion 1.1.17
 #	dh_testdir
