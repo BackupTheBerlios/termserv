@@ -59,3 +59,12 @@ laufen, die Anzeige und Bedienung des Programms findet aber auf einem anderen Re
 GNU/Linux- bzw. Unix-Mehrbenutzerbetrieb können also beliebig viele Rechner
 Programme auf einem einzigen Server starten und bei sich anzeigen lassen. Die Zeichnung
 \ref{userguide-networkbasics-protocols-x-flow} gibt einen schematischen Überblick.
+
+X11 hat ebenso ein ungewöhnliches, aber logisches Namensschema. Der Teil von X11, der
+Grafikbefehle entgegennimmt und Tastatur- und Mauseingaben an ein Programm zurücksendet,
+heißt X-Server. Ein Programm ist ein X-Client beziehungsweise benutzt die X-Client-Bibliotheken;
+es sendet Grafikbefehle an einen X-Server und empfängt die aufgefangenen Tastatur- und
+Mauseingaben von ihm.
+
+Im Terminalserver-Betrieb laufen wie beschrieben die Programme -- und damit die X-Clients --
+aller Benutzer auf dem Server, hingegen laufen auf den Terminals die X-Server!

@@ -12,16 +12,18 @@ apt-cdrom add
 \end{verbatim}
 bekannt gemacht wurde (die CD muß sich hierzu im Laufwerk befinden).
 
-Auf rpm-basierten Systemen kann der Abhängigkeitsliste von task-termserv
+% Installation von termserv.berlios.de mit http?
+
+Auf rpm-basierten Systemen kann der Abhängigkeitsliste von \texttt{task-termserv}
 entnommen werden, welche Pakete benötigt werden.
 
 \subsection{Von der Terminalhardware abhängige Pakete}
-Abhängig von den zur Verfügung stehenden Terminals sind die Kernel- und
-Xserverpakete.
+Abhängig von den zur Verfügung stehenden Terminals sind die zu installierenden
+Kernel- und X-Server-Pakete.
 
 \begin{table}[h]
 \begin{tabular}{lll}
-Xserver	&rpm-Paket			&deb-Paket\\
+X-Server&rpm-Paket			&deb-Paket\\
 3dlabs	&lts\_x3dlabs-2.0-1.i386.rpm	&lts-xserver-3dlabs\_2.0-1\_all.deb\\
 8514	&lts\_x8514-2.0-1.i386.rpm	&lts-xserver-8514\_2.0-1\_all.deb\\
 agx	&lts\_xagx-2.0-1.i386.rpm	&lts-xserver-agx\_2.0-1\_all.deb\\
@@ -38,13 +40,13 @@ svga	&lts\_xsvga-2.0-1.i386.rpm	&lts-xserver-svga\_2.0-1\_all.deb\\
 vga16	&lts\_xvga16-2.0-1.i386.rpm	&lts-xserver-vga16\_2.0-1\_all.deb\\
 w32	&lts\_xw32-2.0-1.i386.rpm	&lts-xserver-w32\_2.0-1\_all.deb\\
 \end{tabular}
-\caption{Xserverpakete}
+\caption{X-Server-Pakete}
 \end{table}
 
-Welche Xserver benötigt werden, hängt von den Grafikkarten der Terminals ab.
-Meistens wird der svga Xserver funktionieren.
-Falls unklar ist, welcher Xserver nötig ist, finden sich in der
-Hardwaredatenbank von SuSE und auf \texttt{http://www.xfree86.org} weitere
+Welche X-Server benötigt werden, hängt von den Grafikkarten der Terminals ab.
+Meistens wird der X-Server für SVGA-kompatible Grafikkarten funktionieren.
+Falls unklar ist, welcher X-Server nötig ist, finden sich in der
+Hardwaredatenbank von SuSE und auf \texttt{http://www.xfree86.org/} weitere
 Informationen.
 
 \begin{table}[h]
@@ -61,11 +63,12 @@ tulip		&lts\_kernel\_tulip-2.2-0.i386.rpm	&lts-kernel-tulip\_2.2-1\_all.deb\\
 \caption{Kernelpakete}
 \end{table}
 
-Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel all
+Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel \texttt{all}
 enthält alle Netzwerkkartentreiber. Wenn für die gewüsnchte Karte
-kein Kernel vorhanden ist, und der all-Kernel nicht funktioniert, muß ein
-Kernel selber erstellt werden und nach /tftpboot/lts/ kopiert werden. Wie das
+kein Kernel vorhanden ist, und der \texttt{all}-Kernel nicht funktioniert, muß ein
+Kernel selber erstellt werden und nach \texttt{/tftpboot/lts/} kopiert werden. Wie das
 geht, steht in der Etherboot-Dokumentation.
 
-Tabellen evtl. in den Anhang?
+Tabellen evtl. in den Anhang? Ich denke, eine halbe Seite Tabellen ist okay, das 
+kann da bleiben.
 
