@@ -30,6 +30,7 @@ the following instructions:
 5. Add ltsp in /etc/webmin/webmin.acl
 
 6. Restart the webmin daemon, e.g.
-   /etc/rc.d/init.d/webmin restart on Caldera and most Linuxes or
-   /etc/init.d/webmin restart on Debian
+   /etc/rc.d/init.d/webmin restart on Caldera and most Linuxes,
+   /sbin/init.d/webmin restart on older SuSE systems or
+   /etc/init.d/webmin restart on Debian and newer SuSE systems
 
