@@ -27,6 +27,7 @@ FILES="${LTSROOT}/etc/rc.local \
        ${LTSROOT}/etc/rc.setupx3 \
        ${LTSROOT}/bin/set_runlevel \
        ${LTSROOT}/bin/telnet_loop \
+       ${LTSROOT}/bin/start_printer \
        ${LTSROOT}/bin/start_telnet"
 
 CAT_FILES=""

@@ -1,5 +1,7 @@
 ltsp-webmin (0.5.3-1) unstable; urgency=low
 
+  * changed section to contrib/admin because ltsp-core is in non-free now.
+  * new options for LTSP 3.0.0 and 2.09pre4.
   * debian/rules: binary does not depend on build-arch, since we have no
     architecture dependant package. This suppresses an error message
     from dh_testdir.

@@ -24,6 +24,25 @@ $version = "unknown";
 # This has to be used instead of header() by all cgis!
 sub ltsp_header {
   &header(@_);
+# This code reads /etc/ltsp.conf if there and ignores the
+# ltsconf_path setting. It works, but we need to handle this better,
+# so it is commented out.
+#
+#  # TODO: make location of ltsp.conf configurable?
+#  if (-e "/etc/ltsp.conf") {
+#    open (LST, "</etc/ltsp.conf");
+#    my @lines = (<LST>);
+#    close (LST);
+#    foreach $_ (@lines) {
+#      # If current line is just a comment or empty, leave the rest out
+#      if (/^\#/) { next; }
+#      if(/^\s*LTSP_DIR\s*=\s*(.+)\s*/) {
+## hack!
+#        $config{"ltsconf_path"} = "$1/i386/etc";
+#        last;
+#      }
+#    }
+#  }
   $version = ltsp_read_version($config{"ltsconf_path"} . "/version");
   error($text{"unknown_version"} . " $version.") unless ($versions{$version});
   if($DEBUG) {
@@ -60,6 +79,7 @@ sub ltsp_read_config($) {
   %profiles = ();
 
   my $config_file = shift(@_);
+  error("config file $config_file not found") unless ( -e $config_file);
 
   &lock_file("$config_file");
   open (LST, "<$config_file");

@@ -1,5 +1,5 @@
 Source: ltsp-webmin
-Section: admin
+Section: contrib/admin
 Priority: optional
 Maintainer: Georg Baum <gbaum@users.sourceforge.net>
 Build-Depends: debhelper
@@ -7,7 +7,7 @@ Standards-Version: 3.1.1
 
 Package: ltsp-webmin
 Architecture: all
-Depends: ${perl:Depends}, lts-core, webmin (>= 0.87) | webmin-ssl (>= 0.87)
+Depends: ${perl:Depends}, lts-core | ltsp-core-i386, webmin (>= 0.87) | webmin-ssl (>= 0.87)
 Description: Webmin module for the Linux Terminalserver Project
  This package contains a webmin module for the configuration of diskless
  workstations setup with the Linux Terminalserver Project (LTSP) package.
