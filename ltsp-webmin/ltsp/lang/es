@@ -1,0 +1,100 @@
+index_title=Configuración LTSP 
+hosts=Estaciones
+host=Estación
+settings_for=Configuración de la
+edit_profile=Editar Estación
+save_settings=Salvar configuración
+delete_host=Suprimir Estación
+name_of_new_host=Nombre de la Nueva Estación
+add_host=Agregar Estación
+
+configuration_check=Verificar Configuración 
+checks=Verificaciones 
+tftp_daemon_running=Demonio TFTP Corriendo
+
+select_rom_image=Seleccione Imágen ROM 
+select=Seleccionar
+select_nic=Seleccione su Tarjeta de Red
+rom_output_format=Formato de salida ROM 
+binary_image=Imágen Binaria
+floppy_loadable_image=Imágen cargada en Floppy 
+get_rom_image=Obtener Imágen ROM 
+
+yes=Si
+no=No
+
+SERVER=Servidor
+DNS_SERVER=Servidor DNS 
+LOCAL_APPS=AplicacionesLocales 
+LOCAL_WM=Administrador de Ventanas Local 
+NIS_DOMAIN=Dominio NIS 
+SYSLOG_HOST=Servidor de Protocolo 
+TELNET_HOST=Servidor Telnet 
+RAMDISK_SIZE=Tamaño de Ramdisk 
+UI_MODE=Modo de Inicio
+USE_XFS=Usar Servidor de Fuentes X 
+XDM_SERVER=Servidor XDM 
+XSERVER=Servidor X 
+X_RES_1=Resolución
+X_COLOR_DEPTH=Profundidad del Color 
+X_HORZSYNC=Sincronismo Horizontal 
+X_VERTREFRESH=Refresco Vertical 
+X_MOUSE_BUTTONS=Número de Botones del Ratón
+X_MOUSE_DEVICE=Dispositivo Ratón
+X_MOUSE_PROTOCOL=Protocolo del Ratón
+X_MOUSE_BAUD=Capacidad del Dispositivo
+XkbModel=Modelo del Teclado 
+XkbLayout=Plantilla del Teclado
+
+Y=Si
+N=No
+GUI=Gráfica, en el servidor
+LOCALX=Gráfica, en la máquina local
+CHAR=Texto, en el servidor
+default=Defecto
+
+microsoft=Microsoft Natural
+dell101=Dell 101 teclas
+flexpro=KeyTronic FlexPro
+omnikey101=Northgate OmniKey 101 teclas
+pc101=Standard 101 teclas
+pc102=Standard 102 teclas
+pc104=Standard 104 teclas
+pc105=Standard 105 teclas
+pc106=Standard 106 teclas Japonés
+everex=Everex STEPnote
+winbook=Winbook XP5
+pc98=NEC PC98
+abnt2=ABNT2
+
+be=Belga
+bg=Búlgaro
+br=Portugués (Brasil)
+ca=Canadiense
+ca_enhanced=Canadiense (Extendido)
+de=Alemán
+de_CH=Alemán (Suiza)
+dk=Danés
+en_US=Inglés (Estados Unidos)
+es=Español
+fi=Finlandés
+fr=Francés
+fr_CH=Francés (Suiza)
+gb=Inglés (Gran Bretaña)
+hu=Húngaro
+is=Islandés
+it=Italiano
+jp=Japonés
+no=Noruego
+pl=Polaco
+pt=Portugués
+ru=Ruso
+se=Sueco
+th=Tailandés
+us=Estados Unidos
+
+network_settings=Configuración de la Red y del Inicio
+graphics_card_settings=Configuración de la Tarjeta de Video
+keyboard_settings=Configuración del Teclado
+mouse_settings=Configuración del Ratón
+
