@@ -1,3 +1,9 @@
+ltsp-webmin (0.5.1-1) stable; urgency=low
+
+  * New version.
+
+ -- Christian Selig <sledge@users.berlios.de>  Thu, 12 May 2001 19:17:30 +0100
+
 ltsp-webmin (0.5-1) unstable; urgency=low
 
   * New version.
