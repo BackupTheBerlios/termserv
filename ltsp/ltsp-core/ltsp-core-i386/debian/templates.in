@@ -41,9 +41,32 @@ Description: Old LTSP installation detected
  you need to transfer your old configuration files (esp. lts.conf)
  manually from /tftpboot/lts/ltsroot/etc/ to _ROOT_DIR_/etc/.
 Description-de: Alte LTSP Installation gefunden
- Offenbar haben sie eine ältere LTSP-Version installiert.
+ Offenbar haben Sie eine ältere LTSP-Version installiert.
  Da sich das LTSP-Wurzelverzeichnis geändert hat
  (es befindet sich jetzt in _ROOT_DIR_),
  müssen Sie Ihre alten Konfigurationsdateien
  (vor allem lts.conf) von Hand von
  /tftpboot/lts/ltsroot/etc/ nach _ROOT_DIR_/etc/ kopieren.
+
+Template: ltsp-core/create-templates-missing
+Type: note
+Description: Config files missing
+ The files _SCRIPT_DIR_/CONFIG and/or _SCRIPT_DIR_/create-templates.sh
+ are missing. This probably means that you deleted them by hand.
+ If you want me to create configuration file templates for some
+ services, purge and reinstall this package with
+ .
+ dpkg --purge _PACKAGE_; apt-get install _PACKAGE_
+ .
+ CAUTION: This deletes all configuration files of this package,
+ so make a backup first.
+Description-de: Fehlende Konfigurationsdateien
+ Die Dateien _SCRIPT_DIR_/CONFIG und/oder _SCRIPT_DIR_/create-templates.sh
+ sind nicht vorhanden. Wahrscheinlich haben Sie diese von Hand gelöscht.
+ Wenn ich Vorlagen für Konfigurationsdateien für einige Dienste
+ erstellen soll, entfernen und installieren Sie dieses Paket mit
+ .
+ dpkg --purge _PACKAGE_; apt-get install _PACKAGE_
+ .
+ ACHTUNG: Damit werden alle Konfigurationsdateien dieses Pakets gelöscht,
+ erstellen Sie deshalb vorher ein Backup.

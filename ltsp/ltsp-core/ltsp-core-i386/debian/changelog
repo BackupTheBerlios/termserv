@@ -1,7 +1,21 @@
+ltsp-core-i386 (3.0.0-2) unstable; urgency=low
+
+  * Fixed problem in debian.sh with /var/dhcp not being present when using
+    dhcp3-server. Thanks to Rick Younie.
+  * Improved detection of kde 2.2 in debian.sh
+  * Added check for existing Xservers file in debian.sh
+  * Added a test to the postinst script for the existance of the
+    create-templates.sh file. If it is not present, the user is informed
+    via debconf.
+    This prevents the mysterious failingof the package instll for people who
+    deleted some files by hand.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Tue, 31 Mar 2002 16:50:36 +0200
+
 ltsp-core-i386 (3.0.0-1) unstable; urgency=low
 
   * Made $ROOT_DIR/lib/ld-linux.so executable. The wrong permissions
-    caused troble for some people.
+    caused trouble for some people.
 
  -- Georg Baum <gbaum@users.sourceforge.net>  Tue,  8 Jan 2002 21:27:07 +0100
 

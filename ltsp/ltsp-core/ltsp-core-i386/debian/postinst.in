@@ -9,6 +9,11 @@ set -e
 
 case "$1" in
     configure)
+      if ! test -e _SCRIPT_DIR_/create-templates.sh -a -e _SCRIPT_DIR_/CONFIG; then
+        db_get ltsp-core/create-templates-missing
+        # don't run this here: db_get ltsp-core/ltsp_initialize
+	exit 0
+      fi
       pushd _SCRIPT_DIR_ >/dev/null 2>&1
       ./create-templates.sh > /dev/null << _EOF_
 y

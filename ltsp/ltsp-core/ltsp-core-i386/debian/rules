@@ -31,9 +31,10 @@ clean:
 	-$(MAKE) clean
 
 	dh_clean -Xlts.orig
-	rm -f debian/postinst
+	rm -f debian/config
 	rm -f debian/conffiles
 	rm -f debian/dirs
+	rm -f debian/postinst
 	rm -f debian/README.debian
 	rm -f debian/templates
 
@@ -56,7 +57,7 @@ install-stamp: build-stamp debian/dirs
 #	dh_movefiles
 	touch install-stamp
 
-debian/postinst: debian/postinst.in
+debian/config: debian/config.in
 	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
 
 debian/conffiles: debian/conffiles.in
@@ -68,11 +69,14 @@ debian/dirs: debian/dirs.in
 debian/README.debian: debian/README.debian.in
 	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_TMPL_DIR_!$(TMPL_DIR)!g'> $@
 
+debian/postinst: debian/postinst.in
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+
 debian/templates: debian/templates.in
-	sed 's!_TMPL_DIR_!$(TMPL_DIR)!g' < $< | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' | sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' > $@
+	sed 's!_PACKAGE_!$(PACKAGE)!g' < $< | sed 's!_TMPL_DIR_!$(TMPL_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' | sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' > $@
 
 # Build architecture-independent files here.
-binary-indep: build install debian/conffiles debian/postinst debian/README.debian debian/templates
+binary-indep: build install debian/config debian/conffiles debian/postinst debian/README.debian debian/templates
 #	dh_testversion
 	dh_testdir -i
 	dh_testroot -i
@@ -102,7 +106,7 @@ binary-indep: build install debian/conffiles debian/postinst debian/README.debia
 	dh_builddeb -i
 
 # Build architecture-dependent files here.
-binary-arch: build install debian/conffiles debian/postinst debian/README.debian debian/templates
+binary-arch: build install debian/config debian/conffiles debian/postinst debian/README.debian debian/templates
 ##	dh_testversion
 #	dh_testdir -a
 #	dh_testroot -a
