@@ -1,20 +1,46 @@
 \section{Konfiguration}
-über webmin
+
+Bei der Installation der Terminalserver-Pakete wurde auch die
+Administrationssoftware Webmin mitinstalliert. Die Konfiguration des
+Terminalservers wird im Folgenden auf Basis dieses Werkzeugs erklärt.
+Fortgeschrittenen Adminstratoren werden die analogen manuellen Kommandos und Veränderungen
+an Konfigurationsdateien einsichtig sein.
+
+Die Webmin-Software ist am Terminalserver selbst sowie über jeden ans das
+Netzwerk angeschlossenen Rechner aufrufbar. Wenn Sie innerhalb des Netzwerkes
+dann den Terminalserver mit Ihrem Browser auf dem Webmin-Port (10000)
+aufrufen, z.B. \texttt{http://192.168.0.254:10000/}, erscheint folgender
+Anmeldebildschirm:
+
+%\begin{figure}[h]
+\begin{center}
+%\resizebox*{!}{5cm}{
+\includegraphics{userguide-installconfig-config-webmin-loginscreen.eps}
+%}
+\end{center}
+%\caption{Anmeldebildschirm von Webmin}
+%\end{figure}
+
+Anmelden können Sie sich als root-Benutzer mit Ihrem root-Passwort.
  
 \subsection{Anpassungen an ein vorhandenes Netzwerk}
-über Webmin
+
+Die Terminalserver-Pakete konfigurieren das System teilweise mit
+Standardwerten. Diese Standardwerte müssen Sie natürlich für ein bestehendes
+Netzwerk anpassen.
  
 \subsection{Einrichtung des DHCP-Servers}
 Der DHCP-Dienst kann entweder auf dem Terminalserver oder auf einem anderen
-Rechner laufen. Einzige Bedingung ist, daß der andere Rechner von den Terminals
+Rechner laufen. Einzige Bedingung ist, dass der andere Rechner von den Terminals
 über das Netzwerk erreicht werden kann.
 
 Befinden sich mehr als ein DHCP-Server im Netz, so ist unbedingt darauf zu
-achten, daß sich die IP-Adreßbereiche, die jeder bedient, nicht überschneiden.
+achten, dass sich die IP-Adressbereiche, die jeder bedient, nicht überschneiden.
 Anderenfalls hängt es vom Zufall ab, von welchem DHCP-Server eine Anfrage
 nach einer IP-Adresse zuerst beantwortet wird.
 
 \subsubsection{DHCP auf dem Terminalserver}
+
 über Webmin
  
 \subsubsection{DHCP auf Arktur}
@@ -22,7 +48,7 @@ Der c't/ODS Kommunikationsserver Arktur enthält bereits einen DHCP-Server.
 Wenn sich außer den Terminals noch andere Rechner im Netz befinden
 und den DHCP-Server benutzen, ist es empfehlenswert, diesen auch für die
 Terminals mitzubenutzen. Dazu sind folgende Änderungen in der Datei
-/\texttt{etc/dhcpd.conf} auf Arktur nötig:
+\texttt{/etc/dhcpd.conf} auf Arktur nötig:
 
 \begin{enumerate}
 \item Eine Gruppe
