@@ -15,6 +15,7 @@ NIS_DOMAIN=NIS-Domäne
 SERVER=Server
 SYSLOG_HOST=Protokoll-Server
 TELNET_HOST=Telnet-Server
+RAMDISK_SIZE=Größe der Ramdisk
 UI_MODE=Startmodus
 USE_XFS=X Font Server benutzen
 XDM_SERVER=XDM-Server

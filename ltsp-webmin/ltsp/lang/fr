@@ -15,6 +15,7 @@ LOCAL_WM=Gestionnaire de fenêtres local
 NIS_DOMAIN=Domaine NIS
 SYSLOG_HOST=Serveur de logs
 TELNET_HOST=Serveur telnet
+RAMDISK=
 UI_MODE=Mode de démarrage
 USE_XFS=Utilisation d'un serveur de polices
 XDM_SERVER=Serveur XDM
