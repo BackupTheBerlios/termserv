@@ -1,13 +1,33 @@
 \section{Protokolle}
-füllst Du besser aus
+
+Protokolle sind Übereinkünfte zweier oder mehrerer Parteien, wie sie miteinander kommunizieren.
+Ein menschliches ''Protokoll'' beispielsweise ist eine Sprache. Sie übermittelt mit Hilfe von
+Satzbau und Wortbedeutungen bestimmte Inhalte. Gleiches gilt für Protokolle auf Computern oder
+innerhalb von Rechnernetzen.
  
-\subsection{BOOTP/DHCP}
-füllst Du besser aus
- 
+\subsection{DHCP}
+
+DHCP, das ''Dynamic Host Configuration Protocol'' ist ein Protokoll, welches einen kleinen
+Teil der Netzwerkverwaltung für den Administrator einfacher machen soll.\newline
+Gewöhnlich werden die oben genannten IP-Adressen auf jedem Rechner einzeln eingestellt.
+Dies kann bei größeren Netzwerken mühsam bis unübersichtlich sein. DHCP schafft hier Abhilfe.
+
+Auf einem Rechner wird die DHCP-Serversoftware installiert. Dort werden die einzelnen
+Rechner im Netzwerk mit ihrer Ethernet-Hardware-Adresse und der vom Administrator festgelegten
+IP-Adresse eingetragen. Stellt nun ein Rechner im Netzwerk eine Anfrage nach seiner
+IP-Adresse, antwortet der DHCP-Server mit dem entsprechenden Wert.\newline
+Ein DHCP-Server ist in der Lage, einiges mehr an Werten an einen Rechner zurückzuliefern
+als eine IP-Adresse. Jedoch ist der Großteil davon für Administration in der Praxis
+recht unwichtig.
  
 \subsection{TFTP - der simple Dateitransfer}
-füllst Du besser aus
- 
+
+TFTP, das ''Tiny File Transfer Protocol'' ist ebenso ein Serverdienst. Er ist mit FTP 
+vergleichbar, jedoch wesentlich simpler. So fordert der Server keine Identifikation mit
+Benutzername und Passwort.
+
+Im Terminalserver-Betrieb ist TFTP das Protokoll, dass das Terminal benutzt, um seinen
+Betriebssystem-Startcode (im Falle von Linux der ''Kernel'') herunterzuladen.
  
 \subsection{NFS - Dateien über das Netzwerk}
  
@@ -18,6 +38,6 @@ Dateien physikalisch gespeichert sind, um auf sie zuzugreifen.
  
 Über NFS hat er von jedem Rechner im Netz gleichermaßen Zugriff auf sein Dateien. Dabei werden die
 Dateien vom Server exportiert und vom Terminal importiert:\\
-Jeder Terminal kann nur importieren, was der Server ausdrücklich exportiert!
+Jedes Terminal kann nur importieren, was der Server ausdrücklich exportiert!
  
 \subsection{X11 - Fenster in der Ferne}   
