@@ -189,11 +189,11 @@ the ''deep'' to the ''high'' level) looks like this:
 <orderedlist>
 <listitem>
 <para><xref linkend="mac-addresses">
-fixme: MAC-Adressen
+fixme: MAC addresses
 </para>
 </listitem>
 <listitem>
-<para>IP-Adressen</para>
+<para>IP addresses</para>
 </listitem>
 <listitem>
 <para>DNS, <xref linkend="dhcp-protocol">
@@ -262,24 +262,20 @@ The concept is domain-oriented, there is a hierarchy:
 High School Bamberg (<emphasis>cg-bamberg</emphasis>) with the name <emphasis>arktur</emphasis>. The last
 part is called top level Domain (short ''TLD''), the second-last part is the
 domain. Before that, there are either computers or further domains. 
-
-Das Konzept ist domänenorientiert, d.h. es existiert eine Hierarchie: arktur.cg-bamberg.de
-ist ein deutscher (<emphasis>de</emphasis>) Rechner des Clavius-Gymnasiums Bamberg (<emphasis>cg-bamberg</emphasis>)
-mit dem Namen <emphasis>arktur</emphasis>. Das Länderkürzel heißt Top-Level-Domain (kurz TLD),
-davor kommt die Domäne, davor dann entweder Rechner oder weitere Domänen.
 </para> 
 
 <sect2 id="dhcp-protocol">
 <title>DHCP</title>
 
 <para>
-DHCP, das ''Dynamic Host Configuration Protocol'' ist ein Protokoll, welches einen kleinen
-Teil der Netzwerkverwaltung für den Administrator einfacher machen soll.
-Gewöhnlich werden die oben genannten IP-Adressen auf jedem Rechner einzeln eingestellt.
-Dies kann bei größeren Netzwerken mühsam bis unübersichtlich sein. DHCP schafft hier Abhilfe.
+DHCP, the ''Dynamic Host Configuration Protocol'' is a protocol intended to make some
+parts of network administration more convenient for the administrator. Usually, IP
+addresses are assigned manually on each computer. That fact complicates administration
+of bigger networks. DHCP solves this problem.
 </para>
 
 <para>
+One computer has a DHCP service installed. The other computers are entered in the network with their Ethernet hardware address and the IP address determined by the administrator. Now if a computer in the network asks an inquiry after its IP address, the DHCP server answers with the appropriate value.
 Auf einem Rechner wird die DHCP-Serversoftware installiert. Dort werden die einzelnen
 Rechner im Netzwerk mit ihrer Ethernet-Hardware-Adresse und der vom Administrator festgelegten
 IP-Adresse eingetragen. Stellt nun ein Rechner im Netzwerk eine Anfrage nach seiner
