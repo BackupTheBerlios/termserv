@@ -8,6 +8,7 @@ delete_host=Delete Host
 name_of_new_host=Name of New Host
 add_host=Add Host
 SERVER=Server
+DNS_SERVER=DNS Server
 LOCAL_APPS=Local Applications
 LOCAL_WM=Local Window Manager
 NIS_DOMAIN=NIS Domain

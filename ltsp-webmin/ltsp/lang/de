@@ -8,6 +8,7 @@ delete_host=Rechner entfernen
 default=Default
 add_host=Rechner hinzufügen
 name_of_new_host=Name des neuen Rechners
+DNS_SERVER=DNS-Server
 LOCAL_APPS=Lokale Anwendungen
 LOCAL_WM=Lokaler Window-Manager
 NIS_DOMAIN=NIS-Domäne

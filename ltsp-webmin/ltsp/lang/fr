@@ -9,6 +9,7 @@ delete_host=Supprimer la station
 name_of_new_host=Nom de la nouvelle station
 add_host=Ajouter une station
 SERVER=Serveur
+DNS_SERVER=Serveur DNS
 LOCAL_APPS=Applications locales
 LOCAL_WM=Gestionnaire de fenêtres local
 NIS_DOMAIN=Domaine NIS
