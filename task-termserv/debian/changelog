@@ -1,0 +1,9 @@
+task-termserv (0.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat, 7 Jul 2001 15:35:32 +0200
+
+Local variables:
+mode: debian-changelog
+End:

@@ -1,0 +1,53 @@
+Summary: Task package for the GNU/Linux Terminalserver for schools
+Name: task-termserv
+Version: _VERSION_
+Release: 0
+Copyright: GPL
+Group: Networking/Admin
+Requires: lts-core, ltsp-webmin, webmin
+Packager: Georg Baum <gbaum@users.sourceforge.net>
+BuildArchitectures: noarch
+
+%description
+This package is a metapackage and does not contain anything. Instead, it
+depends on all the packages which are needed to set up the Terminalserver.
+This makes it easyer for you to select the right packages: Just install
+this package, and all the Terminalserver packages will be selected and
+installed automatically, too.
+
+%prep
+  #
+  # Prepare the package for building on the development machine
+  #
+
+%build
+  #
+  # Build the package by compiling any source code, producing binaries
+  # On the development machine
+  #
+
+%install
+  #
+  # Put the binaries where they belong on the development machine
+  #
+
+%clean
+  # Cleanup after the build process on the development machine
+
+%files
+
+%pre
+  #
+  # Just before the package is installed, this script will be run
+  #
+
+%post
+  #
+  # After the files in the package have been put in place,
+  # these commands will be run
+  #
+  /tftpboot/lts/templates/ltsp_initialize
+
+%changelog
+* Sat Jul 7 2001 Georg Baum <gbaum@users.sourceforge.net>
+- Initial release.
