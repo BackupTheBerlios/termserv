@@ -48,7 +48,7 @@ sub ltsp_read_version($) {
       last;
     }
   }
-  print "version: $vers<br>\n";
+  print "version: $vers<br>\n" if $DEBUG;
   return $vers;
 }
 

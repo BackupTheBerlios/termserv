@@ -3,7 +3,7 @@
 # Script to extract the available options from a LTSP installation and
 # from the webmin module.
 # Useful to check wether the module has all options.
-# Note that not all options can not be extracted from rc.local
+# Note that not all options can be extracted from rc.local
 # correctly, because their names are constructed from variables, such as
 # MODULE_${i}. But you see the point.
 #

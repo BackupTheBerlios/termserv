@@ -32,3 +32,6 @@ no particular version:
    *_SERVER settings to experts, but show only SERVER to novice users.
  - write script that checks wether all possible values of translated options
    are in the language files.
+ - make help page for each option. lts.conf.readme can be a starting point.
+   Then make ltsp_lib.pl using hlink() for each option it displays if a
+   helppage for that option exists.

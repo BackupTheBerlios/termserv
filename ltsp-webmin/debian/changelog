@@ -1,5 +1,8 @@
 ltsp-webmin (0.5.3-1) unstable; urgency=low
 
+  * debian/rules: binary does not depend on build-arch, since we have no
+    architecture dependant package. This suppresses an error message
+    from dh_testdir.
   * new options for LTSP 2.09pre2 from Robert Stanford
   * rpm now available
   * depends now on webmin (>= 0.87) | webmin-ssl (>= 0.87), to make sure
