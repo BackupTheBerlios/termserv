@@ -357,6 +357,7 @@ sub ltsp_write_config($) {
 
 }
 
+# HCE means "host configuration entry"
 sub ltsp_get_hces() {
 
   return keys(%profiles);
@@ -493,6 +494,23 @@ sub ltsp_is_option_supported($) {
     return 0 unless ($versions{"$version"} lt $max_version);
   }
   return 1;
+}
+
+sub ltsp_is_option_at_userlevel() {
+
+#  my $option = shift;
+#  if (-e "./options/$option/userlevel") {
+#    open LST, "<./options/$option/userlevel";
+#    $ul = <LST>;
+#    close LST;
+#    if ($ul le $config{"userlevel"}) {
+#      return 1;
+#    } else {
+#      return 0;
+#    }
+#  else {
+    return 1;
+#  }
 }
 
 sub ltsp_need_value_translation($) {
