@@ -8,7 +8,7 @@ Build-Depends: cpio, debhelper, findutils
 Package: ltsp-core-i386
 Architecture: all
 Depends: debconf, netbase, nfs-kernel-server | nfs-user-server | nfs-server
-Recommends: dhcp | dhcp3-server, ltsp-doc, ltsp-kernel-i386, tftpd
+Recommends: dhcp | dhcp3-server, ltsp-doc, ltsp-kernel-i386, tftpd-hpa | atftpd | tftpd
 Suggests: gdm | kdm | wdm | xdm, ltsp-localapps-i386, ltsp-x-core-i386, ltsp-xserver-i386, ltsp-webmin, netboot | mknbi, xfs | xfs-xtt, xsri
 Provides: ltsp-core
 Description: Linux Terminal Server Project (ltsp.org)

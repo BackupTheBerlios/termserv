@@ -18,7 +18,7 @@ XSERVER_OLD_NAME="ltsp_x336"
 XFREE_VERSION="3.3.6"
 
 
-CORE_VERSION="3.0.4"
+CORE_VERSION="3.0.5"
 CORE_NAME="ltsp-core"
 CORE_OLD_NAME="ltsp_core"
 

@@ -1,3 +1,11 @@
+ltsp-core-i386 (3.0.5-0) unstable; urgency=low
+
+  * new upstream release.
+  * debian.sh: Create portmapper template also on woody
+  * debian.sh: Updates for kdm 3.x
+
+ -- Georg Baum <gbaum@users.sf.net>  Sun, 22 Sep 2002 11:32:24 +0200
+
 ltsp-core-i386 (3.0.4-0) unstable; urgency=low
 
   * new upstream release. Includes now my debian.sh changes.
