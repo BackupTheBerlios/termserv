@@ -15,6 +15,10 @@ tftp_daemon_running=TFTP daemon running
 select_rom_image=Select ROM Image
 select=Select
 select_nic=Select your NIC
+rom_output_format=ROM output format
+binary_image=Binary image
+floppy_loadable_image=Floppy loadable image
+get_rom_image=Get ROM image
 
 yes=Yes
 no=No

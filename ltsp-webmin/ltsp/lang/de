@@ -16,6 +16,10 @@ tftp_daemon_running=TFTP-Dienst läuft
 select_rom_image=ROM-Image auswählen
 select=Auswahl
 select_nic=Wählen Sie Ihre Netzwerkkarte aus
+rom_output_format=Ausgabeformat des ROMs
+binary_image=Binäre Image-Datei
+floppy_loadable_image=Von Diskette ladbares Image
+get_rom_image=ROM-Image laden
 
 DNS_SERVER=DNS-Server
 LOCAL_APPS=Lokale Anwendungen

@@ -3,6 +3,7 @@
 
 do '../web-lib.pl';
 require './ltsp-lib.pl';
+require "./ltsp-etherboot-lib.pl";
 
 &init_config();
 
@@ -15,14 +16,31 @@ print "<hr><br>\n";
 print "<form action=\"./rom-image.cgi\" method=\"get\">\n";
 
 print "<table cellpadding=\"5\" border width=100%>\n";
+
 print "<tr $tb> <td colspan=\"2\"><b>" . $text{"select"} . "</b></td></tr>\n";
-print "<tr $cb> <td>" . $text{"select_nic"} . "</td><td>";
 
-print "gaga";
+print "<tr $cb><td><table border=\"0\">\n";
 
-print "</td></tr></table>\n";
+print "<tr $cb> <td>" . $text{"select_nic"} . "</td><td><select name=\"image\">\n";
 
-print "</td> </tr>\n";
+foreach (&ltsp_etherboot_image_list()) {
+  print "<option>$_\n";
+}
+
+print "</select>\n";
+
+print "</td></tr><tr $cb><td>" . $text{"rom_output_format"} . "</td>";
+
+print "<td><select name=\"output\">\n";
+print "<option>" . $text{"binary_image"};
+print "<option>" . $text{"floppy_loadable_image"};
+print "</select>\n";
+
+print "</td></tr>\n";
+print "<tr $cb><td><input type=\"submit\" value=\"" . $text{"get_rom_image"} . "\"></td></tr>\n";
+print "</table>\n";
+
+print "</td></tr>\n";
 print "</table>\n";
 
 print "</form>\n";

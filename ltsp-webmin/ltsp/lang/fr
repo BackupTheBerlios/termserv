@@ -12,6 +12,10 @@ add_host=Ajouter une station
 select_rom_image=
 select=
 select_nic=
+rom_output_format=
+binary_image=
+floppy_loadable_image=
+get_rom_image=
 
 SERVER=Serveur
 DNS_SERVER=Serveur DNS

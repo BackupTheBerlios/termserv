@@ -11,6 +11,10 @@ add_host=Lägg till värd
 select_rom_image=
 select=
 select_nic=
+rom_output_format=
+binary_image=
+floppy_loadable_image=
+get_rom_image=
 
 SERVER=Server
 DNS_SERVER=DNS Server
