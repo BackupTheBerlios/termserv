@@ -548,6 +548,15 @@ Anmelden können Sie sich als root-Benutzer mit Ihrem root-Passwort.
 Die Terminalserver-Pakete konfigurieren das System teilweise mit
 Standardwerten. Diese Standardwerte müssen Sie natürlich für ein bestehendes
 Netzwerk anpassen.
+
+Zusätzlich zur allgemeinen Konfiguration beschreiben wir hier einen Spezialfall:
+Die Nutzung des Terminalservers neben dem c´t/ODS Kommunikationsserver Arktur.
+Arktur ist eine spezialisierte, einfach einzurichtende Linuxdistribution,
+die auch von Lehrern ohne Linuxvorkenntnisse installiert werden kann. Mehr
+dazu gibt es auf
+<htmlurl url="http://www.heise.de/ct/schan/" name="http://www.heise.de/ct/schan/">.
+Wir beschreiben diesen Fall hier, weil Arktur an deutschen Schulen weit verbreitet
+ist.
 </p>
  
 <sect2>Einrichtung des DHCP-Servers
@@ -628,6 +637,8 @@ subnet 192.168.5.0 netmask 255.255.255.0 {
     option routers 192.168.5.1;
 }
 </code>
+Zusätzlich müssen Sie die neuen IP-Adressen im Nameserver eintragen,
+damit ihnen Namen zugewiesen werden.
 </enum>
 
 <p>
@@ -635,6 +646,11 @@ Die hier beschriebene Konfigurationsmethode stellt nur eine unter vielen
 Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
 <tt/dhcpd.conf/ (in Englisch, zu lesen mit dem Befehl
 <tt/man dhcpd.conf/) verwiesen.
+</p>
+ 
+<p>
+Auch wenn Sie nicht Arktur, sondern einen anderen DHCP-Server benutzen,
+kann die obige Anleitung trotzdem als Anfang nützlich sein.
 </p>
 
 <p>

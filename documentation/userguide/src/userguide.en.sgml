@@ -565,6 +565,14 @@ Anmelden können Sie sich als root-Benutzer mit Ihrem root-Passwort.
 Die Terminalserver-Pakete konfigurieren das System teilweise mit
 Standardwerten. Diese Standardwerte müssen Sie natürlich für ein bestehendes
 Netzwerk anpassen.
+
+In addition to the common configuration we describe a special case:
+the use of the terminalserver together with the
+c´t/ODS communications server Arktur.
+This is a special Linux distribution that is easy to set up and targeted at
+teachers who know nothing about linux. More info (in German) is available at
+<htmlurl url="http://www.heise.de/ct/schan/" name="http://www.heise.de/ct/schan/">.
+We describe this case here because Arktur is widely used at german schools.
 </p>
  
 <sect2>Einrichtung des DHCP-Servers
@@ -588,32 +596,33 @@ nach einer IP-Adresse zuerst beantwortet wird.
 über Webmin
 </p>
  
-<sect3>DHCP auf Arktur
+<sect3>Using Arktur as DHCP server
 
 <p>
-Der c't/ODS Kommunikationsserver Arktur enthält bereits einen DHCP-Server.
-Wenn sich außer den Terminals noch andere Rechner im Netz befinden
-und den DHCP-Server benutzen, ist es empfehlenswert, diesen auch für die
-Terminals mitzubenutzen. Dazu sind folgende Änderungen in der Datei
-<tt>/etc/dhcpd.conf</tt> auf Arktur nötig:
+On the c´t/ODS communications server Arktur is a DHCP-server running already.
+If there are other hosts beside the terminals on the network,
+it is desirable to use this DHCP server also for the terminals. In order to do this
+the following changes have to be applied to the file <tt>/etc/dhcpd.conf</tt>
+on Arktur:
 
 <enum>
-<item>Eine Gruppe
+<item>A group
 <code>
 group {
     next-server termserv;
     use-host-decl-on;
 }
 </code>
-ist zu erstellen. <tt/termserv/ ist hierbei der Name des Terminalservers.
-Mit <tt/next-server termserv;/ wird allen Terminals, die sich innerhalb dieser
-Gruppe befinden mitgeteilt, wie der nächste Server (von dem der Linuxkernel
-geholt wird) heißt.
-<tt/use-host-decl-on;/ sorgt dafür, daß den Terminals ihr eigener Name zusätzlich
-zur IP-Adresse bekanntgegeben wird. Fehlt dieser Eintrag, können die Terminals
-ihren eigenen Abschnitt in <tt>/tftpboot/lts/ltsroot/etc/lts.conf</tt> nicht finden.
-Werden mehrere Terminalserver benutzt, bekommt jeder seine eigene Gruppe.
-<item>Pro Terminal ist innerhalb dieser Gruppe ein Eintrag der Form
+has to be added. <tt/termserv/ is the name of the terminalserver.
+<tt/next-server termserv;/ tells all terminals in this group the name of the next
+server. This is the server that provides the linux kernel.
+
+With <tt/use-host-decl-on;/ the terminals are getting their names in addition to 
+their ip-addresses. If this entry is missing, they are not able to find their
+section in <tt>/tftpboot/lts/ltsroot/etc/lts.conf</tt>.
+If more than one terminalserver is used, each gets its own group.
+
+<item>Each terminal muts have an entry of the form
 <code>
     host Client-A40 {
         hardware ethernet 08:00:07:26:c0:a5;
@@ -621,37 +630,42 @@ Werden mehrere Terminalserver benutzt, bekommt jeder seine eigene Gruppe.
         fixed-address Client-A40;
     }
 </code>
-zu erstellen.
+within this group.
 
-<tt/Client-A40/ ist der Name des entsprechenden Terminals. Der
-Nameserver muß diesen Namen kennen und auf eine IP-Adresse auflösen. Eine
-Tabelle der auf Arktur voreingerichteten Adreßbereiche findet sich unter
-<ref id="dns-arktur" name="DNS auf Arktur">.
+<tt/Client-A40/ is the name of the terminal. The nameserver must know this name
+and resolve it to an IP-address. A table of the already known address ranges
+of Arktur is at
+<ref id="dns-arktur" name="DNS on Arktur">.
 
-<tt/08:00:07:26:c0:a5/ ist die MAC-Adresse der Netzwerkkarte.
+<tt/08:00:07:26:c0:a5/ is the MAC address of the network interface card (NIC).
 
-<tt>/tftpboot/lts/vmlinuz.ne2000</tt> ist der Name des Kernels, der gebootet
-werden soll.
-Er muß sich auf dem oben angegebenen Rechner (hier <tt/termserv/)
-befinden, und natürlich zur verwendeten Netzwerkkarte passen. Je nach
-verwendeter Linuxdistribution kann es auch nötig sein, das führende
-<tt>/tftpboot</tt> wegzulassen. Im Zweifelsfall hilft ausprobieren.
+<tt>/tftpboot/lts/vmlinuz.ne2000</tt> is the name of the kernel that should boot
+on the terminal.
+It must reside on the host mentioned above (here <tt/termserv/), and of course it
+must contain a driver for the NIC of the terminal.
+Some Linux distributions require to remove the leading <tt>/tftpboot</tt>.
+In case of doubt just try both possibilities.
 
-<item>Wenn die unter <ref id="dns-arktur" name="DNS auf Arktur"> angegebenen IP-Adreßbereiche
-nicht ausreichen, ist analog zu den schon vorhandenen Subnetzeinträgen
-ein neues Subnetz zu definieren, z. B.
+<item>If the IP address ranges listed at <ref id="dns-arktur" name="DNS on Arktur">
+are not enough, you have to define a new subnet (analogous to the existing
+subnet entries), for example
 <code>
 subnet 192.168.5.0 netmask 255.255.255.0 {
     option routers 192.168.5.1;
 }
 </code>
+In addition you have to adjust the nameserver to assign names to the new addresses.
 </enum>
 
 <p>
-Die hier beschriebene Konfigurationsmethode stellt nur eine unter vielen
-Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
-<tt/dhcpd.conf/ (in Englisch, zu lesen mit dem Befehl
-<tt/man dhcpd.conf/) verwiesen.
+The configuration method that is described here is only one
+under many possibilities. If you want ot know more, please read the manual page
+of <tt/dhcpd.conf/ (with the command <tt/man dhcpd.conf/).
+</p>
+
+<p>
+You can still use the description above as a starting point
+if you don´t use Arktur, but another DHCP-server.
 </p>
 
 <p>
@@ -663,7 +677,7 @@ Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
 über Webmin
 </p>
  
-<sect3>DNS auf Arktur
+<sect3>DNS on Arktur
 
 <p>
 An der Konfiguration des standardmäßig auf Arktur laufenden Nameservers sind
