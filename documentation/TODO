@@ -1,0 +1,6 @@
+- Find a way to have eps figures for the dvi, ps and pdf format and png for html.
+  If this can´t be accomplished with a stylesheet or the docbook tools, one
+  (ugly) solution would be to have a simple preprocessor that creates different
+  sgml sources for the different output formats with the right format= attributes
+  in the graphic tag.
+- Correct the references (they are marked with fixme)

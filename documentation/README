@@ -1,0 +1,43 @@
+The documentation is written in docbook format. In order to build it,
+you need (among others) the packages
+
+docbook
+docbook-stylesheets
+cygnus-stylesheets
+
+Documentation is available in the packages
+
+docbook-doc
+docbook-stylesheets-doc
+
+Note that these are the names of the Debian pacakges, they may vary for
+other distributions.
+Another good resource is the KDE Documentation Editor´s Homepage at
+http://i18n.kde.org/doc/index.html.
+
+
+
+Translation:
+
+The master source of the documentation is in English (not yet
+fully translated from German, because we started with German only).
+Currently the only other language available is German.
+If you want to translate the documentation into another language
+(for example french), just do this:
+
+cd userguide/src/
+cp userguide.en.sgml userguide.fr.sgml
+
+and begin to translate. You probably also want to change the line
+
+<book lang="en">
+
+to
+
+<book lang="fr">
+
+inside the document.
+The build system automatically recognises the
+new language and builds it. Note that the language code ("fr" here)
+is standardized by the ISO, so you can´t just invent one.
+
