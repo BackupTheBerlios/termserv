@@ -1,6 +1,6 @@
 This module contains everything that is needed for building the Debian packages
 of LTSP out of the binary .tgz packages. It does only exist because LTSP does not use
-CVS right now and I want to keep the debioan thins in CVS.
+CVS right now and I want to keep the debian things in CVS.
 This module might be folded into the main LTSP CVS and disappear from here once
 the LTSP CVS is set up.
 
