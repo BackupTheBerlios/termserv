@@ -1,5 +1,10 @@
 Installation of the Webmin LTSP module
 
+For the Webmin LTSP module, you first need the Webmin package. It
+comes with some distributions. You can also fetch the package from
+http://www.webmin.com/webmin/. Its installation should be
+straightforward and won't be explained in this document.
+
 If you have a recent version of Webmin (>0.80 will do) you can use the 
 Webmin Modules tool in the Webmin Configuration module to install 
 directly from the tarball.  If you want to do it manually, you can use
