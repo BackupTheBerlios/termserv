@@ -12,11 +12,11 @@ BuildRoot: /tmp/termserv-doc
 
 %description
 This package contains the Userguide of the GNU/Linux Terminalserver for
-schools in dvi, postscript and pdf format.
+schools in html, dvi, postscript and pdf format.
 
 %description -l de
 Dieses Paket enthält das Benutzerhandbuch des GNU/Linux Terminalservers für
-Schulen im dvi-, postscript- und pdf-Format.
+Schulen im jtml-, dvi-, postscript- und pdf-Format.
 
 %prep
   #
@@ -30,6 +30,8 @@ Schulen im dvi-, postscript- und pdf-Format.
   # On the development machine
   #
   make
+  # We don't want the uncompressed postscript, so we remove it.
+  rm -rf userguide/out/*/ps/userguide.*.ps
 
 %install
   #
@@ -48,11 +50,7 @@ Schulen im dvi-, postscript- und pdf-Format.
   fi
 
 %files
-  %doc userguide/out/fsub-smalllogo.ps
-  %doc userguide/out/userguide-networkbasics-protocols-x-flow.eps
-  %doc userguide/out/userguide.de.dvi
-  %doc userguide/out/userguide.de.ps
-  %doc userguide/out/userguide.de.pdf
+  %doc userguide/out/*
 
 %pre
   #

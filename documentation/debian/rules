@@ -25,7 +25,7 @@ doc-base: $(foreach LANG,$(LANGUAGES),debian/doc-base.$(LANG))
 debian/doc-base.%: debian/in.doc-base
 	sed "s/_LANG_/$*/g" < $< > $@
 
-debian/docs: $(foreach LANG,$(LANGUAGES),docs-$(LANG))
+debian/docs: $(foreach LANG,$(LANGUAGES),docs-$(LANG)) docs-common
 
 docs-%:
 	grep userguide/out/$* debian/docs > /dev/null 2>&1 || echo userguide/out/$* >> debian/docs

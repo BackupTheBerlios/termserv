@@ -1,6 +1,8 @@
 The documentation is written in docbook format. In order to build it,
 you need (among others) the packages
 
+jade
+jadetex
 docbook
 docbook-stylesheets
 cygnus-stylesheets

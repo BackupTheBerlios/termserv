@@ -11,16 +11,16 @@ LANGUAGES := $(patsubst src/$(GUIDE).%.sgml,%,$(wildcard src/$(GUIDE).*.sgml))
 # Implicit rules for the various documentation formats
 # The automatic variable $* contains the part of the target that matched the %.
 # Here it is the language.
-html-%.stamp: src/$(GUIDE).%.sgml out/%/html
+html-%.stamp: src/$(GUIDE).%.sgml out/%/html common.stamp
 	cd src && rm -rf ../out/$*/html/* $(GUIDE).$* && db2html $(GUIDE).$*.sgml && mv $(GUIDE).$*/* ../out/$*/html/
 	ln -sf book1.html out/$*/html/index.html
-	cp src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/html/
-	cp src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/html/
+	ln -sf ../../common/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/html/
+	ln -sf ../../common/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/html/
 	touch $@
-dvi-%.stamp: src/$(GUIDE).%.sgml out/%/dvi
+dvi-%.stamp: src/$(GUIDE).%.sgml out/%/dvi common.stamp
 	cd src && db2dvi $(GUIDE).$*.sgml && mv *dvi ../out/$*/dvi
-	cp src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/dvi/
-	cp src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/dvi/
+	ln -sf ../../common/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/dvi/
+	ln -sf ../../common/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/dvi/
 	touch $@
 pdf-%.stamp: ps-%.stamp out/%/pdf
 	ps2pdf out/$*/ps/$(GUIDE).$*.ps out/$*/pdf/$(GUIDE).$*.pdf
@@ -31,10 +31,10 @@ ps-%.stamp: dvi-%.stamp out/%/ps
 ps-gz-%.stamp: ps-%.stamp out/%/ps
 	cd out/$*/ps && gzip -c $(GUIDE).$*.ps > $(GUIDE).$*.ps.gz
 	touch $@
-sgml-%.stamp: src/$(GUIDE).%.sgml out/%/sgml
+sgml-%.stamp: src/$(GUIDE).%.sgml out/%/sgml common.stamp
 	cd src && cp $(GUIDE).$*.sgml ../out/$*/sgml
-	cp src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/sgml/
-	cp src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/sgml/
+	ln -sf ../../common/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/$*/sgml/
+	ln -sf ../../common/$(GUIDE)-networkbasics-protocols-x-flow.eps out/$*/sgml/
 	touch $@
 
 # Implicit rules for the out/* directories.
@@ -63,6 +63,14 @@ ps-all: $(foreach LANG,$(LANGUAGES),ps-$(LANG).stamp)
 ps-gz-all: $(foreach LANG,$(LANGUAGES),ps-gz-$(LANG).stamp)
 sgml-all: $(foreach LANG,$(LANGUAGES),sgml-$(LANG).stamp)
 
+# common files
+out/common:
+	mkdir -p $@
+common.stamp: src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/common/
+	cp src/$(GUIDE)-installconfig-config-webmin-loginscreen.eps out/common/
+	cp src/$(GUIDE)-networkbasics-protocols-x-flow.eps out/common/
+	touch $@
+
 clean-%:
 	rm -rf out/$*
 	rm -rf src/$(GUIDE).$*
@@ -73,5 +81,6 @@ clean-all: $(foreach LANG,$(LANGUAGES),clean-$(LANG))
 
 clean: clean-all
 	rm -rf src/DBTOHTML_OUTPUT_DIR*
+	rm -f common.stamp
 
 .PHONY: all clean clean-all html-all dvi-all pdf-all ps-all ps-gz-all sgml-all

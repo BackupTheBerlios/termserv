@@ -10,4 +10,4 @@ Architecture: all
 Suggests: task-termserv
 Description: Documentation for the GNU/Linux Terminalserver for schools
  This package contains the Userguide of the GNU/Linux Terminalserver for
- schools in dvi, postscript and pdf format.
+ schools in html, dvi, postscript and pdf format.
