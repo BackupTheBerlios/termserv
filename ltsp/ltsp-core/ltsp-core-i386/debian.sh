@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Copyright (c) 2000 by James A. McQuillan (McQuillan Systems)
 # Copyright (c) 2000 by Stephan Lauffer

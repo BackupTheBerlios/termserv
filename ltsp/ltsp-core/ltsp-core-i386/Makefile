@@ -22,6 +22,7 @@ all:
 	patch -p0 < debian/diffs/inst.sh.diff
 # need to do this, because otherwise a debian/rules binary would not work
 #	if ! test -f install.sh; then touch install.sh; fi
+	$(LN) debian.sh debian-sarge.sh
 
 install:
 	./inst.sh
@@ -48,5 +49,6 @@ clean:
 	if test -f install-orig.sh; then $(MV) install-orig.sh install.sh; fi
 	$(RM) create-templates.sh
 	$(RM) inst.sh
+	$(RM) debian-sarge.sh
 
 .PHONY: all clean install

@@ -23,7 +23,7 @@
  #
 -# Start building templates
 -#
--/bin/sh ./${TEMPLATE_FILE}
+-/bin/bash ./${TEMPLATE_FILE}
 -
 -#------------------------------------------------------------------------------
 -#

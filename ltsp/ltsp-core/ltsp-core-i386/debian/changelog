@@ -1,3 +1,12 @@
+ltsp-core-i386 (3.0.7-3) unstable; urgency=low
+
+  * debian/diffs/create-templates.sh.diff, debian.sh, install.sh:
+    forgot still one bashism :-(((
+  * created the sarge symlink in Makefile so that a rebuild from source
+    is possible.
+
+ -- Georg Baum <gbaum@users.sf.net>  Sun, 23 Feb 2003 21:40:42 +0100
+
 ltsp-core-i386 (3.0.7-2) unstable; urgency=low
 
   * debian/config.in: forgot still one bashism.

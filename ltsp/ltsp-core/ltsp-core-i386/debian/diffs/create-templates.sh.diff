@@ -1,11 +1,5 @@
 --- create-templates.sh	Thu May  9 09:41:47 2002
 +++ create-templates.sh	Thu May  9 13:37:25 2002
-@@ -1,4 +1,4 @@
--:
-+#! /bin/sh
- #
- # Copyright (c) 2001 by James A. McQuillan (McQuillan Systems)
- #
 @@ -124,6 +124,9 @@
  
  fi
