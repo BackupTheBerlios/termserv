@@ -54,7 +54,6 @@ CHAR=Textbasiert, auf dem Server
 SHELL=lokale Shell ohne Paﬂwortabfrage, zum Debuggen
 default=Default
 
-
 microsoft=Microsoft Natural
 dell101=Dell 101 Tasten
 flexpro=KeyTronic FlexPro
