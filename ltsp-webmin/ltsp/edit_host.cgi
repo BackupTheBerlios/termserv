@@ -77,11 +77,13 @@ foreach (&ltsp_get_option_groups()) {
       print ">" . $text{"default"} . "</td>\n";
       print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
       print "><select name=\"$cur_option\" size=\"1\">\n";
+      $has_selected = 0;
       foreach (&ltsp_get_possible_values($cur_option)) { 
         $pos_val = $_;
         chomp($pos_val);
         if ($conf{"$cur_option"} eq "$pos_val") {
           print "<option value=\"$pos_val\" selected>";
+          $has_selected = 1;
         } else {
           print "<option value=\"$pos_val\">";
         }
@@ -91,6 +93,9 @@ foreach (&ltsp_get_option_groups()) {
         } else {
           print "$pos_val\n";
         }
+      }
+      if ((!$def) and (!$has_selected)) {
+        print "<option value=\"" . $conf{"$cur_option"} . "\" selected>" . $conf{"$cur_option"};
       }
       print "</select></td></tr>\n";
     } else {
