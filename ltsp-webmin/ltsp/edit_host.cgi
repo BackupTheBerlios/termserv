@@ -35,7 +35,7 @@ print "<form action=\"index.cgi\" method=\"post\">\n";
 #
 # Submit button
 # 
-print "<input type=\"submit\" value=\"" . $text{'save_settings'} . "\">\n";
+print "<input type=\"submit\" value=\"" . $text{'save_settings'} . "\"><p>\n";
 
 # A table that helps the two buttons to be displayed without borders around them
 
