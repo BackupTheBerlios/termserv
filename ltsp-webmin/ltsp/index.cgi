@@ -62,7 +62,7 @@ if ($in{"action"} eq "delete") {
 
 &ltsp_read_config($config{"ltsconf_path"} . "/lts.conf");
 
-foreach (&ltsp_get_hces()) {
+foreach (sort(&ltsp_get_hces())) {
   if ($_ eq "Default") {
     push (@icons, "images/group.gif");
   } else {
