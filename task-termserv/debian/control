@@ -7,7 +7,8 @@ Standards-Version: 3.1.1
 
 Package: task-termserv
 Architecture: all
-Depends: lts-core, ltsp-webmin, termserv-doc
+Depends: lts-core, ltsp-webmin, termserv-doc, webmin, webmin-core, webmin-exports, webmin-inetd | webmin-xinetd
+Recommends: webmin-bind8, webmin-dhcpd, webmin-nis, webmin-software
 Description: Task package for the GNU/Linux Terminalserver for schools
  This package is a metapackage and does not contain anything. Instead, it
  depends on all the packages which are needed to set up the Terminalserver.
