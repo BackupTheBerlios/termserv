@@ -2,7 +2,6 @@ index_title=LTSP Configuration
 hosts=Hosts
 host=Host
 settings_for=Settings for
-edit_profile=Edit Host
 save_settings=Save Settings
 delete_host=Delete Host
 name_of_new_host=Name of New Host
