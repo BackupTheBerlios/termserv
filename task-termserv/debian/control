@@ -2,6 +2,7 @@ Source: task-termserv
 Section: admin
 Priority: optional
 Maintainer: Georg Baum <gbaum@users.sourceforge.net>
+Build-Depends: debhelper
 Standards-Version: 3.1.1
 
 Package: task-termserv

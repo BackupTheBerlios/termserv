@@ -12,7 +12,8 @@ FAKEROOT = ${shell which fakeroot}
 PACKAGE = task-termserv
 
 # debian package
-deb:
+deb: tgz
+	cd tmp; $(FAKEROOT) dpkg-source -b $(PACKAGE)-$(VERSION) ""; mv *.dsc *.gz ../../
 	$(FAKEROOT) debian/rules binary
 
 # rpm specfile
@@ -20,7 +21,7 @@ $(PACKAGE).spec: $(PACKAGE).spec.in
 	sed s/_VERSION_/$(VERSION)/g < $< > $@
 
 # rpm package
-rpm: tgz $(PACKAGE).spec
+rpm: tgz
 	rpm -ta ../$(PACKAGE)-$(VERSION).tar.gz
 
 # source package

@@ -16,7 +16,8 @@ all:
 	cd userguide/scripts && ./builddocs de
 
 # debian package
-deb:
+deb: tgz
+	cd tmp; $(FAKEROOT) dpkg-source -b $(PACKAGE)-$(VERSION) ""; mv *.dsc *.gz ../../
 	$(FAKEROOT) debian/rules binary
 
 # rpm specfile
@@ -24,7 +25,7 @@ $(PACKAGE).spec: $(PACKAGE).spec.in
 	sed s/_VERSION_/$(VERSION)/g < $< > $@
 
 # rpm package
-rpm: tgz $(PACKAGE).spec
+rpm: tgz
 	rpm -ta ../$(PACKAGE)-$(VERSION).tar.gz
 
 # source package
@@ -40,6 +41,7 @@ clean:
 	rm -rf tmp
 	rm -f $(PACKAGE).spec
 	cd userguide/scripts && ./clean
+	rm -rf userguide/out
 
 deb-clean:
 	$(FAKEROOT) debian/rules clean

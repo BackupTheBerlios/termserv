@@ -26,7 +26,8 @@ wbm:
 	@(cd tmp && tar -cf ../../$(PACKAGE)-$(VERSION).wbm ltsp)
 
 # debian package
-deb:
+deb: tgz
+	cd tmp; $(FAKEROOT) dpkg-source -b $(PACKAGE)-$(VERSION) ""; mv *.dsc *.gz ../../
 	$(FAKEROOT) debian/rules binary
 
 # source package
