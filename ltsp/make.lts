@@ -13,6 +13,7 @@ function make_it()
     local dpkg_source_args=$6
     local package=${name}-${version}
     local full_version=`head -n1 ${dir}/${package}/debian/changelog | sed "s/^.*(\(.*\)).*$/\1/g"`
+    test -e ${dir}/${package} || ln -s ${name} ${dir}/${package}
     if test "${dpkg_source_args}" = "-sn"; then
 	local tgz=${name}_${full_version}.tar.gz
     else
