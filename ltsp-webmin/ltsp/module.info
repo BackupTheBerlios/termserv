@@ -1,0 +1,6 @@
+name=ltsp
+desc=LTSP Configuration
+desc_de=LTSP-Konfiguration
+desc_fr=Configuration LTSP
+os_support=open-linux redhat-linux debian-linux suse-linux corel-linux slackware-linux
+category=servers

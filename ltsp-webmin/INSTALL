@@ -1,0 +1,12 @@
+To install this webmin module, copy the directory ltsp to your webmin
+directory, usually /usr/share/webmin.
+
+Then add ltsp at the appropriate place in your webmin access control file,
+usually /etc/webmin/webmin.acl
+
+The stuff in the debian directory is for making a binary package for Debian:
+Just do a 
+
+debian/rules binary
+
+if you want to produce a .deb.

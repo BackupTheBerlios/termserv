@@ -1,0 +1,9 @@
+ltsp-webmin (0.2-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat, 27 Jan 2001 14:08:44 +0100
+
+Local variables:
+mode: debian-changelog
+End:

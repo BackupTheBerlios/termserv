@@ -1,0 +1,143 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. 
+# GNU copyright 1997 by Joey Hess.
+#
+# This version is for a hypothetical package that builds an
+# architecture-dependant package, as well as an architecture-independent
+# package.
+
+# Parts stolen from the webmin package.
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=2
+
+export DIRS=ltsp
+
+export DEST=`pwd`/debian/ltsp-webmin/usr/share/webmin
+export CONFDIR=`pwd`/debian/ltsp-webmin/etc/webmin/ltsp
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Add here commands to configure the package.
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	#$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	# Add here commands to clean up after the build process.
+	#-$(MAKE) clean
+
+	dh_clean
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/tmp.
+	#$(MAKE) install DESTDIR=`pwd`/debian/tmp
+	mkdir $(CONFDIR)
+	cp -rp $(DIRS) $(DEST)
+	find $(DEST) -name "*.gif" -exec chmod -x {} \;
+	find $(DEST) -name "lang/*" -exec chmod -x {} \;
+	find $(DEST) -name "pt" -exec chmod -x {} \;
+	find $(DEST) -name "*lib.pl" -exec chmod -x {} \;
+	find $(DEST) -name "*.java" -exec chmod -x {} \;
+	find $(DEST) -name "mime.types" -exec chmod -x {} \;
+	find $(DEST) -name "config-*" -exec chmod -x {} \;
+	find $(DEST) -name "*.cgi" -exec chmod +x {} \;
+	cp $(DEST)/ltsp/config-debian-linux $(CONFDIR)/config
+	chmod 600 $(CONFDIR)/config
+	touch $(CONFDIR)/admin.acl
+	chmod 600 $(CONFDIR)/admin.acl
+# Not needed, is in /usr/share/doc/ltsp-webmin/copyright
+	rm -f $(DEST)/ltsp/LICENSE
+#	dh_movefiles
+
+# Build architecture-independent files here.
+# Pass -i to all debhelper commands in this target to reduce clutter.
+binary-indep: DH_OPTIONS=-i
+binary-indep: build install
+	# Need this version of debhelper for DH_OPTIONS to work. (INDEP)
+	dh_testversion 1.1.17
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installinit --init-script=webmin-init
+#	dh_installcron
+#	dh_installmanpages
+#	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs 
+	dh_link
+	dh_compress
+	dh_fixperms -Xetc/webmin/ltsp
+	# You may want to make some executables suid here.
+	dh_suidregister
+	dh_installdeb
+	dh_perl
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+# Pass -a to all debhelper commands in this target to reduce clutter.
+binary-arch: DH_OPTIONS=-a
+binary-arch: build install
+#	# Need this version of debhelper for DH_OPTIONS to work.
+#	dh_testversion 1.1.17
+#	dh_testdir
+#	dh_testroot
+##	dh_installdebconf
+#	dh_installdocs
+#	dh_installexamples
+#	dh_installmenu
+##	dh_installemacsen
+##	dh_installpam
+#	dh_installinit --init-script=webmin-init
+#	dh_installcron
+##	dh_installmanpages
+#	dh_installinfo
+##	dh_undocumented
+#	dh_installchangelogs 
+#	dh_strip
+#	dh_link
+#	dh_compress
+#	dh_fixperms
+#	# You may want to make some executables suid here.
+#	dh_suidregister
+#	dh_installdeb
+##	dh_makeshlibs
+#	dh_perl
+##	dh_shlibdeps
+#	dh_gencontrol
+#	dh_md5sums
+#	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
