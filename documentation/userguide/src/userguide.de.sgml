@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="is8859-1">
-<!doctype book PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+<!doctype book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
+]>
 
  
 <book lang="de">
@@ -85,14 +86,14 @@ und bewährten Lösungsansatz auf.
 Die Idee des Terminalservers ist simpel: Warum Software und 
 Rechenkapazität auf jedem Endgerät vorhalten, das z.B. beim 
 Einsatz einer Textverarbeitung die allermeiste Zeit nur 
-``Däumchen dreht''? Warum nicht die Kapazität eines Rechners ausnutzen, 
+<quote>Däumchen dreht</quote>? Warum nicht die Kapazität eines Rechners ausnutzen, 
 indem man mehrere Benutzer gleichzeitig an ihm arbeiten lässt?
 </para>
 
 <para> 
 Da natürlich sich nicht mehrere Benutzer gleichzeitig vor einen 
 Bildschirm und eine Tastatur setzen und arbeiten können, verteilt 
-der Rechner seine Kapazität über ein Netz an mehrere ``dumme'' 
+der Rechner seine Kapazität über ein Netz an mehrere <quote>dumme</quote>
 Terminals, die im Grunde nichts weiter darstellen als ein 
 Bildschirm, eine Tastatur und ein Endgerät, das ohne Laufwerke 
 und großen Speicherausausbau auskommt, das Terminal eben.
@@ -172,7 +173,7 @@ innerhalb des Netzwerks Daten austauschen.
 <para>
 Solche Protokolle existieren mehrschichtig, das heißt, ein Protokoll baut
 auf grundlegenderen Protokollen auf. Im Folgenden werden einige Protokolle
-beschrieben, deren Schichtung (von ''tief'' nach ''hoch'') wie folgt aussieht:
+beschrieben, deren Schichtung (von <quote>tief</quote> nach <quote>hoch</quote>) wie folgt aussieht:
 <orderedlist>
 <listitem>
 <para><xref linkend="mac-addresses">
@@ -198,7 +199,7 @@ weiter unten beschrieben.
 <para>
 MAC-Adressen sind Netzwerk-Adressierungen auf der technisch untersten Ebene.
 Jede Netzwerkkarte hat eine fest eingerichtete MAC-Adresse (gelegentlich auch
-``Hardware-Ethernet-Adresse'' genannt). Sie wird durch den Hersteller festgelegt.
+<quote>Hardware-Ethernet-Adresse</quote> genannt). Sie wird durch den Hersteller festgelegt.
 Würden zwei Netzwerkkarten in einem Netzwerk die gleiche MAC-Adresse besitzen,
 würde dies zu einem Konflikt führen. Jedoch haben alle Hersteller Übereinkünfte
 über die Verteilung von MAC-Adressen getroffen.
@@ -238,8 +239,8 @@ usw.
 <para>
 IP-Adressen sind zur Strukturierung ganz nützlich, jedoch können in einem IP-Netzwerk
 rein mathematisch über 4 Milliarden Rechner beheimatet sein! Damit man sich
-kein ``Telefonbuch'' für IP-Adressen anlegen muss und stattdessen menschenlesbare
-Namen verwenden kann, wurde das Domänennamenssystem DNS (``Domain Name System'')
+kein <quote>Telefonbuch</quote> für IP-Adressen anlegen muss und stattdessen menschenlesbare
+Namen verwenden kann, wurde das Domänennamenssystem DNS (<quote>Domain Name System</quote>)
 entwickelt. DNS-Server in einem Netzwerk halten eine Liste über IP-Adressen
 und ihre Namen vor, die von Terminals abgefragt werden kann.
 </para>
@@ -255,7 +256,7 @@ davor kommt die Domäne, davor dann entweder Rechner oder weitere Domänen.
 <title>DHCP</title>
 
 <para>
-DHCP, das ''Dynamic Host Configuration Protocol'' ist ein Protokoll, welches einen kleinen
+DHCP, das <quote>Dynamic Host Configuration Protocol</quote> ist ein Protokoll, welches einen kleinen
 Teil der Netzwerkverwaltung für den Administrator einfacher machen soll.
 Gewöhnlich werden die oben genannten IP-Adressen auf jedem Rechner einzeln eingestellt.
 Dies kann bei größeren Netzwerken mühsam bis unübersichtlich sein. DHCP schafft hier Abhilfe.
@@ -278,14 +279,14 @@ recht unwichtig.
 <title>TFTP - der simple Dateitransfer</title>
 
 <para>
-TFTP, das ''Trivial File Transfer Protocol'' ist ebenso ein Serverdienst. Er ist mit FTP 
+TFTP, das <quote>Trivial File Transfer Protocol</quote> ist ebenso ein Serverdienst. Er ist mit FTP 
 vergleichbar, jedoch wesentlich simpler. So fordert der Server keine Identifikation mit
 Benutzername und Passwort.
 </para>
 
 <para>
 Im Terminalserver-Betrieb ist TFTP das Protokoll, das das Terminal benutzt, um seinen
-Betriebssystem-Startcode (im Falle von Linux der ''Kernel'') herunterzuladen.
+Betriebssystem-Startcode (im Falle von Linux der <quote>Kernel</quote>) herunterzuladen.
 </para>
  
 <sect2>
@@ -501,7 +502,7 @@ Informationen.
 Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <literal>all</literal>
 enthält alle Netzwerkkartentreiber. Wenn für die gewünschte Karte
 kein Kernel vorhanden ist, und der <literal>all</literal>-Kernel nicht funktioniert, muss ein
-Kernel selber erstellt und nach <literal>/tftpboot/lts/</literal> kopiert werden.
+Kernel selber erstellt und nach <filename>/tftpboot/lts/</filename> kopiert werden.
 </para>
 
 <sect3>
@@ -541,7 +542,7 @@ verbrauchen sie etwas weniger Speicher, und zum Anderen will manche betagte Hard
 mit den neueren Versionen nicht richtig laufen.
 Beispielkonfigurationsdateien, in denen außer der Netzwerkkarte schon alle nötigen
 Einstellungen vorgenommen sind, finden Sie je nach verwendeter Distribution unter
-<literal>/usr/share/doc/termserv-doc/</literal> oder <literal>/usr/share/doc/packages/termserv-doc/</literal>, 
+<filename>/usr/share/doc/termserv-doc/</filename> oder <filename>/usr/share/doc/packages/termserv-doc/</filename>, 
 wenn Sie das Paket <literal>termserv-doc</literal> installiert haben.
 
 TODO: Dateien erstellen.
@@ -551,8 +552,8 @@ TODO: Dateien erstellen.
 <para>
 Nachdem der Kernel erfolgreich compiliert wurde, muss er noch mit mknbi-linux in ein
 von Etherboot lesbares Format gewandelt werden. Wie das geht, steht in der
-Etherboot-Dokumentation. Anschließend muss der nun im "tagged image format" vorliegende
-Kernel nach <literal>/tftpboot/lts/</literal> kopiert werden.
+Etherboot-Dokumentation. Anschließend muss der nun im <quote>tagged image format</quote> vorliegende
+Kernel nach <filename>/tftpboot/lts/</filename> kopiert werden.
 </para>
 </sect1>
 
@@ -604,7 +605,7 @@ Tragen Sie
 deb http://termserv.berlios.de/debian stable main
 </programlisting>
 
-in die Datei <literal>/etc/apt/sources.list</literal> ein. Das Paketmanagementsystem
+in die Datei <filename>/etc/apt/sources.list</filename> ein. Das Paketmanagementsystem
 muss nun diese zusätzliche Quelle für Pakete auswerten. Rufen Sie dazu
 
 <programlisting>
@@ -703,7 +704,7 @@ Der c't/ODS Kommunikationsserver Arktur enthält bereits einen DHCP-Server.
 Wenn sich außer den Terminals noch andere Rechner im Netz befinden
 und den DHCP-Server benutzen, ist es empfehlenswert, diesen auch für die
 Terminals mitzubenutzen. Dazu sind folgende Änderungen in der Datei
-<literal>/etc/dhcpd.conf</literal> auf Arktur nötig:
+<filename>/etc/dhcpd.conf</filename> auf Arktur nötig:
 
 <orderedlist>
 <listitem>
@@ -720,7 +721,7 @@ Gruppe befinden mitgeteilt, wie der nächste Server (von dem der Linuxkernel
 geholt wird) heißt.
 <literal>use-host-decl-on;</literal> sorgt dafür, daß den Terminals ihr eigener Name zusätzlich
 zur IP-Adresse bekanntgegeben wird. Fehlt dieser Eintrag, können die Terminals
-ihren eigenen Abschnitt in <literal>/tftpboot/lts/ltsroot/etc/lts.conf</literal> nicht finden.
+ihren eigenen Abschnitt in <filename>/tftpboot/lts/ltsroot/etc/lts.conf</filename> nicht finden.
 Werden mehrere Terminalserver benutzt, bekommt jeder seine eigene Gruppe.
 <listitem>
 <para>Pro Terminal ist innerhalb dieser Gruppe ein Eintrag der Form
@@ -742,12 +743,12 @@ fixme: DNS auf Arktur
 
 <literal>08:00:07:26:c0:a5</literal> ist die MAC-Adresse der Netzwerkkarte.
 
-<literal>/tftpboot/lts/vmlinuz.ne2000</literal> ist der Name des Kernels, der gebootet
+<filename>/tftpboot/lts/vmlinuz.ne2000</filename> ist der Name des Kernels, der gebootet
 werden soll.
 Er muß sich auf dem oben angegebenen Rechner (hier <literal>termserv</literal>)
 befinden, und natürlich zur verwendeten Netzwerkkarte passen. Je nach
 verwendeter Linuxdistribution kann es auch nötig sein, das führende
-<literal>/tftpboot</literal> wegzulassen. Im Zweifelsfall hilft ausprobieren.
+<filename>/tftpboot</filename> wegzulassen. Im Zweifelsfall hilft ausprobieren.
 
 <listitem>
 <para>Wenn die unter <xref linkend="dns-arktur">
@@ -767,8 +768,8 @@ damit ihnen Namen zugewiesen werden.
 <para>
 Die hier beschriebene Konfigurationsmethode stellt nur eine unter vielen
 Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
-<literal>dhcpd.conf</literal> (in Englisch, zu lesen mit dem Befehl
-<literal>man dhcpd.conf</literal>) verwiesen.
+<filename>dhcpd.conf</filename> (in Englisch, zu lesen mit dem Befehl
+<command>man dhcpd.conf</command>) verwiesen.
 </para>
 
 <para>
@@ -808,16 +809,16 @@ fixme: der angegebenen Tabelle
 </thead>
 <tbody>
 <row><entry><literal>Client-A40</literal></entry>		<entry><literal>192.168.0.40</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-A250</literal></entry>	<entry><literal>192.168.0.250</literal></entry></row>
 <row><entry><literal>Client-B10</literal></entry>		<entry><literal>192.168.1.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-B250</literal></entry>	<entry><literal>192.168.1.250</literal></entry></row>
 <row><entry><literal>Client-C10</literal></entry>		<entry><literal>192.168.2.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-C250</literal></entry>	<entry><literal>192.168.2.250</literal></entry></row>
 <row><entry><literal>Client-D10</literal></entry>		<entry><literal>192.168.3.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-D250</literal></entry>	<entry><literal>192.168.3.250</literal></entry></row>
 </tbody>
 </tgroup>
@@ -890,7 +891,7 @@ heruntergeladen werden können. Die Benutzung ist einfach:
 
 <para>
 Auf der Startseite wählt man die gewünschte Version von Etherboot.
-Normalerweise sollte man hier die neueste "Production Release" wählen.
+Normalerweise sollte man hier die neueste <quote>Production Release</quote> wählen.
 Man gelangt dann zu einem Formular mit 4 Punkten. Mit dem ersten Punkt
 wählt man den Typ seiner Netzwerkkarte. Wenn nicht klar ist, welcher der
 richtige ist, hilft ein Blick auf die Etherboot-Homepage
@@ -920,7 +921,7 @@ verwenden).
 </para>
 
 <para>
-Das Format bei der ROM-o-matic ist ``Floppy Bootable ROM Image (.lzdsk)''.
+Das Format bei der ROM-o-matic ist <quote>Floppy Bootable ROM Image (.lzdsk)</quote>.
 Unter Linux schreibt man sich die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) mit
 
 <programlisting>
@@ -933,7 +934,7 @@ auf die Diskette im 1. Laufwerk.
 <caution>
 <para>
 Wenn vorher etwas auf der Diskette gespeichert war, ist es jetzt überschrieben,
-und wenn man sich bei <literal>/dev/fd0</literal> vertippt, kann Schlimmes
+und wenn man sich bei <filename>/dev/fd0</filename> vertippt, kann Schlimmes
 passieren (Überschreiben der Festplatte etc).
 </para>
 </caution>
@@ -973,11 +974,11 @@ ist, daß fertig programmierte Booteproms bzw. Netzwerkkarten mit fertigem
 Booteprom recht teuer sind, und daß man zum Selberbrennen ein
 Epromprogrammiergerät und eine Epromlöschlampe braucht (sofern es sich nicht
 um Flasheproms handelt, die können ohne zusätzliche Geräte direkt
-``in circuit'' programmiert werden).
+<quote>in circuit</quote> programmiert werden).
 </para>
 
 <para>
-Das Format des Images bei der ROM-o-matic ist ``Binary ROM Image (.lzrom)''.
+Das Format des Images bei der ROM-o-matic ist <quote>Binary ROM Image (.lzrom)</quote>.
 </para>
 
 <para>
@@ -1004,7 +1005,7 @@ und wesentlich häufiger verkauft werden und somit billiger sind, empfiehlt
 sich dieser Typ.
 Damit das auch in Karten funktioniert, die eigentlich nur 16 kB-Typen
 vertragen, brennt man nicht das Image direkt, sondern ein 32 kB-Image
-(hier <literal>eb-5.0.2-ne-big.lzrom</literal>), das man sich z. B. mit
+(hier <filename>eb-5.0.2-ne-big.lzrom</filename>), das man sich z. B. mit
 <programlisting>
 cat eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom > eb-5.0.2-ne-big.lzrom
 </programlisting>
@@ -1059,7 +1060,7 @@ die Imagedatei auf eine formatierte Diskette, unter Linux z. B. mit
 <programlisting>
 cp eb-5.0.2-ne.lzdsk /floppy/
 </programlisting>
-Hierbei ist angenommen, daß die Diskette unter <literal>/floppy/</literal> gemountet ist.
+Hierbei ist angenommen, daß die Diskette unter <filename>/floppy/</filename> gemountet ist.
 Natürlich kann das Kopieren auch auf einem DOS- bzw. Windows-Rechner geschehen.
 </para>
 
@@ -1074,7 +1075,7 @@ Diskette ein und mountet sie:
 mount /dev/fd0 /mnt
 </programlisting>
 
-Dazu muss das Verzeichnis <literal>/mnt/</literal> existieren. Falls nicht, legt man es mit dem
+Dazu muss das Verzeichnis <filename>/mnt/</filename> existieren. Falls nicht, legt man es mit dem
 Befehl
 
 <programlisting>
@@ -1087,8 +1088,8 @@ an. Nun kopiert man das Etherboot-Image auf die Festplatte:
 cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hda
 </programlisting>
 
-Falls es sich um eine SCSI-Festplatte handelt, muss statt <literal>/dev/hda</literal>
-entsprechend <literal>/dev/sda</literal> eingegeben werden.
+Falls es sich um eine SCSI-Festplatte handelt, muss statt <filename>/dev/hda</filename>
+entsprechend <filename>/dev/sda</filename> eingegeben werden.
 </para>
 
 <para>
@@ -1106,7 +1107,7 @@ das Image kopiert.
 <caution>
 <para>
 Auch hier muss man wieder aufpassen: Ein Tippfehler bei
-<literal>/dev/hdc</literal> kann sehr unangenehme Folgen haben!
+<filename>/dev/hdc</filename> kann sehr unangenehme Folgen haben!
 </para>
 </caution>
 
@@ -1127,7 +1128,7 @@ Betrieb unter DOS oder als Terminal gewählt werden.
 
 <para>
 Hier wird davon ausgegangen, dass DOS bereits auf der Festplatte installiert
-ist. Das Format bei der ROM-o-matic ist ``DOS.COM Executable ROM Image''.
+ist. Das Format bei der ROM-o-matic ist <quote>DOS.COM Executable ROM Image</quote>.
 Die erhaltene Datei (z. B. eb-5.0.2-ne.com) kopiert man auf die Festplatte.
 Beim Aufruf wird dann Etherboot gestartet - Fertig!
 </para>

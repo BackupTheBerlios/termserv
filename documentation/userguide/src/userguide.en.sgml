@@ -103,7 +103,7 @@ users work with it?
 <para> 
 Of course, because multiple users can't sit in front of on screen
 and one keyboard at the same time, the computer distributes
-its power to a number of ''dumb'' terminals through a network.
+its power to a number of <quote>dumb</quote> terminals through a network.
 These terminals are nothing more than a screen, a keyboard, a
 mouse and a computing device that does not have to rely on
 local storage and big memory.
@@ -185,7 +185,7 @@ computers within a network.
 <para>
 These protocols are multi-tiered which means that one protocol may rely
 on a more basic protocol. Protocol layering (from
-the ''deep'' to the ''high'' level) looks like this:
+the <quote>deep</quote> to the <quote>high</quote> level) looks like this:
 <orderedlist>
 <listitem>
 <para><xref linkend="mac-addresses">
@@ -210,7 +210,7 @@ and are described below.
  
 <para>
 MAC addresses are network addresses on the low level. Every network interface
-card has a fixed MAC address (sometimes called ''hardware ethernet address'').
+card has a fixed MAC address (sometimes called <quote>hardware ethernet address</quote>).
 It is determined by the card vendor. If two network interface cards in the
 same network possessed the same MAC address, the network might be seriously
 messed. But the card vendors have contracts concerning the distribution of
@@ -249,9 +249,9 @@ separated with points. In a network, the server might have the IP address
 <para>
 IP addresses are quite useful for structuring; however an IP-based network 
 can contain up to 4 billion IP addresses! To avoid that everyone using
-that network has to create his personal ''phone book'' for IP addresses
+that network has to create his personal <quote>phone book</quote> for IP addresses
 and instead enable the use of human-readable names, the domain naming
-service (''DNS'') was developed. DNS servers in a network host a list
+service (<quote>DNS</quote>) was developed. DNS servers in a network host a list
 of IP addresses and their corresponding host names, which then can be
 queried by hosts within the network.
 </para>
@@ -260,7 +260,7 @@ queried by hosts within the network.
 The concept is domain-oriented, there is a hierarchy: 
 <emphasis>arktur.cg-bamberg.de</emphasis> is a German (<emphasis>de</emphasis>) computer of the Clavius 
 High School Bamberg (<emphasis>cg-bamberg</emphasis>) with the name <emphasis>arktur</emphasis>. The last
-part is called top level Domain (short ''TLD''), the second-last part is the
+part is called top level Domain (short <quote>TLD</quote>), the second-last part is the
 domain. Before that, there are either computers or further domains. 
 </para> 
 
@@ -268,7 +268,7 @@ domain. Before that, there are either computers or further domains.
 <title>DHCP</title>
 
 <para>
-DHCP, the ''Dynamic Host Configuration Protocol'' is a protocol intended to make some
+DHCP, the <quote>Dynamic Host Configuration Protocol</quote> is a protocol intended to make some
 parts of network administration more convenient for the administrator. Usually, IP
 addresses are assigned manually on each computer. That fact complicates administration
 of bigger networks. DHCP solves this problem.
@@ -292,14 +292,14 @@ recht unwichtig.
 <title>TFTP - der simple Dateitransfer</title>
 
 <para>
-TFTP, das ''Trivial File Transfer Protocol'' ist ebenso ein Serverdienst. Er ist mit FTP 
+TFTP, das <quote>Trivial File Transfer Protocol</quote> ist ebenso ein Serverdienst. Er ist mit FTP 
 vergleichbar, jedoch wesentlich simpler. So fordert der Server keine Identifikation mit
 Benutzername und Passwort.
 </para>
 
 <para>
 Im Terminalserver-Betrieb ist TFTP das Protokoll, das das Terminal benutzt, um seinen
-Betriebssystem-Startcode (im Falle von Linux der ''Kernel'') herunterzuladen.
+Betriebssystem-Startcode (im Falle von Linux der <quote>Kernel</quote>) herunterzuladen.
 </para>
  
 <sect2>
@@ -515,7 +515,7 @@ Informationen.
 Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <literal>all</literal>
 enthält alle Netzwerkkartentreiber. Wenn für die gewünschte Karte
 kein Kernel vorhanden ist, und der <literal>all</literal>-Kernel nicht funktioniert, muss ein
-Kernel selber erstellt und nach <literal>/tftpboot/lts/</literal> kopiert werden.
+Kernel selber erstellt und nach <filename>/tftpboot/lts/</filename> kopiert werden.
 </para>
 
 <sect3>
@@ -555,7 +555,7 @@ verbrauchen sie etwas weniger Speicher, und zum Anderen will manche betagte Hard
 mit den neueren Versionen nicht richtig laufen.
 Beispielkonfigurationsdateien, in denen außer der Netzwerkkarte schon alle nötigen
 Einstellungen vorgenommen sind, finden Sie je nach verwendeter Distribution unter
-<literal>/usr/share/doc/termserv-doc/</literal> oder <literal>/usr/share/doc/packages/termserv-doc/</literal>, 
+<filename>/usr/share/doc/termserv-doc/</filename> oder <filename>/usr/share/doc/packages/termserv-doc/</filename>, 
 wenn Sie das Paket <literal>termserv-doc</literal> installiert haben.
 
 TODO: Dateien erstellen.
@@ -565,8 +565,8 @@ TODO: Dateien erstellen.
 <para>
 Nachdem der Kernel erfolgreich compiliert wurde, muss er noch mit mknbi-linux in ein
 von Etherboot lesbares Format gewandelt werden. Wie das geht, steht in der
-Etherboot-Dokumentation. Anschließend muss der nun im "tagged image format" vorliegende
-Kernel nach <literal>/tftpboot/lts/</literal> kopiert werden.
+Etherboot-Dokumentation. Anschließend muss der nun im <quote>tagged image format</quote> vorliegende
+Kernel nach <filename>/tftpboot/lts/</filename> kopiert werden.
 </para>
 </sect1>
 
@@ -618,7 +618,7 @@ Tragen Sie
 deb http://termserv.berlios.de/debian stable main
 </programlisting>
 
-in die Datei <literal>/etc/apt/sources.list</literal> ein. Das Paketmanagementsystem
+in die Datei <filename>/etc/apt/sources.list</filename> ein. Das Paketmanagementsystem
 muss nun diese zusätzliche Quelle für Pakete auswerten. Rufen Sie dazu
 
 <programlisting>
@@ -715,7 +715,7 @@ nach einer IP-Adresse zuerst beantwortet wird.
 On the c´t/ODS communications server Arktur is a DHCP-server running already.
 If there are other hosts beside the terminals on the network,
 it is desirable to use this DHCP server also for the terminals. In order to do this
-the following changes have to be applied to the file <literal>/etc/dhcpd.conf</literal>
+the following changes have to be applied to the file <filename>/etc/dhcpd.conf</filename>
 on Arktur:
 
 <orderedlist>
@@ -733,7 +733,7 @@ server. This is the server that provides the linux kernel.
 
 With <literal>use-host-decl-on;</literal> the terminals are getting their names in addition to 
 their ip-addresses. If this entry is missing, they are not able to find their
-section in <literal>/tftpboot/lts/ltsroot/etc/lts.conf</literal>.
+section in <filename>/tftpboot/lts/ltsroot/etc/lts.conf</filename>.
 If more than one terminalserver is used, each gets its own group.
 
 <listitem>
@@ -756,11 +756,11 @@ fixme: DNS on Arktur
 
 <literal>08:00:07:26:c0:a5</literal> is the MAC address of the network interface card (NIC).
 
-<literal>/tftpboot/lts/vmlinuz.ne2000</literal> is the name of the kernel that should boot
+<filename>/tftpboot/lts/vmlinuz.ne2000</filename> is the name of the kernel that should boot
 on the terminal.
 It must reside on the host mentioned above (here <literal>termserv</literal>), and of course it
 must contain a driver for the NIC of the terminal.
-Some Linux distributions require to remove the leading <literal>/tftpboot</literal>.
+Some Linux distributions require to remove the leading <filename>/tftpboot</filename>.
 In case of doubt just try both possibilities.
 
 <listitem>
@@ -779,7 +779,7 @@ In addition you have to adjust the nameserver to assign names to the new address
 <para>
 The configuration method that is described here is only one
 under many possibilities. If you want ot know more, please read the manual page
-of <literal>dhcpd.conf</literal> (with the command <literal>man dhcpd.conf</literal>).
+of <filename>dhcpd.conf</filename> (with the command <command>man dhcpd.conf</command>).
 </para>
 
 <para>
@@ -819,16 +819,16 @@ fixme: der angegebenen Tabelle
 </thead>
 <tbody>
 <row><entry><literal>Client-A40</literal></entry>		<entry><literal>192.168.0.40</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-A250</literal></entry>	<entry><literal>192.168.0.250</literal></entry></row>
 <row><entry><literal>Client-B10</literal></entry>		<entry><literal>192.168.1.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-B250</literal></entry>	<entry><literal>192.168.1.250</literal></entry></row>
 <row><entry><literal>Client-C10</literal></entry>		<entry><literal>192.168.2.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-C250</literal></entry>	<entry><literal>192.168.2.250</literal></entry></row>
 <row><entry><literal>Client-D10</literal></entry>		<entry><literal>192.168.3.10</literal></entry></row>
-<row><entry spanname="col1-2" align="center">:</entry></row>
+<row><entry spanname="col1-2" align="center">&vellip</entry></row>
 <row><entry><literal>Client-D250</literal></entry>	<entry><literal>192.168.3.250</literal></entry></row>
 </tbody>
 </tgroup>
@@ -901,7 +901,7 @@ Using this site is simple:
 
 <para>
 You can choose the desired version of etherboot on the starting page.
-Normally you should choose the newest "Production Release".
+Normally you should choose the newest <quote>Production Release</quote>.
 The next page is a form containing four topics. The first one chooses
 the NIC driver. If you don't know the suitable driver for your NIC,
 you may find it out on the etherboot homepage at
@@ -931,7 +931,7 @@ it normally any more if you do this.
 </para>
 
 <para>
-The image format for the ROM-o-matic is ``Floppy Bootable ROM Image (.lzdsk)''.
+The image format for the ROM-o-matic is <quote>Floppy Bootable ROM Image (.lzdsk)</quote>.
 Under Linux you can write the received file (e.g. eb-5.0.2-ne.lzdsk) with
 the command
 
@@ -945,7 +945,7 @@ onto the floppy in the first drive.
 <caution>
 <para>
 This overwrites the contents of the floppy, and if you mistype
-<literal>/dev/fd0</literal> Bad Things can happen
+<filename>/dev/fd0</filename> Bad Things can happen
 (Overwriting of the harddisk etc).
 </para>
 </caution>
@@ -986,7 +986,7 @@ eproms yourself. The only exception are flasheproms, these can be programmed
 </para>
 
 <para>
-The image format for the ROM-o-matic is ``Binary ROM Image (.lzrom)''.
+The image format for the ROM-o-matic is <quote>Binary ROM Image (.lzrom)</quote>.
 </para>
 
 <para>
@@ -1011,7 +1011,7 @@ and sold more often, so they are cheaper. Therefore these chips are
 preferrable.
 Some NIC's require the 16 kB type. You can nevertheless use the 27c256
 with these cards if you don't burn directly the image but a 32 kB image
-(here <literal>eb-5.0.2-ne-big.lzrom</literal>), that you can create
+(here <filename>eb-5.0.2-ne-big.lzrom</filename>), that you can create
 for example with
 <programlisting>
 cat eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom > eb-5.0.2-ne-big.lzrom
@@ -1067,7 +1067,7 @@ formatted floppy. The command under Linux is
 <programlisting>
 cp eb-5.0.2-ne.lzdsk /floppy/
 </programlisting>
-assuming the floppy is mounted under <literal>/floppy/</literal>.
+assuming the floppy is mounted under <filename>/floppy/</filename>.
 Of course you can also copy the image under DOS or Windows.
 </para>
 
@@ -1081,7 +1081,7 @@ insert the floppy created above and mount it:
 mount /dev/fd0 /mnt
 </programlisting>
 
-Of course the directory <literal>/mnt/</literal> must exist. If it does
+Of course the directory <filename>/mnt/</filename> must exist. If it does
 not exist, create it with the command
 
 <programlisting>
@@ -1094,8 +1094,8 @@ Now copy the etherboot image to the harddisk:
 cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hda
 </programlisting>
 
-In case you have a SCSI system replace <literal>/dev/hda</literal>
-with <literal>/dev/sda</literal>.
+In case you have a SCSI system replace <filename>/dev/hda</filename>
+with <filename>/dev/sda</filename>.
 </para>
 
 <para>
@@ -1111,7 +1111,7 @@ cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hdc
 
 <caution>
 <para>
-A typo at <literal>/dev/hdc</literal> can lead to very unpleasant results!
+A typo at <filename>/dev/hdc</filename> can lead to very unpleasant results!
 </para>
 </caution>
 
@@ -1132,7 +1132,7 @@ batchfile upon startup.
 
 <para>
 We assume that DOS is already installed on harddisk. The image format for the
-ROM-o-matic is ``DOS.COM Executable ROM Image''.
+ROM-o-matic is <quote>DOS.COM Executable ROM Image</quote>.
 Aftre copying the received file on disk it can be executed and then
 etherboot starts. That's it!
 </para>
