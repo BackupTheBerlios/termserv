@@ -90,7 +90,7 @@ binary-indep: build install
 	dh_compress
 	dh_fixperms -Xetc/webmin/ltsp
 # You may want to make some executables suid here.
-	dh_suidregister
+#	dh_suidregister
 	dh_installdeb
 	dh_perl
 	dh_gencontrol

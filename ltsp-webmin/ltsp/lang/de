@@ -51,6 +51,7 @@ N=Nein
 GUI=Grafisch, auf dem Server
 LOCALX=Grafisch, lokal
 CHAR=Textbasiert, auf dem Server
+SHELL=lokale Shell ohne Paﬂwortabfrage, zum Debuggen
 default=Default
 
 

@@ -54,6 +54,7 @@ N=No
 GUI=Graphical, on the server
 LOCALX=Graphical, on the local machine
 CHAR=Text-based, on the server
+SHELL=local shell without login prompt, for debugging
 default=Default
 
 microsoft=Microsoft Natural
