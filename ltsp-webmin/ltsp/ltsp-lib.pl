@@ -17,7 +17,7 @@ sub ltsp_read_config($) {
 
   my $config_file = shift(@_);
 
-  print "ltsp_read_config: reading $config_file<br>" if $DEBUG;
+  print "ltsp_read_config: reading $config_file<br>\n" if $DEBUG;
 
   open (LST, "<$config_file");
   @lines = (<LST>);
@@ -35,8 +35,8 @@ sub ltsp_read_config($) {
     # configuration entry (="hce")
 
     if (/^\[(.*)?\]/) {
-      print "ltsp_read_config: $1<br>" if $DEBUG;
       $cur_hce = "$1";
+      print "ltsp_read_config: $1<br>\n" if $DEBUG;
 
       do {
         $i++;
