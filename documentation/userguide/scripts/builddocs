@@ -21,5 +21,8 @@ test -d ../out || mkdir ../out
 mv userguide.$LANG.dvi ../out
 mv userguide.$LANG.ps ../out
 mv userguide.$LANG.pdf ../out
+# The ps files are needed for the dvi file, because it does not include them.
+cp userguide-networkbasics-protocols-x-flow.eps ../out
+cp fsub-smalllogo.ps ../out
 
 cd $DIR

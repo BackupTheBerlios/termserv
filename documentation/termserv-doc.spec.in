@@ -1,0 +1,70 @@
+Summary: Documentation for the GNU/Linux Terminalserver for schools
+Summary(de): Dokumentation für den GNU/Linux Terminalserver für Schulen
+Name: termserv-doc
+Version: _VERSION_
+Release: 0
+Copyright: GPL
+Group: Documentation
+Source: termserv-doc-_VERSION_.tar.gz
+Packager: Georg Baum <gbaum@users.sourceforge.net>
+BuildArchitectures: noarch
+BuildRoot: /tmp/termserv-doc
+
+%description
+This package contains the Userguide of the GNU/Linux Terminalserver for
+schools in dvi, postscript and pdf format.
+
+%description -l de
+Dieses Paket enthält das Benutzerhandbuch des GNU/Linux Terminalservers für
+Schulen im dvi-, postscript- und pdf-Format.
+
+%prep
+  #
+  # Prepare the package for building on the development machine
+  #
+%setup
+
+%build
+  #
+  # Build the package by compiling any source code, producing binaries
+  # On the development machine
+  #
+  make
+
+%install
+  #
+  # Put the binaries where they belong on the development machine
+  #
+  
+%clean
+  # Cleanup after the build process on the development machine
+  make clean
+  # ${RPM_BUILD_ROOT} could be /, if the user specified it, so be careful!
+  if test "x${RPM_BUILD_ROOT}" = "x/tmp/termserv-doc"; then
+      rm -rf ${RPM_BUILD_ROOT}
+  else
+      echo "This package cannot be built with 'rpm --buildroot'".
+      exit 1
+  fi
+
+%files
+  %doc userguide/out/fsub-smalllogo.ps
+  %doc userguide/out/userguide-networkbasics-protocols-x-flow.eps
+  %doc userguide/out/userguide.de.dvi
+  %doc userguide/out/userguide.de.ps
+  %doc userguide/out/userguide.de.pdf
+
+%pre
+  #
+  # Just before the package is installed, this script will be run
+  #
+
+%post
+  #
+  # After the files in the package have been put in place,
+  # these commands will be run
+  #
+
+%changelog
+* Mon Jul 9 2001 Georg Baum <gbaum@users.sourceforge.net>
+- Initial release.
