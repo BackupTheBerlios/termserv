@@ -87,7 +87,11 @@ binary-indep: build install debian/conffiles debian/postinst debian/README.debia
 	dh_installchangelogs -i
 	dh_strip -i
 	dh_compress -i
-	dh_fixperms -i
+# ld-linux.so needs to be executable, so exclude it from dh_fixperms
+# Instead, set the permissions by hand.
+	dh_fixperms -i -Xld-linux
+	chown root:root debian/$(PACKAGE)/$(ROOT_DIR)/lib/ld-linux*
+	chmod 755 debian/$(PACKAGE)/$(ROOT_DIR)/lib/ld-linux*
 #	dh_suidregister -i
 	dh_installdebconf -i
 # I have a broken installdebconf, so do this:

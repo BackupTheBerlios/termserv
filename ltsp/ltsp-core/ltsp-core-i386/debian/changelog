@@ -1,3 +1,10 @@
+ltsp-core-i386 (3.0.0-1) unstable; urgency=low
+
+  * Made $ROOT_DIR/lib/ld-linux.so executable. The wrong permissions
+    caused troble for some people.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Tue,  8 Jan 2002 21:27:07 +0100
+
 ltsp-core-i386 (3.0.0-0) unstable; urgency=low
 
   * new package name to reflect upstream change as well as the fact that
