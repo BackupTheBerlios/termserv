@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# index.cgi
+# edit_host.cgi
 
 do '../web-lib.pl';
 require './ltsp-lib.pl';
