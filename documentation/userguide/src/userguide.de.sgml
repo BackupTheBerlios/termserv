@@ -305,6 +305,22 @@ diesem Punkt arbeitet der Benutzer auf dem Server.
 Der Terminalserver wird auf eine beliebige schon bestehende Installation eines 
 GNU/Linux-Systems aufgespielt.
 </p>
+
+<sect1>Überlegungen vor der Installation
+
+<sect2>Sicherheit
+
+<p>
+Seit geraumer Zeit haben Sicherheitslücken auf allen Betriebssystemen
+immer wieder Aufsehen erregt. Rechner wurden mit teilweise geringstem
+Aufwand kompromitiert. Da Ihr Terminalserver, auf dem möglicherweise
+auch persönliche Dokumente und wichtige Arbeitsdaten liegen, geschützt
+sein soll, darf der Terminalserver nicht gleichzeitig als Zugangsrechner
+(Gateway, Router) zum Internet verwendet werden! Benutzen Sie dazu einen
+zweiten Rechner, auf den Sie beispielsweise den Arktur-Kommunikationsserver
+installiert haben. Dieser sorgt für die notwendige Sicherheit und Abschirmung
+vor Angreifern aus dem Internet.
+</p>
   
 <sect1>Software-Pakete
 
@@ -427,18 +443,18 @@ verbrauchen sie etwas weniger Speicher, und zum Anderen will manche betagte Hard
 mit den neueren Versionen nicht richtig laufen.
 Beispielkonfigurationsdateien, in denen außer der Netzwerkkarte schon alle nötigen
 Einstellungen vorgenommen sind, finden Sie je nach verwendeter Distribution unter
-/usr/share/doc/termserv-doc/ oder /usr/share/doc/packages/termserv-doc/, wenn
-Sie das Paket termserv-doc installiert haben.
+<tt>/usr/share/doc/termserv-doc/</tt> oder <tt>/usr/share/doc/packages/termserv-doc/</tt>, 
+wenn Sie das Paket <tt>termserv-doc</tt> installiert haben.
 
 TODO: Dateien erstellen.
 
 </p>
 
 <p>
-Nachdem der Kernel erfolgreich compiliert wurde, muß er noch mit mknbi-linux in ein
+Nachdem der Kernel erfolgreich compiliert wurde, muss er noch mit mknbi-linux in ein
 von Etherboot lesbares Format gewandelt werden. Wie das geht, steht in der
-Etherboot-Dokumentation. Anschließend muß der nun im "tagged image format" vorliegende
-Kernel nach /tftpboot/lts/ kopiert werden.
+Etherboot-Dokumentation. Anschließend muss der nun im "tagged image format" vorliegende
+Kernel nach <tt>/tftpboot/lts/</tt> kopiert werden.
 </p>
 
 <sect1>Installation von CD
