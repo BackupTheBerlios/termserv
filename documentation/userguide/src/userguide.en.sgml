@@ -11,6 +11,11 @@ Christian Selig <tt/christian.selig@bnv-bamberg.de/
 
 <toc>
  
+<sect>Please help us!
+
+Dear reader, please consider helping us to translate the documentation
+which is currently in German.
+
 <sect>Introduction
 
 <p>
@@ -42,98 +47,101 @@ sind teuer. Schon deswegen teuer, weil für jeden Arbeitsplatz ein eigener
 kompletter Rechner gestellt und nach wenigen Jahren ersetzt werden muss.
 </p>
 
-<p> 
-Eine Lösungsmöglichkeit in diesem Dilemma bietet der Terminalserver. Er 
-ist keine Erfindung des 21. Jahrhunderts, sondern greift einen bekannten 
-und bewährten Lösungsansatz auf. 
+<p>
+A terminal server provides a solution for this dilemma. It is no
+invention of the 21st century, but relies on a well-known and
+[bewährten] approach.
 </p>
 
-<sect1>Idee und Prinzip
+<sect1>Idea and Principle
 
 <p>
-Die Idee des Terminalservers ist simpel: Warum Software und 
-Rechenkapazität auf jedem Endgerät vorhalten, das z.B. beim 
-Einsatz einer Textverarbeitung die allermeiste Zeit nur 
-``Däumchen dreht''? Warum nicht die Kapazität eines Rechners ausnutzen, 
-indem man mehrere Benutzer gleichzeitig an ihm arbeiten lässt?
+The idea of a terminal server is simple: why provide software
+and computing power on the workstation, which, e.g. while
+using a word processor does essentially nothing?
+Why not use to power of a single computer by letting multiple
+users work with it?
 </p>
 
 <p> 
-Da natürlich sich nicht mehrere Benutzer gleichzeitig vor einen 
-Bildschirm und eine Tastatur setzen und arbeiten können, verteilt 
-der Rechner seine Kapazität über ein Netz an mehrere ``dumme'' 
-Terminals, die im Grunde nichts weiter darstellen als ein 
-Bildschirm, eine Tastatur und ein Endgerät, das ohne Laufwerke 
-und großen Speicherausausbau auskommt, das Terminal eben.
+Of course, because multiple users can't sit in front of on screen
+and one keyboard at the same time, the computer distributes
+its power to a number of ''dumb'' terminals through a network.
+These terminals are nothing more than a screen, a keyboard, a
+mouse and a computing device that does not have to rely on
+local storage and big memory.
 </p>
 
 <p> 
-
-Prinzipiell sind zwei Formen des Terminals im Einsatz:
+Generally, there are two types of terminals:
 
 <itemize>
 <item>X-Terminal:
-Dies sind z.B. schwachbrüstige Altrechner mit kleinen Festplatten, 
-die nur ein Minimalsystem aufgespielt haben und sich alle Anwendungen vom Server holen.
+They are e.g. old computers with small hard disks that have a small operating
+system installed and fetch all applications from the server.
 </item>
 <item>
-Diskless-Client:
-Diese Rechner enthalten keine Laufwerke, alle erfolderlichen 
-Programme holen sich die Geräte über die Netzwerkkarte mit Eprom.
+Diskless Client:
+These computers do not have local storage, all needed applications, including
+the operating system, are fetched from the network.
 </item>
 </itemize>
 
 <p>
-Eine Terminalserverlösung besteht also aus einem gut ausgebauten Server, 
-auf dem alle Software installiert und gewartet wird und den mit ihm 
-verbundenen, so gut wie wartungsfreien Terminals. Wartungsfrei deswegen, 
-weil auf ihnen keine Software installiert ist und keine Festplatten kaputt gehen können.
+A terminal server solution consists of a well-equiped server, where all
+applications are installed and configured and of basically administration-free
+terminals that are connected with the server. These terminals are adminstration-free
+because they have no software installed and no hard disks that can be damaged.
 </p>
 
-<sect1>Die Vorteile
+<sect1>Advantages
 
 <p> 
-Der Terminal-Server reizt die Vorteile eines Netzwerks voll aus. Konsequent eingesetzt, verringert er
-den Verwaltungsaufwand des Systemamdministrators enorm. Aber nicht nur das:
+The terminal server fully exploits the advantages of a network. Used consequently, it
+reduces the administration effort of the systems administrator enormously. But there's
+even more to it:
  
 <itemize>
-<item>Ältere Hardware kann für die Terminals weiter verwendet werden.</item>
-<item>Es braucht nur noch ein Rechner -- der Server -- administriert zu werden.</item>
-<item>Software wird nur einmal zentral aufgespielt, gewartet und steht allen angeschlossenen Terminals zur Verfügung.</item>
-<item>Zeit und Kosten werden erheblich minimiert.</item>
+<item>Old computers can be reused as terminals.</item>
+<item>Only one computer -- the server -- needs to be administered.</item>
+<item>Software needs to be installed only one time, is administered centrally and
+is available to all connected terminals.</item>
+<item>It minimized the amount of time and money spent.</item>
 </itemize>  
 
 </p>
 
-<sect>Grundlagen eines Terminalserver-Netzwerks
+<sect>Terminal server networking basics
 
-<p> 
-Ein Terminalserver funktioniert nach einem sehr simplen Prinzip. 
-Jedoch sollten Sie für ein besseres Verständnis die zu Grunde 
-liegenden Schemata kennen, damit Sie ihr Netzwerk im Überblick 
-haben und im Problemfall gezielter nach dem Fehler suchen können.     
+<p>
+A terminal server follows a very simple principle.
+You should have a better understanding of the underlying schemata,
+so that you have a better overview of your network and have
+fewer problems when it comes to troubleshooting.
 </p>
 
-<sect1>Protokolle
+<sect1>Protocols
  
 <p>
-Für die Kommunikation in einem Netzwerk sind Protokolle vonnöten. Sie schreiben
-vor, wie etwa die Adressierung in einem Netzwerk aussehen muss und wie Rechner
-innerhalb des Netzwerks Daten austauschen.
+Protocols are of fundamental importance within a network. They define
+e.g. the network's address structure or the form of data exchange between
+computers within a network.
 </p>
  
 <p>
-Solche Protokolle existieren mehrschichtig, das heißt, ein Protokoll baut
-auf grundlegenderen Protokollen auf. Im Folgenden werden einige Protokolle
-beschrieben, deren Schichtung (von ''tief'' nach ''hoch'') wie folgt aussieht:
+These protocols are multi-tiered which means that one protocol may rely
+on a more basic protocol. Protocol layering (from
+the ''deep'' to the ''high'' level) looks like this:
 <enum>
 <item><ref id="mac-addresses" name="MAC-Adressen"></item>
 <item>IP-Adressen</item>
 <item>DNS, <ref id="dhcp-protocol" name="DHCP">, TFTP, NFS, X11</item>
 </enum>
+These protocols are also the protocols used in a terminal server network
+and are described below.
 </p>
 
-<sect2>MAC-Adressen<label id="mac-addresses">
+<sect2>MAC adresses<label id="mac-addresses">
  
 <p>
 MAC-Adressen sind Netzwerk-Adressierungen auf der technisch untersten Ebene.

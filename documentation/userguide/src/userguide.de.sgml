@@ -77,7 +77,7 @@ die nur ein Minimalsystem aufgespielt haben und sich alle Anwendungen vom Server
 <item>
 Diskless-Client:
 Diese Rechner enthalten keine Laufwerke, alle erfolderlichen 
-Programme holen sich die Geräte über die Netzwerkkarte mit Eprom.
+Programme einschließlich Betriebssystem holen sich die Geräte über das Netzwerk.
 </item>
 </itemize>
 
