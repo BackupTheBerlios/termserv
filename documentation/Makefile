@@ -12,8 +12,7 @@ FAKEROOT = ${shell which fakeroot}
 PACKAGE = termserv-doc
 
 all:
-	cd userguide/scripts && ./builddocs de
-	cd userguide/scripts && ./builddocs de
+	cd userguide && $(MAKE) all
 
 # debian package
 deb: tgz
@@ -40,7 +39,7 @@ install:
 clean:
 	rm -rf tmp
 	rm -f $(PACKAGE).spec
-	cd userguide/scripts && ./clean
+	cd userguide && $(MAKE) clean
 	rm -rf userguide/out
 
 deb-clean:
