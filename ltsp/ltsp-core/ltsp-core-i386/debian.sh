@@ -170,6 +170,10 @@ elif test "${VERSION}" = "woody"; then
     VERSION_MAJOR=3
     VERSION_MINOR=0
     version_warn ${VERSION} ${VERSION_MAJOR}.${VERSION_MINOR}
+elif test "${VERSION}" = "sarge"; then
+    VERSION_MAJOR=3
+    VERSION_MINOR=0
+    version_warn ${VERSION} ${VERSION_MAJOR}.${VERSION_MINOR} new
 elif test "${VERSION}" = "testing_unstable"; then
     # This can be any release after potato. For now (until woody is released)
     # we can safely treat is as woody, but this may change once
@@ -1128,6 +1132,7 @@ fi
     echo "bootpd:    0.0.0.0"
     echo "in.tftpd:  ${IP_NETWORK_BASE}."
     echo "portmap:   ${IP_NETWORK_BASE}."
+    echo "mountd:    ${IP_NETWORK_BASE}."
     echo
     echo "## LTS-end ##"
 ) >>${TARGET}
@@ -1532,7 +1537,7 @@ logit "Setting up ${TARGET}"
     echo "group	{"
     echo "    use-host-decl-names       on;"
     echo "    option log-servers        ${IP_SERVER};"
-    echo "# The follwing is _NOT_ a MAC address!"
+    echo "# The following is _NOT_ a MAC address!"
     echo "    option option-128         e4:45:74:68:00:00;"
     echo ""
     echo "    host ws001 {"

@@ -1,3 +1,13 @@
+ltsp-core-i386 (3.0.7-0) unstable; urgency=low
+
+  * new upstream release.
+  * debian.sh: add an antry for mountd to the generated hosts.allow file
+    (Thanks to Jake Schroeder <akejay@freeshell.org>)
+  * added ldconfig call to postinst (neede for ltsp-x-core 3.0.5)
+  * added recognition of sarge (not tested in any way)
+
+ -- Georg Baum <gbaum@users.sf.net>  Thu, 07 Feb 2003 21:16:34 +0100
+
 ltsp-core-i386 (3.0.5-1) unstable; urgency=low
 
   * Fixed bug that prevented this package from being installed freshly

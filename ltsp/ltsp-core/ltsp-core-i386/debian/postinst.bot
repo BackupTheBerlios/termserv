@@ -9,6 +9,7 @@ _EOF_
         db_get ltsp-core/upgrade_location
       fi
       db_get ltsp-core/ltsp_initialize
+      /sbin/ldconfig -r _LTSP_DIR_/i386
 
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)

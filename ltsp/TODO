@@ -1,0 +1,30 @@
+This is an unsorted TODO list for the LTSP Debian packages.
+Some items might not be debian specific, but apply to all distros.
+The fact that something is contained in this file does not necessaryly mean
+that it gets implemented. Also, the order of things is _not_ sorted in any way.
+Think of this file as of a collection of thoughts that might be useful.
+
+get rid of the ldconfig calls in postinst scripts
+(they mix server and ltsp tree)
+
+add a shutdown entry to {k,g,x}dm menu. Requested by many people,
+  but how to do it?
+
+copyright in ltsp-doc: where is the gfdl installed in debian?
+  Not installed at all in the moment:-(
+  What is the copyright of the other texts (besides the LTSP manual)?
+
+clean up kdm configuration
+
+make background (display of LTSP logo) work again for kdm (and maybe other dm too?)
+
+add Ken Yaps changes from ltsp-devel for rejecting 2nd dhcp server by dhclient
+
+install rgb.txt also in /etc/X11?
+
+install xkbcomp also in /usr/X11R6/bin?
+
+
+
+Georg Baum <gbaum@users.sf.net>
+
