@@ -1,10 +1,6 @@
-0.5:
-
- - finish the non-rewriting configuration file modification routine
-   (sledge)
- - clean up the mess
-
 0.6:
+
+ - add support for Etherboot ROM image creation
 
 0.7:
 
