@@ -1,0 +1,102 @@
+index_title=LTSP Configurazione
+hosts=Hosts
+host=Host
+settings_for=Configurazione per
+save_settings=Save Settings
+delete_host=Elimina Host
+name_of_new_host=Nome del nuovo Host
+add_host=Aggiungi Host
+
+configuration_check=Controllo Configurazione 
+checks=Controlli
+tftp_daemon_running=demone TFTP attivo
+
+select_rom_image=Selezione ROM 
+select=Seleziona
+select_nic=Seleziona la tua Interfaccia 
+rom_output_format=formato output ROM
+binary_image=Immagine binaria
+floppy_loadable_image=Immagine per il floppy
+get_rom_image=Download immagine ROM
+
+error_finding_floppy_boot_sector=Errore rilevazione settore di boot del floppy del vostro pacchetto Etherboot.
+file_not_found=File non trovato.
+
+yes=Si
+no=No
+
+SERVER=Server
+DNS_SERVER=DNS Server
+LOCAL_APPS=Applicazioni locali
+LOCAL_WM=Window Manager Locale
+NIS_DOMAIN=NIS Domain
+SYSLOG_HOST=Protocol Server
+TELNET_HOST=Telnet Server
+RAMDISK_SIZE=Dimensione Ramdisk
+UI_MODE=Modalita di boot
+USE_XFS=Usa X Font Server
+XDM_SERVER=XDM Server
+XSERVER=X Server
+X_RES_1=Risoluzione
+X_COLOR_DEPTH=Profondita colore
+X_HORZSYNC=Sincronizzazione orizzontale
+X_VERTREFRESH=Aggiornamento Verticale
+X_MOUSE_BUTTONS=Numero pulsanti Mouse
+X_MOUSE_DEVICE=Dispositivo Mouse
+X_MOUSE_PROTOCOL=Protocollo Mouse
+X_MOUSE_BAUD=Baudrate del dispositivo
+XkbModel=Modello tastiera
+XkbLayout=Layout tastiera
+
+Y=Si
+N=No
+GUI=Grafica, sul server
+LOCALX=Grafica, su macchina locale
+CHAR=Testo, sul server
+SHELL=shell locale senza login per debugging
+default=Default
+
+microsoft=Microsoft Natural
+dell101=Dell 101 keys
+flexpro=KeyTronic FlexPro
+omnikey101=Northgate OmniKey 101 keys
+pc101=Standard 101 keys
+pc102=Standard 102 keys
+pc104=Standard 104 keys
+pc105=Standard 105 keys
+pc106=Standard 106 keys Japanese
+everex=Everex STEPnote
+winbook=Winbook XP5
+pc98=NEC PC98
+abnt2=ABNT2
+
+be=Belgian
+bg=Bulgarian
+br=Brazilian
+ca=Canadian
+ca_enhanced=Candian (enhanced)
+de=German
+de_CH=German (Switzerland)
+dk=Denish
+en_US=US English
+es=Spanish
+fi=Finnish
+fr=French
+fr_CH=French (Switzerland)
+gb=British
+hu=Hungarian
+is=Islandic
+it=Italian
+jp=Japanese
+no=Norwegian
+pl=Polish
+pt=Portugese
+ru=Russian
+se=Swedish
+th=Thai
+us=US
+
+network_settings=Configurazione Rete e Avvio
+graphics_card_settings=Configurazione scheda video
+keyboard_settings=Configurazione tastiera
+mouse_settings=Configurazione mouse
