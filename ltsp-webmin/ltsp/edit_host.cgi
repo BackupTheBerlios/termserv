@@ -61,65 +61,68 @@ if ($in{"action"} eq "add") {
 
 foreach (&ltsp_get_option_groups()) {
 
-  print "<table cellpadding=\"5\" border=\"0\">\n";
-  print "<tr $tb> <td colspan=\"3\"><b>" . $text{"$_"} . "</b></td></tr>\n";
+  if (&ltsp_get_options($_)) {
+    print "<table cellpadding=\"5\" border=\"0\">\n";
+    print "<tr $tb> <td colspan=\"3\"><b>" . $text{"$_"} . "</b></td></tr>\n";
 
-  foreach (&ltsp_get_options($_)) {
+    foreach (&ltsp_get_options($_)) {
 
-    $cur_option = $_;
+      $cur_option = $_;
 
-    if ($conf{"$_"} eq "") { $def = 1; } else { $def = 0 }
+      if ($conf{"$_"} eq "") { $def = 1; } else { $def = 0 }
 
-    if (&ltsp_get_option_type($cur_option) eq "select") {
+      if (&ltsp_get_option_type($cur_option) eq "select") {
 
-      print "<tr><td>" . $text{"$_"} . "</td>\n";
-      if ($in{"name"} ne "Default") {
-        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
-        print ">" . $text{"default"} . "</td>\n";
-        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
-      } else {
-        print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
-      }
-      print "><select name=\"$cur_option\" size=\"1\">\n";
-      $has_selected = 0;
-      foreach (&ltsp_get_possible_values($cur_option)) { 
-        $pos_val = $_;
-        chomp($pos_val);
-        if ($conf{"$cur_option"} eq "$pos_val") {
-          print "<option value=\"$pos_val\" selected>";
-          $has_selected = 1;
+        print "<tr><td>" . $text{"$_"} . "</td>\n";
+        if ($in{"name"} ne "Default") {
+          print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
+          print ">" . $text{"default"} . "</td>\n";
+          print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
         } else {
-          print "<option value=\"$pos_val\">";
+          print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
         }
+        print "><select name=\"$cur_option\" size=\"1\">\n";
+        $has_selected = 0;
+        foreach (&ltsp_get_possible_values($cur_option)) { 
+          $pos_val = $_;
+          chomp($pos_val);
+          if ($conf{"$cur_option"} eq "$pos_val") {
+            print "<option value=\"$pos_val\" selected>";
+            $has_selected = 1;
+          } else {
+            print "<option value=\"$pos_val\">";
+          }
 
-        if (&ltsp_need_value_translation($cur_option)) {
-          print $text{"$pos_val"} . "\n";
-        } else {
-          print "$pos_val\n";
+          if (&ltsp_need_value_translation($cur_option)) {
+            print $text{"$pos_val"} . "\n";
+          } else {
+            print "$pos_val\n";
+          }
         }
-      }
-      if ((!$def) and (!$has_selected)) {
-        print "<option value=\"" . $conf{"$cur_option"} . "\" selected>" . $conf{"$cur_option"};
-      }
-      print "</select></td></tr>\n";
-    } else {
-      print "<tr><td>" . $text{"$_"} . "</td>\n";
-      if ($in{"name"} ne "Default") {
-        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
-        print ">" . $text{"default"} . "</td>\n";
-        print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+        if ((!$def) and (!$has_selected)) {
+          print "<option value=\"" . $conf{"$cur_option"} . "\" selected>" . $conf{"$cur_option"};
+        }
+        print "</select></td></tr>\n";
       } else {
-        print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
-      }
-      print ">\n";
+        print "<tr><td>" . $text{"$_"} . "</td>\n";
+        if ($in{"name"} ne "Default") {
+          print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"Default\""; print " checked" if ($def);
+          print ">" . $text{"default"} . "</td>\n";
+          print "<td><input type=\"radio\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+        } else {
+          print "<td><input type=\"checkbox\" name=\"def_$cur_option\" value=\"NoDefault\""; print " checked" if (! $def);
+        }
+        print ">\n";
 
-      print "<input type=\"text\" name=\"$_\" value=\"" . $conf{"$_"} . "\">\n";
-      print "</td></tr>\n";
+        print "<input type=\"text\" name=\"$_\" value=\"" . $conf{"$_"} . "\">\n";
+        print "</td></tr>\n";
+      }
+
     }
 
-  }
+    print "</table><br>\n";
 
-  print "</table><br>\n";
+  }
 
 }
 
