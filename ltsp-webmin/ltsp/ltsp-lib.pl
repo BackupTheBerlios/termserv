@@ -44,6 +44,7 @@ sub ltsp_header {
 #    }
 #  }
   $version = ltsp_read_version($config{"ltsconf_path"} . "/version");
+  print "version $version is unknown, because it's value in the hash table is " . $versions{$version} . "<br>" if $DEBUG;
   error($text{"unknown_version"} . " $version.") unless ($versions{$version});
   if($DEBUG) {
     &ltsp_check_options();
@@ -67,7 +68,7 @@ sub ltsp_read_version($) {
       last;
     }
   }
-  print "version: $vers<br>\n" if $DEBUG;
+  print "ltsp_read_version: version: $vers<br>\n" if $DEBUG;
   return $vers;
 }
 
@@ -437,7 +438,7 @@ sub ltsp_check_options() {
   opendir (LST, "./options");
   @existing_options = grep !/^\.\.?$/, readdir LST;
   foreach $option (@existing_options) {
-    if (-d "./options/$option") {
+    if ((-d "./options/$option") and ($option ne "CVS")) {
       error("Option $option exists but is not in options/order!") unless grep /$option/, @order_options;
     }
   }
