@@ -10,3 +10,11 @@ Suggests: ltsp-core
 Description: Linux Terminal Server Project (ltsp.org) documentation
  This package contains the Installation Guide of the
  Linux Terminal Server Project.
+
+Package: ltsp-doc-de
+Architecture: all
+Suggests: ltsp-core
+Description: Linux Terminal Server Project (ltsp.org) german documentation
+ This package contains the Installation Guide of the
+ Linux Terminal Server Project in German.
+

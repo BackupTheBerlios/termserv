@@ -1,3 +1,9 @@
+ltsp-doc (3.0.1-0) unstable; urgency=low
+
+  * Added german translation
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Sat, 20 Jul 2002 11:38:55 +0200
+
 ltsp-doc (3.0.0-0) unstable; urgency=low
 
   * New standards version.

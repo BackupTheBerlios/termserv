@@ -18,7 +18,7 @@ XSERVER_OLD_NAME="ltsp_x336"
 XFREE_VERSION="3.3.6"
 
 
-CORE_VERSION="3.0.0"
+CORE_VERSION="3.0.4"
 CORE_NAME="ltsp-core"
 CORE_OLD_NAME="ltsp_core"
 
@@ -34,15 +34,15 @@ LOCALAPPS_VERSION="3.0.0"
 LOCALAPPS_NAME="ltsp-local-apps"
 LOCALAPPS_OLD_NAME="ltsp_local_apps"
 
-DOC_VERSION="3.0.0"
+DOC_VERSION="3.0.1"
 DOC_NAME="ltsp-doc"
 DOC_OLD_NAME="ltsp-doc"
 
 # Specaisl arguments that will be passed to dpkg-source
 DOC_ARGS="-sn"
 
-KERNEL_VERSION="3.0.0"
-KERNEL_NAME="ltsp-kernel-2.4.9"
+KERNEL_VERSION="3.0.4"
+KERNEL_NAME="ltsp-kernel-2.4.18"
 KERNEL_OLD_NAME="ltsp_kernel"
 KERNEL_DIR="ltsp-kernel"
 
