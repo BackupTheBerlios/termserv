@@ -3,12 +3,6 @@
 source /usr/share/debconf/confmodule
 
 db_input medium ltsp-core/ltsp_initialize || true
-if ! test -e _SCRIPT_DIR_/create-templates.sh -a -e _SCRIPT_DIR_/CONFIG; then
-    db_input medium ltsp-core/create-templates-missing || true
-    # don't run this here: db_input medium ltsp-core/ltsp_initialize || true
-    db_go
-    exit 0
-fi
 if test -e /tftpboot/lts/ltsroot -o -e /usr/lib/lts/ltsroot; then
     db_input medium ltsp-core/upgrade_location || true
 fi

@@ -1,0 +1,17 @@
+#! /bin/sh
+# postinst script for lts-core
+#
+# see: dh_installdeb(1)
+
+source /usr/share/debconf/confmodule
+
+set -e
+
+case "$1" in
+    configure)
+      if ! test -e _SCRIPT_DIR_/CONFIG; then
+        # The user has installed this package before and then deleted the files by hand.
+	# Because CONFIG is a configuration file, the new version from the
+	# package is not installed. This causes create-templates.sh to fail, so install
+	# a new version of CONFIG instead.
+        cat > _SCRIPT_DIR_/CONFIG << _EOF_

@@ -1,18 +1,4 @@
-#! /bin/sh
-# postinst script for lts-core
-#
-# see: dh_installdeb(1)
-
-source /usr/share/debconf/confmodule
-
-set -e
-
-case "$1" in
-    configure)
-      if ! test -e _SCRIPT_DIR_/create-templates.sh -a -e _SCRIPT_DIR_/CONFIG; then
-        db_get ltsp-core/create-templates-missing
-        # don't run this here: db_get ltsp-core/ltsp_initialize
-	exit 0
+_EOF_
       fi
       pushd _SCRIPT_DIR_ >/dev/null 2>&1
       ./create-templates.sh > /dev/null << _EOF_

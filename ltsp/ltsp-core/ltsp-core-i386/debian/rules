@@ -35,6 +35,7 @@ clean:
 	rm -f debian/conffiles
 	rm -f debian/dirs
 	rm -f debian/postinst
+	rm -f debian/postinst.in
 	rm -f debian/README.debian
 	rm -f debian/templates
 
@@ -58,22 +59,38 @@ install-stamp: build-stamp debian/dirs
 	touch install-stamp
 
 debian/config: debian/config.in
-	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | \
+	sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | \
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
 
 debian/conffiles: debian/conffiles.in
-	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | \
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
 
 debian/dirs: debian/dirs.in
-	sed 's!_LTSP_DIR_PREFIX_!$(LTSP_DIR_PREFIX)!g' < $< | sed 's!_SWAP_DIR_PREFIX_!$(SWAP_DIR_PREFIX)!g' > $@
+	sed 's!_LTSP_DIR_PREFIX_!$(LTSP_DIR_PREFIX)!g' < $< | \
+	sed 's!_SWAP_DIR_PREFIX_!$(SWAP_DIR_PREFIX)!g' > $@
 
 debian/README.debian: debian/README.debian.in
-	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_TMPL_DIR_!$(TMPL_DIR)!g'> $@
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' < $< | \
+	sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | \
+	sed 's!_TMPL_DIR_!$(TMPL_DIR)!g'> $@
+
+debian/postinst.in: debian/postinst.top CONFIG debian/postinst.bot
+	cat debian/postinst.top > $@
+	sed 's!\(\$$\)!\\\1!g' < CONFIG | sed 's!\(`\)!\\\1!g' >> $@
+	cat debian/postinst.bot >> $@
 
 debian/postinst: debian/postinst.in
-	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' < $< | \
+	sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' | \
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' > $@
 
 debian/templates: debian/templates.in
-	sed 's!_PACKAGE_!$(PACKAGE)!g' < $< | sed 's!_TMPL_DIR_!$(TMPL_DIR)!g' | sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' | sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' > $@
+	sed 's!_PACKAGE_!$(PACKAGE)!g' < $< | \
+	sed 's!_TMPL_DIR_!$(TMPL_DIR)!g' | \
+	sed 's!_ROOT_DIR_!$(ROOT_DIR)!g' | \
+	sed 's!_SCRIPT_DIR_!$(SCRIPT_DIR)!g' > $@
 
 # Build architecture-independent files here.
 binary-indep: build install debian/config debian/conffiles debian/postinst debian/README.debian debian/templates
