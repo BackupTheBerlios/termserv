@@ -23,7 +23,7 @@ if ($in{"action"} eq "delete") {
 
   print "<font color=\"#ff0000\">Host " . $in{"name"} . " deleted</font>\n";
 
-  &ltsp_modify_entry($in{"name"}, %ent);
+  &ltsp_modify_entry($in{"name"}, "d", %ent);
   &ltsp_write_config($config{"ltsconf_path"} . "/lts.conf");
 
 } elsif ($in{"action"} eq "add") {
@@ -39,7 +39,7 @@ if ($in{"action"} eq "delete") {
     }
   }
 
-  &ltsp_modify_entry($in{"newhost"}, %modent);
+  &ltsp_modify_entry($in{"newhost"}, "a", %modent);
   &ltsp_write_config($config{"ltsconf_path"} . "/lts.conf");
 
 } elsif ($in{"action"} eq "modify") {
@@ -55,7 +55,7 @@ if ($in{"action"} eq "delete") {
     }
   }
 
-  &ltsp_modify_entry($in{"name"}, %modent);
+  &ltsp_modify_entry($in{"name"}, "m", %modent);
   &ltsp_write_config($config{"ltsconf_path"} . "/lts.conf");
   
 }

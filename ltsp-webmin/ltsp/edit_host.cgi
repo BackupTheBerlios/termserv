@@ -94,7 +94,11 @@ foreach (&ltsp_get_option_groups()) {
           }
 
           if (&ltsp_need_value_translation($cur_option)) {
-            print $text{"$cur_option\_$pos_val"} . "\n";
+	    if ($text{"$cur_option\_$pos_val"} ne "") {
+              print $text{"$cur_option\_$pos_val"} . "\n";
+	    } else {
+	      print $text{"$pos_val"} . "\n";
+	    }
           } else {
             print "$pos_val\n";
           }

@@ -84,12 +84,14 @@ sub ltsp_read_config($) {
 
   &lock_file("$config_file");
   open (LST, "<$config_file");
-  @lines = (<LST>);
+  my @lines = (<LST>);
   close (LST);
   &unlock_file("$config_file");
   &webmin_log("read", "file", $config_file, );
 
-  for ($i = 0; $i<$#lines; $i++) {
+  $cur_hce = "";
+
+  for ($i = 0; $i<=$#lines; $i++) {
 
     $_ = $lines[$i];
 
@@ -102,30 +104,27 @@ sub ltsp_read_config($) {
 
     if (/^\[(.*)?\]/) {
       $cur_hce = "$1";
+    }
 
-      do {
-        $i++;
-        # $lines[$i] =~ s/ //g;
-        chomp($lines[$i]);
+    chomp($lines[$i]);
 
-        # If line is not empty or a comment
-        if ((length($lines[$i]) != "0") and (!($lines[$i] =~ /^\#/))) {
-          ($key, $value) = split(/=/, $lines[$i]);
+    # If line is not empty or a comment
+    if ((length($lines[$i]) != "0") and (!($lines[$i] =~ /^\#/))) {
+      ($key, $value) = split(/=/, $lines[$i]);
 
-          $key =~ s/(\s*)?//g;
-          $value =~ s/^(\s*)?//;
-          $value =~ s/(\s*)$//;
-          $value =~ s/\"//g;
+      $key =~ s/(\s*)?//g;
+      $value =~ s/^(\s*)?//;
+      $value =~ s/(\s*)$//;
+      $value =~ s/\"//g;
 
-          $profiles{"$cur_hce"} .= ";$key,$value";
-        }
-      } until (($lines[$i+1] =~ /^\[(.*)?\]/) or ($#lines == $i));
+      $profiles{"$cur_hce"} .= ";$key,$value";
     }
   }
 
   # Kill semicolon
   foreach (keys(%profiles)) {
     $profiles{"$_"} = substr($profiles{"$_"}, 1);
+    print "$_" . $profiles{"$_"} . "<br>" if $DEBUG;
   }
 
 }
@@ -137,6 +136,10 @@ sub _ltsp_modify_entry_on_write(@) {
   # information of the entry; it returns the modified list
 
   *lines = shift(@_);
+
+  print "_ltsp_modify_entry_on_write says all the lines it got: <br>\n" if $DEBUG;
+  foreach (@lines) { print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n" if $DEBUG; }
+  print "<hr>" if $DEBUG;
 
   %cur_conf = ();
   
@@ -154,8 +157,12 @@ sub _ltsp_modify_entry_on_write(@) {
     $cur_conf{"$key"} .= $value;
   }
 
+  print "_ltsp_modify_entry_on_write says host is $host<br>\n" if $DEBUG;
   %conf = &ltsp_get_configuration($host);
 
+  print "_ltsp_modify_entry_on_write says new conf is " . $profiles{"$host"} . "<br>\n" if $DEBUG;
+  foreach (keys(%conf)) { print "_ltsp_modify_entry_on_write new is $_ = " . $conf{"$_"} . "<br>\n" if $DEBUG; }
+  foreach (keys(%cur_conf)) { print "_ltsp_modify_entry_on_write old is $_ = " . $cur_conf{"$_"} . "<br>\n" if $DEBUG; }
   (*added, *deleted, *modified, *nonmodifed) = &compare_hashes(\%cur_conf, \%conf);
 
   for ($i = 0; $i<=$#lines; $i++) {
@@ -168,21 +175,8 @@ sub _ltsp_modify_entry_on_write(@) {
     $key =~ s/(\s*)?//g;
     $value =~ s/^(\s|\t)*(\"{0,1})(.*?)\"{0,1}\s*$/$3/;
 
-    # And once again Larry gets on my ****. He is too stupid to invent
-    # the "a in b" operator which returns true when string a is in array b
-    # even the squichie eaters languages from Wirth have this simple operation!
-# It's not an operator, but it works like this:
-# if grep /^$a$/, @b
-# returns true if and only if $a is in @b.
-# So this should work:
-#   if grep /^$key$/, @deleted {
-#      if (&_ltsp_option_exists($key)) {
-#        splice(@lines, $i, 1);
-#      }
-#    }
-# etc.
-  
     foreach (@deleted) {
+      print "_ltsp_modify_entry_on_write says $_ deleted<br>\n" if $DEBUG;
       if ($_ eq $key) {
         print "delete?: $_<br>\n" if $DEBUG;
         if (&_ltsp_option_exists($_)) {
@@ -194,6 +188,7 @@ sub _ltsp_modify_entry_on_write(@) {
     }    
 
     foreach (@modified) {
+      print "_ltsp_modify_entry_on_write says $_ modified<br>\n" if $DEBUG;
       if ($_ eq $key) {
         print "modified: $_<br>\n" if $DEBUG;
         if ($lines[$i] =~ /(\s*)?(\w*)?(.*)?=(.*)?\"(.*)?\"(.*)?/) {
@@ -217,6 +212,7 @@ sub _ltsp_modify_entry_on_write(@) {
   }
 
   foreach (@added) {
+    print "_ltsp_modify_entry_on_write says $_ added<br>\n" if $DEBUG;
     if (&ltsp_value_needs_quotes("$_")) {
       push (@lines, "$_ = \"" . $conf{"$_"} . "\"");
     } else {
@@ -243,26 +239,29 @@ sub ltsp_write_config($) {
 
   # Do we have any hosts deleted?
   if ($#deleted_hosts != -1) {
+    print "We will delete some hosts right now.<br>" if $DEBUG;
     foreach (@deleted_hosts) {
+      print "I will delete host $_<br>" if $DEBUG;
       $i = 0;
 
       # Find out where to begin deletion
-      BEGINDELETE: for ($i = 0; $i < $#lines; $i++) {
+      for ($i = 0; $i <= $#lines; $i++) {
         if ($lines[$i] =~ /^\[$_\]/) {
           $begin_delete = $i;
-          last BEGINDELETE;
+          last;
         }
       }
       # Find out where to stop deletion
-      ENDDELETE: while ($i <= $#lines) {
+      while ($i <= $#lines) {
         $i++;
         if ($lines[$i] =~ /^\[(.*)?\]/) {
-          $end_delete = $i-1;
-          last ENDDELETE;
+          $end_delete = $i;
+          last;
         }
       }
-      # In case of EOF
-      if ($end_delete != $i) { $end_delete = $i; }
+      if ($end_delete == "") { $end_delete = $i; }
+      
+      print "I will delete lines $begin_delete to $end_delete<br>\n" if $DEBUG;
       splice (@lines, $begin_delete, $end_delete-$begin_delete);
     }
   }
@@ -277,38 +276,31 @@ sub ltsp_write_config($) {
       $i = 0;
 
       # Find out where to begin modification
-      BEGINMODIFY: for ($i = 0; $i < $#lines; $i++) {
+      for ($i = 0; $i <= $#lines; $i++) {
         if ($lines[$i] =~ /^\[$_\]/) {
           $begin_modify = $i;
-          last BEGINMODIFY;
+          last;
         }
       }
       # Find out where to stop deletion
-      ENDMODIFY: while ($i <= $#lines) {
+      while ($i <= $#lines) {
         $i++;
         if ($lines[$i] =~ /^\[(.*)?\]/) {
-          $end_modify = $i-1;
-          last ENDMODIFY;
+          $end_modify = $i;
+          last;
         }
       }
       # In case of EOF
-      if ($end_modify != $i) { $end_modify = $i; }
+      if ($end_modify == "") { $end_modify = $i; }
+      
       # TMTOWTDI - har har - lick my shiny metal a**, Larry!
       for ($i = $begin_modify; $i < $end_modify; $i++) { 
         push (@mod_lines, $lines[$i]); 
       }
 
-      # Okay, I give no business about empty lines and comments at the end of an entry
-      #for ($i = $end_modify; $i > $begin_modify; $i--) {
-      #  print "line is: <font color=#00ff00>" . $mod_lines[$i] . "</font><br>" if $DEBUG;
-      #  if (($mod_lines[$i] =~ /^\s*?$/) || ($mod_lines[$i] =~ /^\s*?\#/)) {
-      #    print "and it contains nonsense<br>" if $DEBUG;
-      #    splice(@mod_lines, $i, 1);
-      #  }
-      #}
-
       # That's the only interesting subroutine here, believe me
 
+      print "modification between line $begin_modify and $end_modify<br>" if $DEBUG;
       &_ltsp_modify_entry_on_write(\@mod_lines);
       splice(@lines, $begin_modify, $end_modify-$begin_modify, @mod_lines);
     }
@@ -320,20 +312,30 @@ sub ltsp_write_config($) {
   #
 
   if ($#added_hosts ne -1) {
+    print "We will add hosts right now.<br>" if $DEBUG;
+    foreach (@lines) { print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n" if $DEBUG; }
+    print "<hr>" if $DEBUG;
+
     foreach (@added_hosts) {
       my $cur_hce = $_;
-      if (&ltsp_get_configuration($cur_hce) != 0) {
+      print(&ltsp_get_configuration($cur_hce)) if $DEBUG;
+#      if (&ltsp_get_configuration($cur_hce) != 0) {
         %conf = &ltsp_get_configuration($cur_hce);
         push (@lines, "[$cur_hce]");
-        foreach (keys(%conf)) { 
-          if (&ltsp_value_needs_quotes("$_")) {
-            push (@lines, "$_ = \"" . $conf{"$_"}. "\""); 
-          } else {
-            push (@lines, "$_ = " . $conf{"$_"}); 
-          }
+#	print "number of new keystuff: " . %conf . "<br>" if $DEBUG;
+#	print "profile: --" . $profiles{"$cur_hce"} . "--<br>\n" if $DEBUG;
+        if (&ltsp_get_configuration($cur_hce) != 0) {
+	  foreach (keys(%conf)) { 
+            if (&ltsp_value_needs_quotes("$_")) {
+              push (@lines, "$_ = \"" . $conf{"$_"}. "\""); 
+            } else {
+              push (@lines, "$_ = " . $conf{"$_"}); 
+            }
+	  }
         } 
-      }
+#      }
     }
+    foreach (@lines) { print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n" if $DEBUG; }
   }
 
   &lock_file("$config_file");
@@ -369,11 +371,16 @@ sub ltsp_get_configuration($) {
   my $prof = shift(@_);
   my %ret_hash = ();
 
-  if ($profiles{"$prof"} eq "") { return 0; }
+  print "ltsp_get_configuration  says that it knows $prof, it has " . $profiles{"$prof"} . "<br>\n";
+  if ($profiles{"$prof"} eq "") { 
+    print "ltsp_get_configuration has decided that its programmer is a blockhead.<br>\n";
+    return 0; 
+  }
 
   foreach (split(/;/, $profiles{"$prof"})) {
     ($key, $value) = split(/,/); 
     $ret_hash{"$key"} = $value;
+    print "ltsp_get_configuration: $key = $value" if $DEBUG;
   }
 
   return %ret_hash;
@@ -533,34 +540,35 @@ sub ltsp_value_needs_quotes($) {
   return 0;
 }
 
-sub ltsp_modify_entry($, %) {
+# Modify an entry
+# op = Operation, a = add, d = delete, m = modify
+sub ltsp_modify_entry($, $, %) {
 
-  ($entry, %data) = @_;
+  ($entry, $op, %data) = @_;
 
-  # Test whether the entry is empty
-  # empty means that the entry does not yet exist,
-  # so it's been created
+#  print "the user decided to do operation $op<br>\n" if $DEBUG;
 
-  if ($profiles{"$entry"} eq "") {
+  if ($op eq "a") {
+#    print "The user decided to add host $entry<br>\n" if $DEBUG;
     $newhost = 1;
     push (@added_hosts, $entry);
   }
 
   $profiles{"$entry"} = "";
   foreach (keys(%data)) {
+#    print "i received the following data: $_: " . $data{"$_"} . "<br>\n" if $DEBUG;
     $profiles{"$entry"} .= ";$_," . $data{"$_"};
   }
   $profiles{"$entry"} = substr($profiles{"$entry"}, 1);
+  print "ltsp_modify_entry has set profiles(entry) to " . $profiles{"$entry"} . "<br>\n" if $DEBUG;
 
-  if (!($newhost eq 1) && !($profiles{"$entry"} eq "")) {
+  if ($op eq "m") {
+#    print "The user decided to modify host $entry<br>\n" if $DEBUG;
     push (@modified_hosts, $entry);
   }
 
-  # Test whether the entry is empty at the end
-  # empty means that the entry does not have any configuration
-  # so the user wanted to delete that entry
-
-  if ($profiles{"$entry"} eq "") {
+  if ($op eq "d") {
+#    print "The user decided to delete host $entry<br>\n" if $DEBUG;
     push (@deleted_hosts, $entry);
   }
 

@@ -132,7 +132,9 @@ XkbLayout_th=Thai
 XkbLayout_us=US
 
 XkbCompat=Keyboard Compatibility
+
 XkbSymbols=Keyboard Symbols
+
 XkbTypes=Keyboard Type
 
 PRINTER_0_DEVICE=Printer Device
@@ -144,6 +146,8 @@ PRINTER_0_SPEED=Printer Speed (serial)
 PRINTER_0_FLOWCTRL=Printer Flow Control (serial)
 PRINTER_0_PARITY=Printer Parity (serial)
 PRINTER_0_DATABITS=Printer Data Bits (serial)
+PRINTER_0_OPTIONS=Additional options for printer 0
+PRINTER_0_WRITE_ONLY=Open printer port 0 in write only mode
 
 PRINTER_1_DEVICE=Printer Device
 PRINTER_1_TYPE=Printer Type
@@ -154,6 +158,8 @@ PRINTER_1_SPEED=Printer Speed (serial)
 PRINTER_1_FLOWCTRL=Printer Flow Control (serial)
 PRINTER_1_PARITY=Printer Parity (serial)
 PRINTER_1_DATABITS=Printer Data Bits (serial)
+PRINTER_1_OPTIONS=Additional options for printer 1
+PRINTER_1_WRITE_ONLY=Open printer port 1 in write only mode
 
 PRINTER_2_DEVICE=Printer Device
 PRINTER_2_TYPE=Printer Type
@@ -164,6 +170,8 @@ PRINTER_2_SPEED=Printer Speed (serial)
 PRINTER_2_FLOWCTRL=Printer Flow Control (serial)
 PRINTER_2_PARITY=Printer Parity (serial)
 PRINTER_2_DATABITS=Printer Data Bits (serial)
+PRINTER_2_OPTIONS=Additional options for printer 2
+PRINTER_2_WRITE_ONLY=Open printer port 2 in write only mode
 
 MODULE_01=Module 1
 MODULE_02=Module 2
@@ -191,13 +199,13 @@ N=No
 default=Default
 
 XFree86=X4
-deb=Double-buffering (deb)
-GLcore=OpenGL support (GLcore)
-dri=Direct rendering infrastructure (dri)
-glx=OpenGL X protocol interface (glx)
-pex5=PHIGS for X 3D environment (pex5)
-record=X event recorder (record)
-xie=X Image Extension (xie)
+deb=Double-Buffering (deb)
+GLcore=OpenGL-Unterstützung (GLcore)
+dri=Direct Rendering Infrastructure (dri)
+glx=OpenGL X Protokollschnittstelle (glx)
+pex5=PHIGS für X 3D Umgebungen (pex5)
+record=X Ereignisrekorder (record)
+xie=X Image Erweiterung (xie)
 
 
 
@@ -226,16 +234,10 @@ printer_1_settings=Printer 1 Settings
 printer_2_settings=Printer 2 Settings
 touchscreen_settings=Touchscreen Settings
 
-DISABLE_ACCESS_CONTROL=Disable xserver access control
+DISABLE_ACCESS_CONTROL=Disable X Server Access Control
 DISABLE_ACCESS_CONTROL_Y=Yes
 DISABLE_ACCESS_CONTROL_N=No
 
-PRINTER_0_OPTIONS=Additional options for printer 0
-PRINTER_0_WRITE_ONLY=Open printer port 0 in write only mode
-PRINTER_1_OPTIONS=Additional options for printer 1
-PRINTER_1_WRITE_ONLY=Open printer port 1 in write only mode
-PRINTER_2_OPTIONS=Additional options for printer 2
-PRINTER_2_WRITE_ONLY=Open printer port 2 in write only mode
 
 SOUND=Use sound
 SOUND_Y=Yes
