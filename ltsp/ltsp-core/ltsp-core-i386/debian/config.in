@@ -1,6 +1,6 @@
 #! /bin/sh -e
 
-source /usr/share/debconf/confmodule
+. /usr/share/debconf/confmodule
 
 db_input medium ltsp-core/ltsp_initialize || true
 if test -e /tftpboot/lts/ltsroot -o -e /usr/lib/lts/ltsroot; then

@@ -1,3 +1,10 @@
+ltsp-core-i386 (3.0.7-2) unstable; urgency=low
+
+  * debian/config.in: forgot still one bashism.
+    (Thanks to Ragnar Wisloff <ragnar@wisloff.no> again.)
+
+ -- Georg Baum <gbaum@users.sf.net>  Fri, 21 Feb 2003 19:01:03 +0100
+
 ltsp-core-i386 (3.0.7-1) unstable; urgency=low
 
   * debian/postinst.top: change /bin/sh to /bin/bash, because we use
