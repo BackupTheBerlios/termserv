@@ -1,0 +1,17 @@
+0.5:
+
+ - finish the non-rewriting configuration file modification routine
+   (sledge)
+ - create a distinction for values which need to be quoted and the
+    non-quoted ones
+   (sledge)
+ - clean up the mess
+
+0.6:
+
+0.7:
+
+ - add support for local printers and perhaps touch pads
+
+ - add support for automatic dhcp update
+
