@@ -12,17 +12,18 @@ class Option:
   type = 0
   userlevel = 1
   translate = 0
+  group = ""
 
   def __init__(self, optgroup, optname):
 
     self.type = 0
-    self.name = ""
+    self.name = optname
     self.vals = []
     self.userlevel = 1
     self.translate = 0
+    self.group = optgroup
 
     # Set name from parm
-    self.name = optname
     optpath = "options/" + optgroup + "/" + optname + "/"
 
     # Find out type of option
@@ -74,23 +75,67 @@ class Option:
   def getUserLevel(self):
     return self.userlevel
 
+  def getGroup(self):
+    return self.group
+
+
+class OptionGroup:
+
+  optionnames = []
+  options = []
+  groupname = ""
+
+  def __init__(self, grpname):
+    self.optionnames = os.listdir("options/" + grpname)
+    self.groupname = grpname
+    for i in self.optionnames:
+      self.options.append(Option(grpname, i))
+
+  def getOptions(self):
+    return self.options
+
+  def getOptionNames(self):
+    return self.optionnames
+
+  def getName(self):
+    return self.groupname
+
+  def hasOption(self, nm):
+    if nm in self.optionnames:
+      return self.getOption(nm)
+    return None
+
+  def getOption(self, nm):
+    for i in self.options:
+      if i.getName() == nm:
+        return i
+    return None
+
 class OptionsReader:
 
-  opts = []
+  groupnames = []
+  groups = []
 
   def __init__(self):
-    pass
+    self.groupnames = os.listdir("options/")
+    for i in self.groupnames:
+      self.groups.append(OptionGroup(i))
 
-  def getOptionGroups(self):
+  def getGroupNames(self):
+    return self.groupnames
 
-    opts = os.listdir("options/")
-    return opts
+  def getGroups(self):
+    return self.groups
 
-  def getOptions(self, optgroup):
+  def getGroup(self, nm):
+    for i in self.groups:
+      if i.getName() == nm:
+        return i
+    return None
 
-    self.opts = []
-    for opt in os.listdir("options/" + optgroup + "/"):
-      o = Option(optgroup, opt)
-      self.opts.append(o)
-    return self.opts
-
+  def getOption(self, nm):
+    for i in self.groups:
+      for j in i.getOptions():
+        if j.getName() == nm:
+          return j
+    return None
