@@ -1,0 +1,36 @@
+\chapter{Installation der Terminals}
+
+Bevor es an die Installation der Terminals geht, ein paar Grundlagen
+zum Startvorgang eines PCs:
+
+Direkt nach dem Einschalten wird das BIOS (Basic Input and Output System)
+gestartet. Dieses führt ein paar Tests durch und lädt danach das
+Startprogramm des Betriebssystems. Wo es dieses findet, kann man im
+Setup-Programm des BIOS einstellen.
+Dort finden sich normalerweise die Optionen Diskette, Festplatte, CDROM
+und bei neueren Rechnern oft auch Netzwerk.
+
+Normalerweise wird vom Startprogramm dann das Betriebssystem geladen,
+evtl. kann man zwischen mehreren wählen. In unserem Fall heißt dieses
+Startprogramm etherboot oder netboot. Beide erfüllen den gleichen Zweck:
+Statt das Betriebssystem von Platte oder Diskette zu laden, wird es über
+das Netz von einem Server geholt.
+
+Im Folgenden gehen wir von etherboot aus, da es deutlich flexibler als
+netboot ist und aktiver weiterentwickelt wird. Ein Unterschied zwischen
+etherboot und netboot ist, daß etherboot für jede Netzwerkkarte einen eigenen
+Treiber braucht, während netboot eine Art Mini-DOS zur Verfügung stellt,
+sodaß mit netboot alle Netzwerkkarten verwendet werden können, für die
+es einen DOS-Packet-Treiber gibt. In der Regel sollte man also etherboot
+verwenden. Wenn die Netzwerkkarte von etherboot nicht unterstützt wird,
+kann man es mit netboot versuchen.
+
+Von wo aus etherboot geladen wird, ist für den weiteren Startvorgang des
+Terminals unerheblich. Es hat allein praktische Gründe. Wir beschränken
+uns hier auf drei Methoden: Start von Diskette, von Festplatte und von
+einem Booteprom, die in den nächsten Kapiteln beschrieben werden.
+
+Weiterhin gehen wir davon aus, daß Zugang zum Internet besteht und die
+Etherboot-Images von \texttt{http://rom-o-matic.net} heruntergeladen werden
+können.
+

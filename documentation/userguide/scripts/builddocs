@@ -16,6 +16,8 @@ latex userguide.$LANG.tex
 dvips -t a4 userguide.$LANG.dvi -o userguide.$LANG.ps
 ps2pdf userguide.$LANG.ps
 
+# Create ../out directory if it does not exist
+test -d ../out || mkdir ../out
 mv userguide.$LANG.dvi ../out
 mv userguide.$LANG.ps ../out
 mv userguide.$LANG.pdf ../out

@@ -1,0 +1,55 @@
+\section{Terminals mit Festplatte}
+
+Ist eine Festplatte in eimem Terminal überhaupt sinnvoll, da ja lokal sowieso
+nichts gespeichert wird?
+Ja, wenn nur wenig Hauptspeicher zur Verfügung steht, kann man sie sehr gut
+als virtuellen Arbeitsspeicher gebrauchen.
+In allen anderen Fällen sollten evtl. vorhandene Festplatten eher ausgebaut
+werden, da sie unnötig Strom verbrauchen, Lärm machen und aufgrund mechanisch
+bewegter Teile irgendwann kaputt gehen.
+
+Das Format des Images bei der ROM-o-matic ist dasselbe wie beim Starten von
+Diskette, nur das Überspielen des Images auf die Festplatte funktioniert
+naturgemäß etwas anders.
+
+Hier gibt es zwei Wege: Über Diskette oder über Einbau der Festplatte in einen
+anderen PC.
+
+Wenn das Terminal über ein Diskettenlaufwerk verfügt, kopiert man
+die Imagedatei auf eine formatierte Diskette, unter Linux t. B. mit
+\begin{verbatim}
+cp eb-5.0.2-ne.lzdsk /floppy/
+\end{verbatim}
+Hierbei ist angenommen, daß die Diskette unter \texttt{/floppy/} gemountet ist.
+Natürlich kann das Kopieren auch auf einem DOS/Windows-Rechner geschehen.
+
+Nun kann man das Terminal mit einem Taschenlinux (die Rettungsdiskette
+gängiger Linuxdistributionen geht auch) starten.
+Nachdem man sich als root angemeldet hat bzw. auf andere
+Weise eine shell mit root-Rechten geöffnet hat, legt man die zuvor erstellte
+Diskette ein und mountet sie:
+\begin{verbatim}
+mount /dev/fd0 /mnt
+\end{verbatim}
+Dazu muß das Verzeichnis /mnt existieren. Falls nicht, legt man es mit dem
+Befehl
+\begin{verbatim}
+mkdir /mnt
+\end{verbatim}
+an. Nun kopiert man das Etherboot-Image auf die Festplatte:
+\begin{verbatim}
+cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hda
+\end{verbatim}
+Falls es sich um eine SCSI-Festplatte handelt, muß statt \texttt{/dev/hda}
+entsprechend \texttt{/dev/sda} eingegeben werden.
+
+Besitzt das Terminal kein Diskettenlaufwerk ist es etwas aufwendiger: Man baut
+die Festplatte aus und in einen Linux-PC ein.
+Wenn die Platte z. B. als Master am zweiten IDE-Kanal hängt, wird mit 
+\begin{verbatim}
+cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hdc
+\end{verbatim}
+das Image kopiert. Auch hier muß man wieder aufpassen: Ein Tippfehler bei
+\texttt{/dev/hdc} kann sehr unangenehme Folgen haben!
+
+Nun kann die Platte wieder in das Terminal eingebaut werden.
