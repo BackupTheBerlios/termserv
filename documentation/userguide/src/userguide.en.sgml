@@ -1,0 +1,990 @@
+<!doctype linuxdoc system>
+ 
+<article>
+ 
+<title>GNU/Linux Terminalserver for schools
+ 
+<author>
+Georg Baum <tt/gbaum@users.sourceforge.net/, 
+Peter Bingel <tt/pb@fsub.schule.de/, 
+Christian Selig <tt/christian.selig@bnv-bamberg.de/
+
+<toc>
+ 
+<sect>Introduction
+
+<p>
+It is a well-known situation: schools networks becomer bigger and
+more complex, the collegues' requirements towards new media grow,
+publishing companies, hardware producers and software creators
+postulate a golden era.
+</p>
+
+<p> 
+Pitily, reality doesn't look that good and 
+Leider sieht die Wirklichkeit vor Ort nicht immer so rosig aus und 
+vielerorts realisieren auch die Schulträger, dass die Kosten für 
+Anschaffung und Wartung der Geräte, der Bedarf an Administration von 
+Hard- und Software ständig wächst. Schulen mit 40, 50, 80 oder gar 
+100 und mehr Rechnern sind keine Exoten mehr. Netze solcher Größenordnung  
+erfordern leistungsfähige Server, kaskadierte Netze und  -- vor allem -- 
+kompetente, rund um die Uhr verfügbare Systemadminstratoren,  die sich ihre
+Arbeit in der Industrie teuer bezahlen lassen.
+</p>
+
+<p> 
+Ständig steigender Wartungsaufwand und steigende Kosten lassen an der 
+Schule nach anderen Lösungen als den bisher eingesetzten suchen. Es 
+erweist sich mehr und mehr als Unding, die Anwendungssoftware auf 
+jedem einzelnen Rechner zu installieren und zu warten. Zwar gibt es 
+auch hierfür Lösungen, die aber vor allem durch eins glänzen: sie 
+sind teuer. Schon deswegen teuer, weil für jeden Arbeitsplatz ein eigener 
+kompletter Rechner gestellt und nach wenigen Jahren ersetzt werden muss.
+</p>
+
+<p> 
+Eine Lösungsmöglichkeit in diesem Dilemma bietet der Terminalserver. Er 
+ist keine Erfindung des 21. Jahrhunderts, sondern greift einen bekannten 
+und bewährten Lösungsansatz auf. 
+</p>
+
+<sect1>Idee und Prinzip
+
+<p>
+Die Idee des Terminalservers ist simpel: Warum Software und 
+Rechenkapazität auf jedem Endgerät vorhalten, das z.B. beim 
+Einsatz einer Textverarbeitung die allermeiste Zeit nur 
+``Däumchen dreht''? Warum nicht die Kapazität eines Rechners ausnutzen, 
+indem man mehrere Benutzer gleichzeitig an ihm arbeiten lässt?
+</p>
+
+<p> 
+Da natürlich sich nicht mehrere Benutzer gleichzeitig vor einen 
+Bildschirm und eine Tastatur setzen und arbeiten können, verteilt 
+der Rechner seine Kapazität über ein Netz an mehrere ``dumme'' 
+Terminals, die im Grunde nichts weiter darstellen als ein 
+Bildschirm, eine Tastatur und ein Endgerät, das ohne Laufwerke 
+und großen Speicherausausbau auskommt, das Terminal eben.
+</p>
+
+<p> 
+
+Prinzipiell sind zwei Formen des Terminals im Einsatz:
+
+<itemize>
+<item>X-Terminal:
+Dies sind z.B. schwachbrüstige Altrechner mit kleinen Festplatten, 
+die nur ein Minimalsystem aufgespielt haben und sich alle Anwendungen vom Server holen.
+</item>
+<item>
+Diskless-Client:
+Diese Rechner enthalten keine Laufwerke, alle erfolderlichen 
+Programme holen sich die Geräte über die Netzwerkkarte mit Eprom.
+</item>
+</itemize>
+
+<p>
+Eine Terminalserverlösung besteht also aus einem gut ausgebauten Server, 
+auf dem alle Software installiert und gewartet wird und den mit ihm 
+verbundenen, so gut wie wartungsfreien Terminals. Wartungsfrei deswegen, 
+weil auf ihnen keine Software installiert ist und keine Festplatten kaputt gehen können.
+</p>
+
+<sect1>Die Vorteile
+
+<p> 
+Der Terminal-Server reizt die Vorteile eines Netzwerks voll aus. Konsequent eingesetzt, verringert er
+den Verwaltungsaufwand des Systemamdministrators enorm. Aber nicht nur das:
+ 
+<itemize>
+<item>Ältere Hardware kann für die Terminals weiter verwendet werden.</item>
+<item>Es braucht nur noch ein Rechner -- der Server -- administriert zu werden.</item>
+<item>Software wird nur einmal zentral aufgespielt, gewartet und steht allen angeschlossenen Terminals zur Verfügung.</item>
+<item>Zeit und Kosten werden erheblich minimiert.</item>
+</itemize>  
+
+</p>
+
+<sect>Grundlagen eines Terminalserver-Netzwerks
+
+<p> 
+Ein Terminalserver funktioniert nach einem sehr simplen Prinzip. 
+Jedoch sollten Sie für ein besseres Verständnis die zu Grunde 
+liegenden Schemata kennen, damit Sie ihr Netzwerk im Überblick 
+haben und im Problemfall gezielter nach dem Fehler suchen können.     
+</p>
+
+<sect1>Protokolle
+ 
+<p>
+Für die Kommunikation in einem Netzwerk sind Protokolle vonnöten. Sie schreiben
+vor, wie etwa die Adressierung in einem Netzwerk aussehen muss und wie Rechner
+innerhalb des Netzwerks Daten austauschen.
+</p>
+ 
+<p>
+Solche Protokolle existieren mehrschichtig, das heißt, ein Protokoll baut
+auf grundlegenderen Protokollen auf. Im Folgenden werden einige Protokolle
+beschrieben, deren Schichtung (von ''tief'' nach ''hoch'') wie folgt aussieht:
+<enum>
+<item><ref id="mac-addresses" name="MAC-Adressen"></item>
+<item>IP-Adressen</item>
+<item>DNS, <ref id="dhcp-protocol" name="DHCP">, TFTP, NFS, X11</item>
+</enum>
+</p>
+
+<sect2>MAC-Adressen<label id="mac-addresses">
+ 
+<p>
+MAC-Adressen sind Netzwerk-Adressierungen auf der technisch untersten Ebene.
+Jede Netzwerkkarte hat eine fest eingerichtete MAC-Adresse (gelegentlich auch
+``Hardware-Ethernet-Adresse'' genannt). Sie wird durch den Hersteller festgelegt.
+Würden zwei Netzwerkkarten in einem Netzwerk die gleiche MAC-Adresse besitzen,
+würde dies zu einem Konflikt führen. Jedoch haben alle Hersteller Übereinkünfte
+über die Verteilung von MAC-Adressen getroffen.
+</p>
+ 
+<sect3>Beispiel
+ 
+<p>
+Eine MAC-Adresse besteht aus sechs zweistelligen Hexadezimalzahlen, die meist
+durch Doppelpunkte getrennt sind, wie etwa <em/00:0D:84:F6:3A:10/. 
+</p>
+
+<sect2>IP-Adressen
+
+<p> 
+IP-Adressen geben eine logische Struktur in einem Netzwerk vor. Sie sind durch
+den Systembetreuer konfigurierbar.
+</p>
+ 
+<sect3>Beispiel
+
+<p> 
+Eine IP-Adresse besteht aus vier zweistelligen Hexadezimalzahlen, die jedoch
+fast immer der Übersichtlichkeit halber als Dezimalzahlen geschrieben werden.
+Sie werden mit Punkten voneinander getrennt. In einem Schulnetzwerk könnte der
+Server die IP-Adresse <em/192.168.1.1/ besitzen. Der Proxy-Server besitzt
+die IP <em/192.168.1.2/. Die Terminals bekommen <em/192.168.1.10/, <em/192.168.1.11/,
+usw.
+</p>
+ 
+<sect2>Rechnernamen und Domänen (DNS)
+
+<p> 
+IP-Adressen sind zur Strukturierung ganz nützlich, jedoch können in einem IP-Netzwerk
+rein mathematisch über 4 Milliarden Rechner beheimatet sein! Damit man sich
+kein ``Telefonbuch'' für IP-Adressen anlegen muss und stattdessen menschenlesbare
+Namen verwenden kann, wurde das Domänennamenssystem DNS (``Domain Name System'')
+entwickelt. DNS-Server in einem Netzwerk halten eine Liste über IP-Adressen
+und ihre Namen vor, die von Terminals abgefragt werden kann.
+</p>
+
+<p>
+Das Konzept ist domänenorientiert, d.h. es existiert eine Hierarchie: arktur.cg-bamberg.de
+ist ein deutscher (<em/de/) Rechner des Clavius-Gymnasiums Bamberg (<em/cg-bamberg/)
+mit dem Namen <em/arktur/. Das Länderkürzel heißt Top-Level-Domain (kurz TLD),
+davor kommt die Domäne, davor dann entweder Rechner oder weitere Domänen.
+</p> 
+
+<sect2>DHCP<label id="dhcp-protocol">
+
+<p>
+DHCP, das ''Dynamic Host Configuration Protocol'' ist ein Protokoll, welches einen kleinen
+Teil der Netzwerkverwaltung für den Administrator einfacher machen soll.
+Gewöhnlich werden die oben genannten IP-Adressen auf jedem Rechner einzeln eingestellt.
+Dies kann bei größeren Netzwerken mühsam bis unübersichtlich sein. DHCP schafft hier Abhilfe.
+</p>
+
+<p>
+Auf einem Rechner wird die DHCP-Serversoftware installiert. Dort werden die einzelnen
+Rechner im Netzwerk mit ihrer Ethernet-Hardware-Adresse und der vom Administrator festgelegten
+IP-Adresse eingetragen. Stellt nun ein Rechner im Netzwerk eine Anfrage nach seiner
+IP-Adresse, antwortet der DHCP-Server mit dem entsprechenden Wert.
+</p>
+
+<p>
+Ein DHCP-Server ist in der Lage, einiges mehr an Werten an einen Rechner zurückzuliefern
+als eine IP-Adresse. Jedoch ist der Großteil davon für Administration in der Praxis
+recht unwichtig.
+</p>
+ 
+<sect2>TFTP - der simple Dateitransfer
+
+<p>
+TFTP, das ''Trivial File Transfer Protocol'' ist ebenso ein Serverdienst. Er ist mit FTP 
+vergleichbar, jedoch wesentlich simpler. So fordert der Server keine Identifikation mit
+Benutzername und Passwort.
+</p>
+
+<p>
+Im Terminalserver-Betrieb ist TFTP das Protokoll, das das Terminal benutzt, um seinen
+Betriebssystem-Startcode (im Falle von Linux der ''Kernel'') herunterzuladen.
+</p>
+ 
+<sect2>NFS - Dateien über das Netzwerk
+
+<p> 
+Das Network File System - NFS - erlaubt das Verwalten von Dateien auf
+mehreren Computern innerhalb eines Netzwerkes so, als ob sie auf der lokalen
+Festplatte gespeichert wären. Dadurch ist es für den Benutzer nicht nötig zu wissen, wo die
+Dateien physikalisch gespeichert sind, um auf sie zuzugreifen.
+</p>
+
+<p> 
+Über NFS hat er von jedem Rechner im Netz gleichermaßen Zugriff auf sein Dateien. Dabei werden die
+Dateien vom Server exportiert und vom Terminal importiert:
+<em/Jedes Terminal kann nur importieren, was der Server ausdrücklich exportiert!/
+ 
+<sect2>X11 - Fenster in der Ferne
+
+<p>
+<figure>
+<eps file="userguide-networkbasics-protocols-x-flow.eps">
+<caption>Funktionsweise des X11-Protokolls<label id="x-flow-diag">
+</figure>
+</p>
+
+<p>
+X11 ist ein System, welches unter GNU/Linux- und Unix-Systemen die Grafikausgabe regelt.
+Das Besondere an ihm ist seine Netzwerkfähigkeit. So kann ein Programm auf einem bestimmten Rechner
+laufen, die Anzeige und Bedienung des Programms findet aber auf einem anderen Rechner statt! Im
+GNU/Linux- bzw. Unix-Mehrbenutzerbetrieb können also beliebig viele Rechner
+Programme auf einem einzigen Server starten und bei sich anzeigen lassen.
+<ref id="x-flow-diag" name="Eine Zeichnung"> gibt einen schematischen Überblick.
+</p>
+
+<p>
+X11 hat ebenso ein ungewöhnliches, aber logisches Namensschema. Der Teil von X11, der
+Grafikbefehle entgegennimmt und Tastatur- und Mauseingaben an ein Programm zurücksendet,
+heißt X-Server. Ein Programm ist ein X-Client beziehungsweise benutzt die X-Client-Bibliotheken;
+es sendet Grafikbefehle an einen X-Server und empfängt die aufgefangenen Tastatur- und
+Mauseingaben von ihm.
+</p>
+
+<p>
+Im Terminalserver-Betrieb laufen wie beschrieben die Programme -- und damit die X-Clients --
+aller Benutzer auf dem Server, hingegen laufen auf den Terminals die X-Server!
+</p>
+
+<sect1>Vorgänge beim Starten eines Terminals
+
+<p> 
+<itemize>
+<item> Das Terminal bootet. Nun wird ein Code auf dem Boot-ROM der Netzwerkkarte ausgeführt,
+der alternativ auch von Diskette oder als DOS-Programm ausgeführt werden kann.
+<item>Der Code des Boot-ROMs versucht über das sogenannte BOOTP- oder DHCP-Protokoll einen Server
+im Netzwerk zu finden, der dem Terminal anhand seiner Hardware-Ethernet-Adresse
+eine IP-Adresse zuweisen und weiteren Code zur Ausführung bereitstellen kann.
+<item>Der Server, i.d.R. der gleiche Rechner wie der Terminalserver, stellt dem suchenden
+Terminal seine IP-Adresse, die IP-Adresse eines Boot-Servers sowie den Namen eines vom Boot-Server
+zu ladenden Startcodes zur Verfügung.
+<item>Das Terminal lädt den Startcode mit dem TFTP-Protokoll, einem vereinfachten FTP-Protokoll.
+Dieser Startcode ist ein entsprechend modifizierter Linux-Kernel.
+<item>Der Linux-Kernel wird auf den Terminal geladen und ausgeführt. Nachdem er gestartet
+ist, holt er sich sein gesamtes Dateisystem vom Terminalserver mit Hilfe des
+NFS-Protokolls.
+<item>Innerhalb dieses Dateisystems liegen Startscripts. Sie werden ausgeführt und
+starten die graphische Oberfläche.
+<item>Die graphische Oberfläche X11 sucht einen XDMCP-Server, das ist ein Rechner,
+der in der Lage ist, die Graphikbefehle der laufenden Programme auf die Terminals
+zu übertragen.
+<item>Wenn ein solcher Server gefunden ist, verbindet sich der Terminal mit ihm. Ab
+diesem Punkt arbeitet der Benutzer auf dem Server.
+</itemize>
+</p>
+
+<sect>Installation und Konfiguration des Terminalservers
+
+<p>
+Der Terminalserver wird auf eine beliebige schon bestehende Installation eines 
+GNU/Linux-Systems aufgespielt.
+</p>
+
+<sect1>Überlegungen vor der Installation
+
+<sect2>Sicherheit
+
+<p>
+Seit geraumer Zeit haben Sicherheitslücken auf allen Betriebssystemen
+immer wieder Aufsehen erregt. Rechner wurden mit teilweise geringstem
+Aufwand kompromitiert. Da Ihr Terminalserver, auf dem möglicherweise
+auch persönliche Dokumente und wichtige Arbeitsdaten liegen, geschützt
+sein soll, darf der Terminalserver nicht gleichzeitig als Zugangsrechner
+(Gateway, Router) zum Internet verwendet werden! Benutzen Sie dazu einen
+zweiten Rechner, auf den Sie beispielsweise den Arktur-Kommunikationsserver
+installiert haben. Dieser sorgt für die notwendige Sicherheit und Abschirmung
+vor Angreifern aus dem Internet.
+</p>
+  
+<sect1>Software-Pakete
+
+<p>
+Die Pakete des Terminalservers liegen im rpm- und deb-Format vor. Das
+deb-Format wird von der Debian-Distribution (und allen abgeleiteten wie
+Progeny oder Corel), das rpm-Format von praktisch allen anderen gängigen
+Distributionen wie SuSE, RedHat und Mandrake benutzt.
+</p>
+
+<sect2>Immer benötigte Pakete
+
+<p>
+Diejenigen Pakete, die auf jeden Fall benötigt werden, werden auf
+Debian-Systemen durch Installieren des Pakets <tt/task-termserv/ automatisch
+mitinstalliert.
+</p>
+
+<p>
+Auf rpm-basierten Systemen kann der Abhängigkeitsliste von <tt/task-termserv/
+entnommen werden, welche Pakete benötigt werden.
+</p>
+
+<p>
+Als Abhängigkeit und Voraussetzung für das <tt/task-termserv/-Paket
+findet sich auch die Administrationssoftware Webmin 
+(<htmlurl url="http://www.webmin.com/" name="http://www.webmin.com/">)
+und das dazugehörige LTSP-Konfigurationsmodul. Sie können damit Ihren zukünftigen
+Terminalserver über eine Web-Oberfläche konfigurieren (dazu später). Wollen Sie
+diese beiden Pakete nicht, müssen Sie die anderen Pakete einzeln installieren!
+</p>
+
+<sect2>Von der Terminalhardware abhängige Pakete
+
+<p>
+Abhängig von den zur Verfügung stehenden Terminals sind die zu installierenden
+Kernel- und X-Server-Pakete.
+
+<table>
+<tabular ca=lll>
+X-Server	|rpm-Paket			|deb-Paket@
+3dlabs		|lts\_x3dlabs-2.0-1.i386.rpm	|lts-xserver-3dlabs\_2.0-1\_all.deb@
+8514		|lts\_x8514-2.0-1.i386.rpm	|lts-xserver-8514\_2.0-1\_all.deb@
+agx		|lts\_xagx-2.0-1.i386.rpm	|lts-xserver-agx\_2.0-1\_all.deb@
+fbdev		|lts\_xfbdev-2.0-1.i386.rpm	|lts-xserver-fbdev\_2.0-1\_all.deb@
+i128		|lts\_xi128-2.0-1.i386.rpm	|lts-xserver-i128\_2.0-1\_all.deb@
+mach32		|lts\_xmach32-2.0-1.i386.rpm	|lts-xserver-mach32\_2.0-1\_all.deb@
+mach64		|lts\_xmach64-2.0-1.i386.rpm	|lts-xserver-mach64\_2.0-1\_all.deb@
+mach8		|lts\_xmach8-2.0-1.i386.rpm	|lts-xserver-mach8\_2.0-1\_all.deb@
+mono		|lts\_xmono-2.0-1.i386.rpm	|lts-xserver-mono\_2.0-1\_all.deb@
+p9000		|lts\_xp9000-2.0-1.i386.rpm	|lts-xserver-p9000\_2.0-1\_all.deb@
+s3		|lts\_xs3-2.0-1.i386.rpm	|lts-xserver-s3\_2.0-1\_all.deb@
+s3v		|lts\_xs3v-2.0-1.i386.rpm	|lts-xserver-s3v\_2.0-1\_all.deb@
+svga		|lts\_xsvga-2.0-1.i386.rpm	|lts-xserver-svga\_2.0-1\_all.deb@
+vga16		|lts\_xvga16-2.0-1.i386.rpm	|lts-xserver-vga16\_2.0-1\_all.deb@
+w32		|lts\_xw32-2.0-1.i386.rpm	|lts-xserver-w32\_2.0-1\_all.deb@
+</tabular>
+<caption>X-Server-Pakete
+</table>
+
+Welche X-Server benötigt werden, hängt von den Grafikkarten der Terminals ab.
+Meistens wird der X-Server für SVGA-kompatible Grafikkarten funktionieren.
+Falls unklar ist, welcher X-Server nötig ist, finden sich in der
+Hardwaredatenbank von SuSE 
+(<htmlurl url="http://cdb.suse.de/" name="http://cdb.suse.de/">) und 
+auf den Seiten des XFree86-Projektes 
+(<htmlurl url="http://www.xfree86.org/" name="http://www.xfree86.org/">) weitere
+Informationen.
+
+<p>
+<table>
+<tabular ca=lll>
+Netzwerkkarte	|rpm-Paket				|deb-Paket@
+3c509		|lts\_kernel\_3c509-2.2-0.i386.rpm	|lts-kernel-3c509\_2.2-1\_all.deb@
+3c905		|lts\_kernel\_3c905-2.2-0.i386.rpm	|lts-kernel-3c905\_2.2-1\_all.deb@
+all		|lts\_kernel\_all-2.2-0.i386.rpm	|lts-kernel-all\_2.2-1\_all.deb@
+eepro100	|lts\_kernel\_eepro100-2.2-0.i386.rpm	|lts-kernel-eepro100\_2.2-1\_all.deb@
+ne2000		|lts\_kernel\_ne2000-2.2-0.i386.rpm	|lts-kernel-ne2000\_2.2-1\_all.deb@
+rtl8139		|lts\_kernel\_rtl8139-2.2-0.i386.rpm	|lts-kernel-rtl8139\_2.2-1\_all.deb@
+tulip		|lts\_kernel\_tulip-2.2-0.i386.rpm	|lts-kernel-tulip\_2.2-1\_all.deb@
+</tabular>
+<caption>Kernelpakete
+</table>
+
+Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <tt/all/
+enthält alle Netzwerkkartentreiber. Wenn für die gewünschte Karte
+kein Kernel vorhanden ist, und der <tt/all/-Kernel nicht funktioniert, muss ein
+Kernel selber erstellt und nach <tt>/tftpboot/lts/</tt> kopiert werden.
+</p>
+
+<sect3>Kernel für ein Terminal selber bauen
+<p>
+Wir gehen hier davon aus, dass Sie wissen, wie man einen Kernel compiliert (z. B.
+aus einem der vielen Linuxbücher) und beschreiben nur die Besonderheiten für den
+plattenlosen Betrieb. Bei der Kernelkonfiguration muss der Treiber der Netzwerkkarte
+fest in den Kernel eincompiliert werden (kein Modul!). Dies liegt daran, daß das
+Wurzeldateisystem (welches die Module enthält) über das Netzwerk geholt wird, und dazu
+muss natürlich die Netzwerkkarte funktionieren. Andere zu aktivierende Optionen (auch
+diese dürfen keine Module sein) stehen in <ref id="kernel-optionen" name="dieser Tabelle">.
+
+
+<table>
+<tabular ca=l>
+Block devices->RAM disk support@
+Networking options->IP kernel-level configuration support@
+Networking options->DHCP support@
+Filesystems->Network File Systems->NFS filesystem support@
+Filesystems->Network File Systems->Root filesystem on NFS@
+</tabular>
+<caption>Benötigte Kernel-Optionen<label id="kernel-optionen">
+</table>
+</p>
+
+<p>
+Manche der Optionen sind erst anwählbar, wenn andere aktiviert sind. Daher empfielt
+es sich, in der Reihenfolge der Tabelle vorzugehen.
+Prinzipiell ist es möglich, Kernel der Version 2.0.x, 2.2.x oder 2.4.x zu verwenden.
+Die älteren Kernel können für ältere Hardware noch ganz nützlich sein. Einmal
+verbrauchen sie etwas weniger Speicher, und zum Anderen will manche betagte Hardware
+mit den neueren Versionen nicht richtig laufen.
+Beispielkonfigurationsdateien, in denen außer der Netzwerkkarte schon alle nötigen
+Einstellungen vorgenommen sind, finden Sie je nach verwendeter Distribution unter
+<tt>/usr/share/doc/termserv-doc/</tt> oder <tt>/usr/share/doc/packages/termserv-doc/</tt>, 
+wenn Sie das Paket <tt>termserv-doc</tt> installiert haben.
+
+TODO: Dateien erstellen.
+
+</p>
+
+<p>
+Nachdem der Kernel erfolgreich compiliert wurde, muss er noch mit mknbi-linux in ein
+von Etherboot lesbares Format gewandelt werden. Wie das geht, steht in der
+Etherboot-Dokumentation. Anschließend muss der nun im "tagged image format" vorliegende
+Kernel nach <tt>/tftpboot/lts/</tt> kopiert werden.
+</p>
+
+<sect1>Installation von CD
+
+<sect2>Debian/GNU Linux und Abkömmlinge
+
+<p>
+Bei Debian-Systemen müssen Sie die Terminalserver-CD dem Paketmanagementsystem mit
+
+<code>
+apt-cdrom add
+</code>
+
+bekannt machen. Die CD muss sich hierzu im Laufwerk befinden. Anschließend können
+Sie den Terminalserver mit
+
+<code>
+apt-get install task-termserv
+</code>
+
+installieren. Weitere Eingriffe sind nicht nötig.
+</p>
+
+<sect2>Rpm-basierte GNU/Linux-Distributionen
+
+<!--
+% RPM: Welche Pakete müssen eingespielt werden
+% RPM hat ja leider kein apt "autoresolve dependencies"
+-->
+
+<sect1>Installation über das Internet
+
+<p>
+Die Installation über das Internet ist nur mit Debian GNU/Linux-Systemen
+und Abkömmlingen möglich. Selbstverständlich geht das nur, wenn Ihr 
+zukünftiger Terminalserver eine Verbindung zum Internet hat.
+</p>
+
+<p>
+Tragen Sie
+
+<code>
+deb http://termserv.berlios.de/debian stable main
+</code>
+
+in die Datei <tt>/etc/apt/sources.list</tt> ein. Das Paketmanagementsystem
+muss nun diese zusätzliche Quelle für Pakete auswerten. Rufen Sie dazu
+
+<code>
+apt-get update
+</code>
+
+auf. Den Terminalserver können Sie jetzt mit
+
+<code>
+apt-get install task-termserv
+</code>
+
+installieren.
+</p>
+
+<sect1>Konfiguration
+
+<p>
+Bei der Installation der Terminalserver-Pakete wurde auch die
+Administrationssoftware Webmin mitinstalliert. Die Konfiguration des
+Terminalservers wird im Folgenden auf Basis dieses Werkzeugs erklärt.
+Fortgeschrittenen Adminstratoren werden die analogen manuellen Kommandos und Veränderungen
+an Konfigurationsdateien einsichtig sein.
+</p>
+
+<p>
+Die Webmin-Software ist am Terminalserver selbst sowie über jeden ans das
+Netzwerk angeschlossenen Rechner aufrufbar. Wenn Sie innerhalb des Netzwerkes
+dann den Terminalserver mit Ihrem Browser auf dem Webmin-Port (10000)
+aufrufen, z.B. <tt>http://192.168.0.254:10000/</tt>, erscheint folgender
+Anmeldebildschirm:
+</p>
+
+<!--
+%\begin{figure}[h]
+\begin{center}
+%\resizebox*{!}{5cm}{
+\includegraphics{userguide-installconfig-config-webmin-loginscreen.eps}
+%}
+\end{center}
+%\caption{Anmeldebildschirm von Webmin}
+%\end{figure}
+-->
+
+<p>
+Anmelden können Sie sich als root-Benutzer mit Ihrem root-Passwort.
+</p>
+ 
+<sect2>Anpassungen an ein vorhandenes Netzwerk
+
+<p>
+Die Terminalserver-Pakete konfigurieren das System teilweise mit
+Standardwerten. Diese Standardwerte müssen Sie natürlich für ein bestehendes
+Netzwerk anpassen.
+</p>
+ 
+<sect2>Einrichtung des DHCP-Servers
+
+<p>
+Der DHCP-Dienst kann entweder auf dem Terminalserver oder auf einem anderen
+Rechner laufen. Einzige Bedingung ist, dass der andere Rechner von den Terminals
+über das Netzwerk erreicht werden kann.
+</p>
+
+<p>
+Befinden sich mehr als ein DHCP-Server im Netz, so ist unbedingt darauf zu
+achten, dass sich die IP-Adressbereiche, die jeder bedient, nicht überschneiden.
+Anderenfalls hängt es vom Zufall ab, von welchem DHCP-Server eine Anfrage
+nach einer IP-Adresse zuerst beantwortet wird.
+</p>
+
+<sect3>DHCP auf dem Terminalserver
+
+<p>
+über Webmin
+</p>
+ 
+<sect3>DHCP auf Arktur
+
+<p>
+Der c't/ODS Kommunikationsserver Arktur enthält bereits einen DHCP-Server.
+Wenn sich außer den Terminals noch andere Rechner im Netz befinden
+und den DHCP-Server benutzen, ist es empfehlenswert, diesen auch für die
+Terminals mitzubenutzen. Dazu sind folgende Änderungen in der Datei
+<tt>/etc/dhcpd.conf</tt> auf Arktur nötig:
+
+<enum>
+<item>Eine Gruppe
+<code>
+group {
+    option next-server termserv;
+}
+</code>
+ist zu erstellen. <tt/termserv/ ist hierbei der Name des Terminalservers.
+Hiermit wird allen Terminals, die sich innerhalb dieser Gruppe befinden,
+mitgeteilt, wie der nächste Server (von dem der Linuxkernel geholt wird) heißt.
+Werden mehrere Terminalserver benutzt, bekommt jeder seine eigene Gruppe.
+<item>Pro Terminal ist innerhalb dieser Gruppe ein Eintrag der Form
+<code>
+    host Client-A40 {
+        hardware ethernet 08:00:07:26:c0:a5;
+        filename "/tftpboot/lts/vmlinuz.ne2000";
+        fixed-address Client-A40;
+    }
+</code>
+zu erstellen.
+
+<tt/Client-A40/ ist der Name des entsprechenden Terminals. Der
+Nameserver muß diesen Namen kennen und auf eine IP-Adresse auflösen. Eine
+Tabelle der auf Arktur voreingerichteten Adreßbereiche findet sich unter
+<ref id="dns-arktur" name="DNS auf Arktur">.
+
+<tt/08:00:07:26:c0:a5/ ist die MAC-Adresse der Netzwerkkarte.
+
+<tt>/tftpboot/lts/vmlinuz.ne2000</tt> ist der Name des Kernels, der gebootet
+werden soll.
+Er muß sich auf dem oben angegebenen Rechner (hier <tt/termserv/)
+befinden, und natürlich zur verwendeten Netzwerkkarte passen. Je nach
+verwendeter Linuxdistribution kann es auch nötig sein, das führende
+<tt>/tftpboot</tt> wegzulassen. Im Zweifelsfall hilft ausprobieren.
+
+<item>Wenn die unter <ref id="dns-arktur" name="DNS auf Arktur"> angegebenen IP-Adreßbereiche
+nicht ausreichen, ist analog zu den schon vorhandenen Subnetzeinträgen
+ein neues Subnetz zu definieren, z. B.
+<code>
+subnet 192.168.5.0 netmask 255.255.255.0 {
+    option routers 192.168.5.1;
+}
+</code>
+</enum>
+
+<p>
+Die hier beschriebene Konfigurationsmethode stellt nur eine unter vielen
+Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
+<tt/dhcpd.conf/ (in Englisch, zu lesen mit dem Befehl
+<tt/man dhcpd.conf/) verwiesen.
+</p>
+
+<p>
+<sect2>Einrichtung des DNS-Servers
+
+<sect3>DNS auf dem Terminalserver
+
+<p>
+über Webmin
+</p>
+ 
+<sect3>DNS auf Arktur
+
+<p>
+An der Konfiguration des standardmäßig auf Arktur laufenden Nameservers sind
+normalerweise keine Änderungen nötig. Die verfügbaren Namen und IP-Adressen
+stehen unter <ref id="dns-arktur" name="der angegebenen Tabelle">.
+
+<table>
+<tabular ca=ll>
+Name			|IP-Adresse@
+<tt/Client-A40/		|<tt/192.168.0.40/@
+:			|:@
+<tt/Client-A250/	|<tt/192.168.0.250/@
+<tt/Client-B10/		|<tt/192.168.1.10/@
+:			|:@
+<tt/Client-B250/	|<tt/192.168.1.250/@
+<tt/Client-C10/		|<tt/192.168.2.10/@
+:			|:@
+<tt/Client-C250/	|<tt/192.168.2.250/@
+<tt/Client-D10/		|<tt/192.168.3.10/@
+:			|:@
+<tt/Client-D250/	|<tt/192.168.3.250/@
+</tabular>
+<caption>Voreingerichtete Namen und IP-Adressen auf Arktur<label id="dns-arktur">
+</table>
+</p>
+
+<sect2>Das LTSP-Modul - Einrichtung der Terminal-Hardware
+
+<sect>Installation der Terminals
+
+<p>
+Bevor es an die Installation der Terminals geht, ein paar Grundlagen
+zum Startvorgang eines PCs:
+</p>
+
+<p>
+Direkt nach dem Einschalten wird das BIOS (Basic Input and Output System)
+gestartet. Dieses führt ein paar Tests durch und lädt danach das
+Startprogramm des Betriebssystems. Wo es dieses findet, kann man im
+Setup-Programm des BIOS einstellen.
+Dort finden sich normalerweise die Optionen Diskette, Festplatte, CDROM
+und bei neueren Rechnern oft auch Netzwerk.
+</p>
+
+<p>
+Normalerweise wird vom Startprogramm dann das Betriebssystem geladen,
+evtl. kann man zwischen mehreren wählen. In unserem Fall heißt dieses
+Startprogramm etherboot oder netboot. Beide erfüllen den gleichen Zweck:
+Statt das Betriebssystem von Platte oder Diskette zu laden, wird es über
+das Netz von einem Server geholt.
+</p>
+
+<p>
+Im Folgenden gehen wir von etherboot aus, da es deutlich flexibler als
+netboot ist und aktiver weiterentwickelt wird. Ein Unterschied zwischen
+etherboot und netboot ist, daß etherboot für jede Netzwerkkarte einen eigenen
+Treiber braucht, während netboot eine Art Mini-DOS zur Verfügung stellt,
+sodass mit netboot alle Netzwerkkarten verwendet werden können, für die
+es einen DOS-Packet-Treiber gibt. In der Regel sollte man also etherboot
+verwenden. Wenn die Netzwerkkarte von etherboot nicht unterstützt wird,
+kann man es mit netboot versuchen.
+</p>
+
+<p>
+Von wo aus etherboot geladen wird, ist für den weiteren Startvorgang des
+Terminals unerheblich. Es hat allein praktische Gründe. Wir beschränken
+uns hier auf vier Methoden: Start von Diskette, vom Bootsektor der
+Festplatte, von DOS aus und von
+einem Booteprom, die in den nächsten Kapiteln beschrieben werden.
+</p>
+
+<p>
+Weiterhin gehen wir davon aus, dass Zugang zum Internet besteht und die
+Etherboot-Images von <htmlurl url="http://rom-o-matic.net/" name="http://rom-o-matic.net/">
+heruntergeladen werden können.
+
+<sect1>Erstellen eines Etherbootimages mit der ROM-o-matic
+
+<p>
+Marty Connor betreibt auf <htmlurl url="http://rom-o-matic.net/" name="http://rom-o-matic.net/">
+einen Service, bei dem speziell konfigurierte Etherboot-Images dynamisch erzeugt und
+heruntergeladen werden können. Die Benutzung ist einfach:
+</p>
+
+<p>
+Auf der Startseite wählt man die gewünschte Version von Etherboot.
+Normalerweise sollte man hier die neueste "Production Release" wählen.
+Man gelangt dann zu einem Formular mit 4 Punkten. Mit dem ersten Punkt
+wählt man den Typ seiner Netzwerkkarte. Wenn nicht klar ist, welcher der
+richtige ist, hilft ein Blick auf die Etherboot-Homepage
+<htmlurl url="http://etherboot.sourceforge.net/" name="http://etherboot.sourceforge.net/">
+bzw. die Netzwerkkartendatenbank auf 
+<htmlurl url="http://etherboot.sourceforge.net/db/" name="http://etherboot.sourceforge.net/db/">.
+Unter dem zweiten Punkt kann man verschiedene Optionen einstellen, das ist
+normalerweise nicht nötig. Mit dem 3. Knopf wählt man das gewünschte Format
+(welches benötigt wird, hängt von der Startmethode ab, und wird in den
+zugehörigen Kapiteln beschrieben), und der 4. schließlich generiert das Image.
+</p>
+
+<sect1>Terminals mit Startdiskette
+
+<p>
+Eine Startdiskette ist die einfachste Methode, um ein Terminal zu starten,
+weil sie schnell auf einem anderen Rechner erstellt werden kann und einfach
+nur eingelegt zu werden braucht. Daher wird diese Methode auch gerne zum
+Testen verwendet. Ein Nachteil ist, daß ein Diskettenlaufwerk bewegliche
+Teile besitzt und damit staubanfällig ist und mechanisch altert. Ein weiterer
+Nachteil ist, daß die Startdiskette verlorengehen kann (dem kann man abhelfen,
+indem man das Laufwerk mit eingelegter Diskette so einbaut, daß es von außen
+nicht zugänglich ist, dann kann man es aber nicht für andere Zwecke
+verwenden).
+</p>
+
+<p>
+Das Format bei der ROM-o-matic ist ``Floppy Bootable ROM Image (.lzdsk)''.
+Unter Linux schreibt man sich die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) mit
+
+<code>
+cat eb-5.0.2-ne.lzdsk &gt; /dev/fd0
+</code>
+
+auf die Diskette im 1. Laufwerk. Aber Achtung: Wenn vorher etwas auf der
+Diskette gespeichert war, ist es jetzt überschrieben, und wenn man sich bei
+<tt>/dev/fd0</tt> vertippt, kann Schlimmes passieren (Überschreiben der
+Festplatte etc.) Natürlich braucht man für diesen Befehl Schreibrechte
+auf dem Diskettenlaufwerk, als Benutzer root sollte es auf alle Fälle
+funktionieren.
+</p>
+
+<p>
+Unter DOS/Windows kann man das Programm rawrite.exe benutzen, um die
+Startdiskette zu erstellen. Es ist normalerweise auf einer der Installations-CDs
+jeder Linuxdistribution zu finden oder kann von 
+<htmlurl url="http://uranus.it.swin.edu.au/~jn/linux/" name="http://uranus.it.swin.edu.au/~jn/linux/">
+heruntergeladen werden.
+</p>
+
+<p>
+Da das Diskettenabbild sehr klein ist, ist es normal, wenn die LED des Laufwerks
+beim Schreiben nur kurz aufleuchtet und man fast keine Geräusche hört.
+</p>
+
+<p>
+Das wars! Jetzt kann das Terminal mit dieser Diskette gestartet werden.
+</p>
+
+<sect1>Terminals mit Booteprom
+
+<p>
+Das Starten eines Terminals über ein Booteprom ist die eleganteste Methode,
+die auch bei entsprechenden kommerziell vertriebenen Lösungen angewandt wird.
+Der wesentliche Vorteil ist, daß man ohne bewegte Teile auskommt. Der Nachteil
+ist, daß fertig programmierte Booteproms bzw. Netzwerkkarten mit fertigem
+Booteprom recht teuer sind, und daß man zum Selberbrennen ein
+Epromprogrammiergerät und eine Epromlöschlampe braucht (sofern es sich nicht
+um Flasheproms handelt, die können ohne zusätzliche Geräte direkt
+``in circuit'' programmiert werden).
+</p>
+
+<p>
+Das Format des Images bei der ROM-o-matic ist ``Binary ROM Image (.lzrom)''.
+</p>
+
+<p>
+Hat man das Glück und eine Netzwerkkarte mit Flasheprom, so ist die
+erhaltene Datei mit dem zur Netzwerkkarte gehörigen
+Flashprogramm in das Flasheprom zu laden.
+</p>
+
+<p>
+Hat man eine Karte mit einem Sockel für ein normales EPROM, so ist die
+erhaltene Datei mit dem Epromprogrammiergerät in das Eprom zu brennen.
+Alternativ können fertig programmierte Eproms bei verschiedenen Anbietern
+bezogen werden. Eine Liste steht auf
+<htmlurl url="http://etherboot.sourceforge.net/commercial.html" name="http://etherboot.sourceforge.net/commercial.html">
+Anschließend muss das Eprom in den Sockel eingesetzt werden, und zwar so,
+daß die Aussparung an der einen Stirnseite mit der entsprechenden Markierung
+des Sockels übereinstimmt.
+</p>
+
+<p>
+Die meisten Etherbootimages sind 16 kB groß. Die passenden Eproms haben die
+Bezeichnung 27c128. Da jedoch die 32 kB-Eproms 27c256 pinkompatibel zum 27c128
+und wesentlich häufiger verkauft werden und somit billiger sind, empfiehlt
+sich dieser Typ.
+Damit das auch in Karten funktioniert, die eigentlich nur 16 kB-Typen
+vertragen, brennt man nicht das Image direkt, sondern ein 32 kB-Image
+(hier <tt/eb-5.0.2-ne-big.lzrom/), das man sich z. B. mit
+<code>
+cat eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom > eb-5.0.2-ne-big.lzrom
+</code>
+unter GNU/Linux oder
+<code>
+copy eb-5.0.2-ne.lzrom eb-5.0.2-ne.lzrom eb-5.0.2-ne-big.lzrom
+</code>
+unter DOS/Windows erzeugt.
+</p>
+
+<p>
+Meistens muss das Eprom/Flasheprom noch mit einem Konfigurationsprogramm
+aktiviert werden, bevor es benutzt werden kann.
+</p>
+
+<p>
+Dieses Kapitel enthält nur die nötigsten Punkte und ist eher als Überblick
+über die Möglichkeiten gedacht, die man mit einem Booteprom hat. Für
+ausführlichere Informationen, z. B. auch wie man Etherboot bei neueren PCs
+direkt ins BIOS integrieren kann, oder wie ein vorhandenes PXE-kompatibles
+Booteprom benutzt werden kann, sei auf die Etherboot-Dokumentation verwiesen.
+</p>
+
+<sect1>Terminals mit Festplatte
+
+<p>
+Ist eine Festplatte in eimem Terminal überhaupt sinnvoll, da ja lokal sowieso
+nichts gespeichert wird?
+Ja, wenn nur wenig Hauptspeicher zur Verfügung steht, kann man sie sehr gut
+als virtuellen Arbeitsspeicher gebrauchen.
+In allen anderen Fällen sollten evtl. vorhandene Festplatten eher ausgebaut
+werden, da sie unnötig Strom verbrauchen, Lärm machen und aufgrund mechanisch
+bewegter Teile irgendwann kaputt gehen.
+</p>
+
+<p>
+Das Format des Images bei der ROM-o-matic ist dasselbe wie beim Starten von
+Diskette, nur das Überspielen des Images auf die Festplatte funktioniert
+naturgemäß etwas anders.
+</p>
+
+<p>
+Hier gibt es zwei Wege: Über Diskette oder über Einbau der Festplatte in einen
+anderen PC.
+</p>
+
+<p>
+Wenn das Terminal über ein Diskettenlaufwerk verfügt, kopiert man
+die Imagedatei auf eine formatierte Diskette, unter Linux t. B. mit
+<code>
+cp eb-5.0.2-ne.lzdsk /floppy/
+</code>
+Hierbei ist angenommen, daß die Diskette unter <tt>/floppy/</tt> gemountet ist.
+Natürlich kann das Kopieren auch auf einem DOS/Windows-Rechner geschehen.
+</p>
+
+<p>
+Nun kann man das Terminal mit einem Taschenlinux (die Rettungsdiskette
+gängiger Linuxdistributionen geht auch) starten.
+Nachdem man sich als root angemeldet hat bzw. auf andere
+Weise eine shell mit root-Rechten geöffnet hat, legt man die zuvor erstellte
+Diskette ein und mountet sie:
+
+<code>
+mount /dev/fd0 /mnt
+</code>
+
+Dazu muss das Verzeichnis <tt>/mnt/</tt> existieren. Falls nicht, legt man es mit dem
+Befehl
+
+<code>
+mkdir /mnt
+</code>
+
+an. Nun kopiert man das Etherboot-Image auf die Festplatte:
+
+<code>
+cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hda
+</code>
+
+Falls es sich um eine SCSI-Festplatte handelt, muss statt <tt>/dev/hda</tt>
+entsprechend <tt>/dev/sda</tt> eingegeben werden.
+</p>
+
+<p>
+Besitzt das Terminal kein Diskettenlaufwerk ist es etwas aufwendiger: Man baut
+die Festplatte aus und in einen Linux-PC ein.
+Wenn die Platte z. B. als Master am zweiten IDE-Kanal hängt, wird mit 
+
+<code>
+cat /mnt/eb-5.0.2-ne.lzdsk > /dev/hdc
+</code>
+
+das Image kopiert. Auch hier muss man wieder aufpassen: Ein Tippfehler bei
+<tt>/dev/hdc</tt> kann sehr unangenehme Folgen haben!
+</p>
+
+<p>
+Nun kann die Platte wieder in das Terminal eingebaut werden.
+</p>
+
+<sect1>Terminals mit DOS
+
+<p>
+Wenn auf dem Terminal als zweites Betriebssystem DOS läuft, kann Etherboot
+auch von dort aus gestartet werden. Mit dem Startmenü von MS-DOS 6.x oder
+einer selbst geschriebenen Batch-Datei kann beim Starten zwischen dem
+Betrieb unter DOS oder als Terminal gewählt werden.
+</p>
+
+<p>
+Hier wird davon ausgegangen, dass DOS bereits auf der Fetsplatte installiert
+ist. Das Format bei der ROM-o-matic ist ``DOS.COM Executable ROM Image''.
+Die erhaltene Datei (z. B. eb-5.0.2-ne.com) kopiert man auf die Festplatte.
+Beim Aufruf wird dann Etherboot gestartet - Fertig!
+</p>
+
+<sect>Systemadministration
+
+<p>
+mittels webmin
+</p>
+
+<sect1>Benutzer- und Gruppenverwaltung
+
+<sect2>Direkt auf dem Terminalserver
+
+<sect2>Übernahme der Benutzer von einem anderen Server
+
+<p>
+Möglich von jedem NIS/NFS-Server.
+Evtl. Sonderweg für Arktur.
+</p>
+
+<sect1>Zugriffsrechteverwaltung
+
+<sect1>Speicherplatzbegrenzung mit Quotas
+
+<p>
+Peter: nötig? Selbst der Arktur bietet das nur als Option, die von Hand eingestellt werden muss. Außerdem müsste dann auf dem TS ein ext2 laufen, das Ganze ist nicht ganz einfach einzustellen.
+</p>
+
+<p>
+Christian: ja, wir brauchen das. Wenn jemand bei der Serverinstallation
+falsch partitioniert, kann man die Kiste mit Hilfe eines vollen Home-Verzeichnisses
+vollständig lahmlegen.
+</p>
+
+<sect>Fehlersuche
+<sect>Miszellaneen
+<sect1>Impressum
+<sect1>Lizenz
+<p>
+GFDL.
+</p>
+</article>
