@@ -344,7 +344,7 @@ Abhängig von den zur Verfügung stehenden Terminals sind die zu installierenden
 Kernel- und X-Server-Pakete.
 
 <table>
-<tabular al=lll>
+<tabular ca=lll>
 X-Server	|rpm-Paket			|deb-Paket@
 3dlabs		|lts\_x3dlabs-2.0-1.i386.rpm	|lts-xserver-3dlabs\_2.0-1\_all.deb@
 8514		|lts\_x8514-2.0-1.i386.rpm	|lts-xserver-8514\_2.0-1\_all.deb@
@@ -376,7 +376,7 @@ Informationen.
 
 <p>
 <table>
-<tabular al=lll>
+<tabular ca=lll>
 Netzwerkkarte	|rpm-Paket				|deb-Paket@
 3c509		|lts\_kernel\_3c509-2.2-0.i386.rpm	|lts-kernel-3c509\_2.2-1\_all.deb@
 3c905		|lts\_kernel\_3c905-2.2-0.i386.rpm	|lts-kernel-3c905\_2.2-1\_all.deb@
