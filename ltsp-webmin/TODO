@@ -1,12 +1,8 @@
 0.6:
 
- - handle new LTS_ROOT (/opt/ltsp/i386)
-
- - add support for Etherboot ROM image creation
+ - add support for Etherboot ROM image creation 
 
 0.7:
-
- - add support for local printers and perhaps touch pads
 
  - add support for automatic dhcp update
 
@@ -20,6 +16,7 @@ no particular version:
    with the option name (here "PRINTER_0_PARITY_N"), and only if that fails,
    look for the value (here "N"). Then we should translate "PRINTER_0_PARITY_N"
    to "None" and "N" to "No". This is not elegant, but should work.
+   (in progress)
  - Handle multiple occurences of the same option like PRINTER_0_TYPE ..
    PRINTER_2_TYPE more intelligently, that means without having to specify
    each options seperately.
@@ -28,10 +25,6 @@ no particular version:
    the X options.
    Problem: We need something like an "Update" button or a solution with
    javascript.
- - Add expert/novice setting on a per-user basis. For example, show all
-   *_SERVER settings to experts, but show only SERVER to novice users.
- - write script that checks wether all possible values of translated options
-   are in the language files.
  - make help page for each option. lts.conf.readme can be a starting point.
    Then make ltsp_lib.pl using hlink() for each option it displays if a
    helppage for that option exists.
