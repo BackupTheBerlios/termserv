@@ -1,3 +1,47 @@
+May 9, 2002 LTSP 3.0.4 -jam-
+
+   ltsp_core
+
+     o Integrated the changes supplied by Georg Baum for
+       Debian to support DHCP v3.0
+
+
+May 6, 2002 LTSP 3.0.3 -jam-
+
+   ltsp_core
+
+     o Added support for Suse 8.0
+
+
+May 5, 2002 LTSP 3.0.2 -jam-
+
+   ltsp_core
+
+     o Added support for Redhat 7.3, Mandrake 8.2 and Suse 7.2 and 7.3 
+
+     o Fixed problem with ltsp_initialize for Suse. COPY templates were
+       opening the target for input, rather than output, and 'interpreter'
+       was overwriting the default answer, causing "/bin/sh" to appear in the
+       default column.
+
+     o Modified rc.local to work properly if ltsp_x_core package is
+       not installed.
+
+     o Fixed problem in the gdm_Init template.  It seems that readlink
+       doesn't exist on all distros, so I simulated it with perl.
+
+
+Dec 17, 2001 LTSP 3.0.1 -jam-
+
+  ALL
+
+     o RPM packages created
+
+  ltsp_x_core
+
+     o Updated vidlist file supports more video cards, including
+       many cards that require XFree86 3.3.6
+
 Nov 28, 2001 LTSP 3.0.0 -jam-
 
   ltsp_core

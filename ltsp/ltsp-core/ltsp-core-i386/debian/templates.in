@@ -8,7 +8,7 @@ Description: Run ltsp_initialize
  .
  If you have a different IP address scheme than the default one, you may
  edit _SCRIPT_DIR_/CONFIG and recreate
- the templates by changig to the directory _SCRIPT_DIR_
+ the templates by changing to the directory _SCRIPT_DIR_
  and then running ./create_templates.sh.
  .
  You can then change to _TMPL_DIR_ and run

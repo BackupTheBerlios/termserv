@@ -1,3 +1,19 @@
+ltsp-core-i386 (3.0.4-0) unstable; urgency=low
+
+  * new upstream release. Includes now my debian.sh changes.
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Fri, 10 May 2002 20:39:57 +0200
+
+ltsp-core-i386 (3.0.3-0) unstable; urgency=low
+
+  * never released publically
+  * new upstream release.
+  * templates.in: corrected typo (Thanks to Karl Hegblom).
+  * debian.sh: Before installing Xsetup_workstation and ltsp.gif, the
+    presence of /etc/X11/xdm is now checked (Thanks to Karl Hegblom).
+
+ -- Georg Baum <gbaum@users.sourceforge.net>  Thu,  9 May 2002 09:50:57 +0200
+
 ltsp-core-i386 (3.0.0-2) unstable; urgency=low
 
   * Fixed problem in debian.sh with /var/dhcp not being present when using
