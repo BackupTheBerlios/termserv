@@ -26,6 +26,7 @@ X_MOUSE_PROTOCOL=Protocole de la souris
 X_MOUSE_BAUD=Vitesse du port
 XkbModel=Modèle du clavier
 XkbLayout=Type de clavier
+RAMDISK_SIZE=Taille ramdisk
 Y=Oui
 N=Non
 GUI=Graphique, depuis de serveur
