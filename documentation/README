@@ -1,6 +1,7 @@
 The documentation is written in docbook format. In order to build it,
 you need (among others) the packages
 
+sp
 jade
 jadetex
 docbook
@@ -16,6 +17,20 @@ Note that these are the names of the Debian pacakges, they may vary for
 other distributions.
 Another good resource is the KDE Documentation Editor's Homepage at
 http://i18n.kde.org/doc/index.html.
+
+
+
+Graphics:
+
+Graphics have to be provided in two formats: png for the html version
+and eps for the printed version. You have to put them into
+userguide/src (or provide a rule in userguide/Makefile to create them from
+other sources).
+The variable IMAGES in userguide/Makefile needs to contain the basename
+of each image.
+
+See http://www.caldera.de/~eric/crash-course/HTML/graphics.html for
+examples of sgml source for including graphics.
 
 
 

@@ -307,10 +307,12 @@ Dateien vom Server exportiert und vom Terminal importiert:
 <title>X11 - Fenster in der Ferne</title>
 
 <para>
-<figure id="x-flow-diag">
-<title>Funktionsweise des X11-Protokolls</title>
-<graphic fileref="userguide-networkbasics-protocols-x-flow.eps" format="eps" width="5cm"></graphic>
-</figure>
+<mediaobject id="x-flow-diag">
+<imageobject><imagedata fileref="userguide-networkbasics-protocols-x-flow.eps" format="eps"></imageobject>
+<imageobject><imagedata fileref="userguide-networkbasics-protocols-x-flow.png" format="png"></imageobject>
+<textobject><phrase>Funktionsweise des X11-Protokolls</phrase></textobject>
+<caption><para>Funktionsweise des X11-Protokolls</para></caption>
+</mediaobject>
 </para>
 
 <para>
@@ -638,10 +640,15 @@ aufrufen, z.B. <literal>http://192.168.0.254:10000/</literal>, erscheint folgend
 Anmeldebildschirm:
 </para>
 
-<figure>
-<title>Anmeldebildschirm von Webmin</title>
-<graphic fileref="userguide-installconfig-config-webmin-loginscreen.eps" format="eps" width="5cm"></graphic>
-</figure>
+<screenshot>
+<screeninfo>Anmeldebildschirm von Webmin</screeninfo>
+<mediaobject>
+<imageobject><imagedata fileref="userguide-installconfig-config-webmin-loginscreen.eps" format="eps"></imageobject>
+<imageobject><imagedata fileref="userguide-installconfig-config-webmin-loginscreen.png" format="png"></imageobject>
+<textobject><phrase>Anmeldebildschirm von Webmin</phrase></textobject>
+<caption><para>Anmeldebildschirm von Webmin</para></caption>
+</mediaobject>
+</screenshot>
 
 <para>
 Anmelden können Sie sich als root-Benutzer mit Ihrem root-Passwort.
