@@ -232,6 +232,13 @@ Dateien vom Server exportiert und vom Terminal importiert:
  
 <sect2>X11 - Fenster in der Ferne
 
+<p>
+<figure>
+<eps file="userguide-networkbasics-protocols-x-flow.eps">
+<caption>Funktionsweise des X11-Protokolls</caption>
+</figure>
+</p>
+
 <!--\begin{figure}
 
 \begin{center}
@@ -336,29 +343,27 @@ diese beiden Pakete nicht, müssen Sie die anderen Pakete einzeln installieren!
 Abhängig von den zur Verfügung stehenden Terminals sind die zu installierenden
 Kernel- und X-Server-Pakete.
 
-<!--
-\begin{table}[h]
-\begin{tabular}{lll}
-X-Server	&rpm-Paket			&deb-Paket\\
-3dlabs		&lts\_x3dlabs-2.0-1.i386.rpm	&lts-xserver-3dlabs\_2.0-1\_all.deb\\
-8514		&lts\_x8514-2.0-1.i386.rpm	&lts-xserver-8514\_2.0-1\_all.deb\\
-agx		&lts\_xagx-2.0-1.i386.rpm	&lts-xserver-agx\_2.0-1\_all.deb\\
-fbdev		&lts\_xfbdev-2.0-1.i386.rpm	&lts-xserver-fbdev\_2.0-1\_all.deb\\
-i128		&lts\_xi128-2.0-1.i386.rpm	&lts-xserver-i128\_2.0-1\_all.deb\\
-mach32		&lts\_xmach32-2.0-1.i386.rpm	&lts-xserver-mach32\_2.0-1\_all.deb\\
-mach64		&lts\_xmach64-2.0-1.i386.rpm	&lts-xserver-mach64\_2.0-1\_all.deb\\
-mach8		&lts\_xmach8-2.0-1.i386.rpm	&lts-xserver-mach8\_2.0-1\_all.deb\\
-mono		&lts\_xmono-2.0-1.i386.rpm	&lts-xserver-mono\_2.0-1\_all.deb\\
-p9000		&lts\_xp9000-2.0-1.i386.rpm	&lts-xserver-p9000\_2.0-1\_all.deb\\
-s3		&lts\_xs3-2.0-1.i386.rpm	&lts-xserver-s3\_2.0-1\_all.deb\\
-s3v		&lts\_xs3v-2.0-1.i386.rpm	&lts-xserver-s3v\_2.0-1\_all.deb\\
-svga		&lts\_xsvga-2.0-1.i386.rpm	&lts-xserver-svga\_2.0-1\_all.deb\\
-vga16		&lts\_xvga16-2.0-1.i386.rpm	&lts-xserver-vga16\_2.0-1\_all.deb\\
-w32		&lts\_xw32-2.0-1.i386.rpm	&lts-xserver-w32\_2.0-1\_all.deb\\
-\end{tabular}
-\caption{X-Server-Pakete}
-\end{table}
--->
+<table>
+<tabular al=lll>
+X-Server	|rpm-Paket			|deb-Paket@
+3dlabs		|lts\_x3dlabs-2.0-1.i386.rpm	|lts-xserver-3dlabs\_2.0-1\_all.deb@
+8514		|lts\_x8514-2.0-1.i386.rpm	|lts-xserver-8514\_2.0-1\_all.deb@
+agx		|lts\_xagx-2.0-1.i386.rpm	|lts-xserver-agx\_2.0-1\_all.deb@
+fbdev		|lts\_xfbdev-2.0-1.i386.rpm	|lts-xserver-fbdev\_2.0-1\_all.deb@
+i128		|lts\_xi128-2.0-1.i386.rpm	|lts-xserver-i128\_2.0-1\_all.deb@
+mach32		|lts\_xmach32-2.0-1.i386.rpm	|lts-xserver-mach32\_2.0-1\_all.deb@
+mach64		|lts\_xmach64-2.0-1.i386.rpm	|lts-xserver-mach64\_2.0-1\_all.deb@
+mach8		|lts\_xmach8-2.0-1.i386.rpm	|lts-xserver-mach8\_2.0-1\_all.deb@
+mono		|lts\_xmono-2.0-1.i386.rpm	|lts-xserver-mono\_2.0-1\_all.deb@
+p9000		|lts\_xp9000-2.0-1.i386.rpm	|lts-xserver-p9000\_2.0-1\_all.deb@
+s3		|lts\_xs3-2.0-1.i386.rpm	|lts-xserver-s3\_2.0-1\_all.deb@
+s3v		|lts\_xs3v-2.0-1.i386.rpm	|lts-xserver-s3v\_2.0-1\_all.deb@
+svga		|lts\_xsvga-2.0-1.i386.rpm	|lts-xserver-svga\_2.0-1\_all.deb@
+vga16		|lts\_xvga16-2.0-1.i386.rpm	|lts-xserver-vga16\_2.0-1\_all.deb@
+w32		|lts\_xw32-2.0-1.i386.rpm	|lts-xserver-w32\_2.0-1\_all.deb@
+</tabular>
+<caption>X-Server-Pakete
+</table>
 
 Welche X-Server benötigt werden, hängt von den Grafikkarten der Terminals ab.
 Meistens wird der X-Server für SVGA-kompatible Grafikkarten funktionieren.
@@ -369,37 +374,35 @@ auf den Seiten des XFree86-Projektes
 (<htmlurl url="http://www.xfree86.org/" name="http://www.xfree86.org/">) weitere
 Informationen.
 
-<!--
-\begin{table}[h]
-\begin{tabular}{lll}
-Netzwerkkarte	&rpm-Paket				&deb-Paket\\
-3c509		&lts\_kernel\_3c509-2.2-0.i386.rpm	&lts-kernel-3c509\_2.2-1\_all.deb\\
-3c905		&lts\_kernel\_3c905-2.2-0.i386.rpm	&lts-kernel-3c905\_2.2-1\_all.deb\\
-all		&lts\_kernel\_all-2.2-0.i386.rpm	&lts-kernel-all\_2.2-1\_all.deb\\
-eepro100	&lts\_kernel\_eepro100-2.2-0.i386.rpm	&lts-kernel-eepro100\_2.2-1\_all.deb\\
-ne2000		&lts\_kernel\_ne2000-2.2-0.i386.rpm	&lts-kernel-ne2000\_2.2-1\_all.deb\\
-rtl8139		&lts\_kernel\_rtl8139-2.2-0.i386.rpm	&lts-kernel-rtl8139\_2.2-1\_all.deb\\
-tulip		&lts\_kernel\_tulip-2.2-0.i386.rpm	&lts-kernel-tulip\_2.2-1\_all.deb\\
-\end{tabular}
-\caption{Kernelpakete}
-\end{table}
--->
-
 <p>
+<table>
+<tabular al=lll>
+Netzwerkkarte	|rpm-Paket				|deb-Paket@
+3c509		|lts\_kernel\_3c509-2.2-0.i386.rpm	|lts-kernel-3c509\_2.2-1\_all.deb@
+3c905		|lts\_kernel\_3c905-2.2-0.i386.rpm	|lts-kernel-3c905\_2.2-1\_all.deb@
+all		|lts\_kernel\_all-2.2-0.i386.rpm	|lts-kernel-all\_2.2-1\_all.deb@
+eepro100	|lts\_kernel\_eepro100-2.2-0.i386.rpm	|lts-kernel-eepro100\_2.2-1\_all.deb@
+ne2000		|lts\_kernel\_ne2000-2.2-0.i386.rpm	|lts-kernel-ne2000\_2.2-1\_all.deb@
+rtl8139		|lts\_kernel\_rtl8139-2.2-0.i386.rpm	|lts-kernel-rtl8139\_2.2-1\_all.deb@
+tulip		|lts\_kernel\_tulip-2.2-0.i386.rpm	|lts-kernel-tulip\_2.2-1\_all.deb@
+</tabular>
+<caption>Kernelpakete
+</table>
+
 Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <tt/all/
 enthält alle Netzwerkkartentreiber. Wenn für die gewünschte Karte
-kein Kernel vorhanden ist, und der <tt/all/-Kernel nicht funktioniert, muß ein
+kein Kernel vorhanden ist, und der <tt/all/-Kernel nicht funktioniert, muss ein
 Kernel selber erstellt und nach <tt>/tftpboot/lts/</tt> kopiert werden.
 </p>
 
 <sect3>Kernel für ein Terminal selber bauen
 <p>
-Wir gehen hier davon aus, daß Sie wissen, wie man einen Kernel compiliert (z. B.
+Wir gehen hier davon aus, dass Sie wissen, wie man einen Kernel compiliert (z. B.
 aus einem der vielen Linuxbücher) und beschreiben nur die Besonderheiten für den
-plattenlosen Betrieb. Bei der Kernelkonfiguration muß der Treiber der Netzwerkkarte
+plattenlosen Betrieb. Bei der Kernelkonfiguration muss der Treiber der Netzwerkkarte
 fest in den Kernel eincompiliert werden (kein Modul!). Dies liegt daran, daß das
-Wurzeldateisystem (welches die Module enthält) über das Netz geholt wird, und dazu
-muß natürlich die Netzwerkkarte funktionieren. Andere zu aktivierende Optionen (auch
+Wurzeldateisystem (welches die Module enthält) über das Netzwerk geholt wird, und dazu
+muss natürlich die Netzwerkkarte funktionieren. Andere zu aktivierende Optionen (auch
 diese dürfen keine Module sein) stehen in <ref id="kernel-optionen" name="dieser Tabelle">.
 
 
@@ -411,8 +414,7 @@ Networking options->DHCP support@
 Filesystems->Network File Systems->NFS filesystem support@
 Filesystems->Network File Systems->Root filesystem on NFS@
 </tabular>
-<caption>Benötigte Kernel-Optionen</caption>
-<label id="kernel-optionen">
+<caption>Benötigte Kernel-Optionen<label id="kernel-optionen">
 </table>
 </p>
 
@@ -653,9 +655,8 @@ Name			|IP-Adresse@
 :			|:@
 <tt/Client-D250/	|<tt/192.168.3.250/@
 </tabular>
-<caption>Voreingerichtete Namen und IP-Adressen auf Arktur</caption>
+<caption>Voreingerichtete Namen und IP-Adressen auf Arktur<label id="dns-arktur">
 </table>
-<label id="dns-arktur">
 </p>
 
 <sect2>Das LTSP-Modul - Einrichtung der Terminal-Hardware
