@@ -1,8 +1,0 @@
-ltsp-webmin for Debian
-----------------------
-
-I know that this package should depend on the ltsp package, but unfortunately
-ltsp is currently not available as .deb.
-I'll correct this as soon as possible!
-
- -- Georg Baum <gbaum@users.sourceforge.net>, Sat, 27 Jan 2001 14:08:44 +0100
