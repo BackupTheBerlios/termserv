@@ -1,0 +1,12 @@
+Source: termserv-doc
+Section: doc
+Priority: optional
+Maintainer: Georg Baum <gbaum@users.sourceforge.net>
+Standards-Version: 3.1.1
+
+Package: termserv-doc
+Architecture: all
+Suggests: task-termserv
+Description: Documentation for the GNU/Linux Terminalserver for schools
+ This package contains the Userguide of the GNU/Linux Terminalserver for
+ schools in dvi, postscript and pdf format.
