@@ -129,7 +129,12 @@ sub _ltsp_modify_entry_on_write(@) {
         splice(@lines, $i, 1);
       }
     }    
-    
+
+    foreach (@modified) {
+      if ($_ eq $key) {
+        
+      }
+    }
   }
 
   foreach $key (keys(%cur_conf)) {
