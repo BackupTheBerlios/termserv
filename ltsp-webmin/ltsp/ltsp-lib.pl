@@ -132,8 +132,21 @@ sub _ltsp_modify_entry_on_write(@) {
 
     foreach (@modified) {
       if ($_ eq $key) {
-        if (/( *)?([^ ]*)?=( *)?"([^"]*)?"( *)?/) {
-          print "<blink>quoted: $_!</blink>";
+        print "modified: $_<br>\n" if $DEBUG;
+        if ($lines[$i] =~ /( *)?(\w*)?(.*)?=(.*)?\"(.*)?\"(.*)?/) {
+          $rep = $conf{"$_"};
+          if (&ltsp_value_needs_quotes("$_")) {
+            $lines[$i] =~ s/=(.*)?\"(.*)?\"(.*)?/=$1\"$rep\"$3/;
+          } else {
+            $lines[$i] =~ s/=(.*)?\"(.*)?\"(.*)?/=$1$rep$3/;
+          }
+        } elsif ($lines[$i] =~ /( *)?(\w*)?(.*)?=((\t| )*)?([^ ]*)?( *)?/) {
+          $rep = $conf{"$_"};
+          if (&ltsp_value_needs_quotes("$_")) {
+            $lines[$i] =~ s/=((\t| )*)?([^ ]*)?( *)?/=$1\"$rep\"$3/;
+          } else {
+            $lines[$i] =~ s/=((\t| )*)?([^ ]*)?( *)?/=$1$rep$3/;
+          }
         }
       }
     }
@@ -226,6 +239,7 @@ sub ltsp_write_config($) {
       }
       # That's the only interesting subroutine here, believe me
       &_ltsp_modify_entry_on_write(\@mod_lines);
+      splice(@lines, $begin_modify, $end_modify-$begin_modify, @mod_lines);
     }
 
   }
@@ -241,7 +255,6 @@ sub ltsp_write_config($) {
         %conf = &ltsp_get_configuration($cur_hce);
         push (@lines, "[$cur_hce]\n");
         foreach (keys(%conf)) { 
-          # RESPECT NOQUOTE!
           if (&ltsp_value_needs_quotes("$_")) {
             push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n"); 
           } else {
@@ -252,21 +265,21 @@ sub ltsp_write_config($) {
     }
   }
 
-  &lock_file("$conf_file");
-  open (LST, ">$conf_file");
+  &lock_file("$config_file");
+  open (LST, ">$config_file");
 
   # Insert file writing operation code here
  
   if ($DEBUG) {
     foreach (@lines) {
       print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n";
-      print LST;
+      print LST "$_";
     }
   }
 
   close (LST);
-  &unlock_file("$conf_file");
-  &webmin_log("write", "file", $conf_file, );
+  &unlock_file("$config_file");
+  &webmin_log("write", "file", $config_file, );
 
   # Set back "helper" variables
   @added_hosts = ();
