@@ -28,8 +28,6 @@ sub ltsp_read_config($) {
 
   my $config_file = shift(@_);
 
-  print "ltsp_read_config: reading $config_file<br>\n" if $DEBUG;
-
   &lock_file("$config_file");
   open (LST, "<$config_file");
   @lines = (<LST>);
@@ -81,7 +79,6 @@ sub ltsp_read_config($) {
 
 sub _ltsp_modify_entry_on_write(@) {
 
-  print "_ltsp_modify_entry_on_write called<br>\n" if $DEBUG;
   # This function reads a list, which contains the entry in the
   # config file, and a hash, which contains the configuration
   # information of the entry; it returns the modified list
@@ -102,9 +99,7 @@ sub _ltsp_modify_entry_on_write(@) {
 
     ($key, $value) = split(/=/);
     $key =~ s/(\s*)?//g;
-    print "<tt>key captured: $key</tt>\n";
     $value =~ s/^(\s|\t)*(\"{0,1})(.*?)\"{0,1}\s*$/$3/;
-    print "<tt>value captured: $value</tt>\n";
     $cur_conf{"$key"} .= $value;
   }
 
@@ -171,8 +166,6 @@ sub _ltsp_modify_entry_on_write(@) {
 
 sub ltsp_write_config($) {
 
-  print "ltsp_write_config: procedure called\n<br>" if $DEBUG;
-
   my $config_file = shift(@_);
 
   &lock_file("$config_file");
@@ -204,7 +197,6 @@ sub ltsp_write_config($) {
       }
       # In case of EOF
       if ($end_delete != $i) { $end_delete = $i; }
-      print "ltsp_write_config: delete lines $begin_delete to $end_delete\n<br>" if $DEBUG;
       splice (@lines, $begin_delete, $end_delete-$begin_delete);
     }
   }
@@ -235,10 +227,8 @@ sub ltsp_write_config($) {
       }
       # In case of EOF
       if ($end_modify != $i) { $end_modify = $i; }
-      print "ltsp_write_config: modifying lines $begin_modify to $end_modify\n<br>" if $DEBUG;
       # TMTOWTDI - har har - lick my shiny metal a**, Larry!
       for ($i = $begin_modify; $i < $end_modify; $i++) { 
-        print "<tt><font color=\"#1fff1f\">" . $lines[$i] . "</font></tt>\n<br>" if $DEBUG;
         push (@mod_lines, $lines[$i]); 
       }
       # That's the only interesting subroutine here, believe me
@@ -287,8 +277,6 @@ sub ltsp_write_config($) {
   @added_hosts = ();
   @modified_hosts = ();
   @deleted_hosts = ();
-
-  print "ltsp_write_config: procedure finished\n<br>" if $DEBUG;
 
 }
 
@@ -393,9 +381,8 @@ sub ltsp_value_needs_quotes($) {
 
   if ( -e "./options/$option/quoted") {
     return 1;
-  } else {
-    return 0;
   }
+  return 0;
 }
 
 sub ltsp_modify_entry($, %) {
@@ -409,19 +396,16 @@ sub ltsp_modify_entry($, %) {
   if ($profiles{"$entry"} eq "") {
     $newhost = 1;
     push (@added_hosts, $entry);
-    print "ltsp_modify_entry: $entry is a new entry<br>\n" if $DEBUG;
   }
 
   $profiles{"$entry"} = "";
   foreach (keys(%data)) {
     $profiles{"$entry"} .= ";$_," . $data{"$_"};
   }
-  print "ltsp_modify_entry: $entry is " . $profiles{"$entry"} . "<br>\n" if $DEBUG;
   $profiles{"$entry"} = substr($profiles{"$entry"}, 1);
 
   if (!($newhost eq 1) && !($profiles{"$entry"} eq "")) {
     push (@modified_hosts, $entry);
-    print "ltsp_modify_entry: $entry is a modified entry<br>\n" if $DEBUG;
   }
 
   # Test whether the entry is empty at the end
@@ -430,7 +414,6 @@ sub ltsp_modify_entry($, %) {
 
   if ($profiles{"$entry"} eq "") {
     push (@deleted_hosts, $entry);
-    print "ltsp_modify_entry: $entry is a deleted entry<br>\n" if $DEBUG;
   }
 
 }
