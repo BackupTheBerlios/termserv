@@ -358,7 +358,6 @@ w32		&lts\_xw32-2.0-1.i386.rpm	&lts-xserver-w32\_2.0-1\_all.deb\\
 \end{tabular}
 \caption{X-Server-Pakete}
 \end{table}
-
 -->
 
 Welche X-Server benötigt werden, hängt von den Grafikkarten der Terminals ab.
@@ -388,10 +387,57 @@ tulip		&lts\_kernel\_tulip-2.2-0.i386.rpm	&lts-kernel-tulip\_2.2-1\_all.deb\\
 
 <p>
 Die verfügbaren Kernel decken nicht alle Netzwerkkarten ab. Der Kernel <tt/all/
-enthält alle Netzwerkkartentreiber. Wenn für die gewüsnchte Karte
+enthält alle Netzwerkkartentreiber. Wenn für die gewünschte Karte
 kein Kernel vorhanden ist, und der <tt/all/-Kernel nicht funktioniert, muß ein
-Kernel selber erstellt werden und nach <tt>/tftpboot/lts/</tt> kopiert werden. Wie das
-geht, steht in der Etherboot-Dokumentation.
+Kernel selber erstellt und nach <tt>/tftpboot/lts/</tt> kopiert werden.
+</p>
+
+<sect3>Kernel für ein Terminal selber bauen
+<p>
+Wir gehen hier davon aus, daß Sie wissen, wie man einen Kernel compiliert (z. B.
+aus einem der vielen Linuxbücher) und beschreiben nur die Besonderheiten für den
+plattenlosen Betrieb. Bei der Kernelkonfiguration muß der Treiber der Netzwerkkarte
+fest in den Kernel eincompiliert werden (kein Modul!). Dies liegt daran, daß das
+Wurzeldateisystem (welches die Module enthält) über das Netz geholt wird, und dazu
+muß natürlich die Netzwerkkarte funktionieren. Andere zu aktivierende Optionen (auch
+diese dürfen keine Module sein) stehen in <ref id="kernel-optionen" name="dieser Tabelle">.
+
+
+<table>
+<tabular ca=l>
+Block devices->RAM disk support@
+Networking options->IP kernel-level configuration support@
+Networking options->DHCP support@
+Filesystems->Network File Systems->NFS filesystem support@
+Filesystems->Network File Systems->Root filesystem on NFS@
+</tabular>
+<caption>Benötigte Kernel-Optionen</caption>
+<label id="kernel-optionen">
+</table>
+</p>
+
+<p>
+Manche der Optionen sind erst anwählbar, wenn andere aktiviert sind. Daher empfielt
+es sich, in der Reihenfolge der Tabelle vorzugehen.
+Prinzipiell ist es möglich, Kernel der Version 2.0.x, 2.2.x oder 2.4.x zu verwenden.
+Die älteren Kernel können für ältere Hardware noch ganz nützlich sein. Einmal
+verbrauchen sie etwas weniger Speicher, und zum Anderen will manche betagte Hardware
+mit den neueren Versionen nicht richtig laufen.
+Beispielkonfigurationsdateien, in denen außer der Netzwerkkarte schon alle nötigen
+Einstellungen vorgenommen sind, finden Sie je nach verwendeter Distribution unter
+/usr/share/doc/termserv-doc/ oder /usr/share/doc/packages/termserv-doc/, wenn
+Sie das Paket termserv-doc installiert haben.
+
+TODO: Dateien erstellen.
+
+</p>
+
+<p>
+Nachdem der Kernel erfolgreich compiliert wurde, muß er noch mit mknbi-linux in ein
+von Etherboot lesbares Format gewandelt werden. Wie das geht, steht in der
+Etherboot-Dokumentation. Anschließend muß der nun im "tagged image format" vorliegende
+Kernel nach /tftpboot/lts/ kopiert werden.
+</p>
 
 <sect1>Installation von CD
 
@@ -584,35 +630,33 @@ Möglichkeiten dar. Wer tiefer einsteigen möchte, sei auf die Manualseite zu
 über Webmin
 </p>
  
-<sect3>DNS auf Arktur<label id="dns-arktur">
+<sect3>DNS auf Arktur
 
 <p>
 An der Konfiguration des standardmäßig auf Arktur laufenden Nameservers sind
 normalerweise keine Änderungen nötig. Die verfügbaren Namen und IP-Adressen
 stehen unter <ref id="dns-arktur" name="der angegebenen Tabelle">.
-</p>
 
-<!--
-\begin{table}[h]
-\begin{tabular}{ll}
-Name			&IP-Adresse\\
-\texttt{Client-A40}	&\texttt{192.168.0.40}\\
-\multicolumn{2}{c}{\vdots}\\
-\texttt{Client-A250}	&\texttt{192.168.0.250}\\
-\texttt{Client-B10}	&\texttt{192.168.1.10}\\
-\multicolumn{2}{c}{\vdots}\\
-\texttt{Client-B250}	&\texttt{192.168.1.250}\\
-\texttt{Client-C10}	&\texttt{192.168.2.10}\\
-\multicolumn{2}{c}{\vdots}\\
-\texttt{Client-C250}	&\texttt{192.168.2.250}\\
-\texttt{Client-D10}	&\texttt{192.168.3.10}\\
-\multicolumn{2}{c}{\vdots}\\
-\texttt{Client-D250}	&\texttt{192.168.3.250}\\
-\end{tabular}
-\caption{Voreingerichtete Namen und IP-Adressen auf Arktur}
-\label{dns-arktur}
-\end{table}
--->
+<table>
+<tabular ca=ll>
+Name			|IP-Adresse@
+<tt/Client-A40/		|<tt/192.168.0.40/@
+:			|:@
+<tt/Client-A250/	|<tt/192.168.0.250/@
+<tt/Client-B10/		|<tt/192.168.1.10/@
+:			|:@
+<tt/Client-B250/	|<tt/192.168.1.250/@
+<tt/Client-C10/		|<tt/192.168.2.10/@
+:			|:@
+<tt/Client-C250/	|<tt/192.168.2.250/@
+<tt/Client-D10/		|<tt/192.168.3.10/@
+:			|:@
+<tt/Client-D250/	|<tt/192.168.3.250/@
+</tabular>
+<caption>Voreingerichtete Namen und IP-Adressen auf Arktur</caption>
+</table>
+<label id="dns-arktur">
+</p>
 
 <sect2>Das LTSP-Modul - Einrichtung der Terminal-Hardware
 
@@ -703,7 +747,7 @@ verwenden).
 
 <p>
 Das Format bei der ROM-o-matic ist ``Floppy Bootable ROM Image (.lzdsk)''.
-Die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) schreibt man sich unter Linux mit
+Unter Linux schreibt man sich die erhaltene Datei (z. B. eb-5.0.2-ne.lzdsk) mit
 
 <code>
 cat eb-5.0.2-ne.lzdsk &gt; /dev/fd0
@@ -718,8 +762,16 @@ funktionieren.
 </p>
 
 <p>
-Da die Datei sehr klein ist, ist es normal, wenn die LED des Laufwerks nur
-kurz aufleuchtet, und man fast keine Geräusche hört.
+Unter DOS/Windows kann man das Programm rawrite.exe benutzen, um die
+Startdiskette zu erstellen. Es ist normalerweise auf einer der Installations-CDs
+jeder Linuxdistribution zu finden oder kann von 
+<htmlurl url="http://uranus.it.swin.edu.au/~jn/linux/" name="http://uranus.it.swin.edu.au/~jn/linux/">
+heruntergeladen werden.
+</p>
+
+<p>
+Da das Diskettenabbild sehr klein ist, ist es normal, wenn die LED des Laufwerks
+beim Schreiben nur kurz aufleuchtet und man fast keine Geräusche hört.
 </p>
 
 <p>
