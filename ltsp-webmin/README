@@ -1,6 +1,9 @@
 The Webmin LTSP module
 
- I do not see any reason to describe this package.
+ This modules provides a user-friendly interface to the
+ configuration of the Linux Terminal Server Project (LTSP).
+ The newest version can be downloaded from
+ http://termserv.berlios.de/
 
 Files
 
@@ -8,5 +11,7 @@ Files
  INSTALL: Installation hints.
  LICENSE: The GPL.
  CREDITS: Credits to co-developers and helpful people.
- TODO&FEATURES: you bet.
+ TODO: long list.
+ FEATURES: short list.
 
+After all, it's been fun :-)
