@@ -1,9 +1,14 @@
-#! /bin/sh
-# postinst script for lts-core
+#! /bin/bash
+#
+# bash and not sh because
+# 1) pushd/popd
+# 2) the "." command did not work on ash the last time I checked (11th Feb 2003)
+#
+# postinst script for ltsp-core
 #
 # see: dh_installdeb(1)
 
-source /usr/share/debconf/confmodule
+. /usr/share/debconf/confmodule
 
 set -e
 

@@ -1,12 +1,19 @@
+ltsp-core-i386 (3.0.7-1) unstable; urgency=low
+
+  * debian/postinst.top: change /bin/sh to /bin/bash, because we use
+    bashs pushd/popd (Thanks to Ragnar Wisloff <ragnar@wisloff.no>)
+
+ -- Georg Baum <gbaum@users.sf.net>  Tue, 11 Feb 2003 21:57:26 +0100
+
 ltsp-core-i386 (3.0.7-0) unstable; urgency=low
 
   * new upstream release.
   * debian.sh: add an antry for mountd to the generated hosts.allow file
     (Thanks to Jake Schroeder <akejay@freeshell.org>)
-  * added ldconfig call to postinst (neede for ltsp-x-core 3.0.5)
+  * added ldconfig call to postinst (needed for ltsp-x-core 3.0.5)
   * added recognition of sarge (not tested in any way)
 
- -- Georg Baum <gbaum@users.sf.net>  Thu, 07 Feb 2003 21:16:34 +0100
+ -- Georg Baum <gbaum@users.sf.net>  Fri, 07 Feb 2003 21:16:34 +0100
 
 ltsp-core-i386 (3.0.5-1) unstable; urgency=low
 
