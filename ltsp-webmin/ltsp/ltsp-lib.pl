@@ -19,9 +19,12 @@ sub ltsp_read_config($) {
 
   print "ltsp_read_config: reading $config_file<br>\n" if $DEBUG;
 
+  &lock_file("$config_file");
   open (LST, "<$config_file");
   @lines = (<LST>);
   close (LST);
+  &unlock_file("$config_file");
+  &webmin_log("read", "file", $config_file, );
 
   for ($i = 0; $i<$#lines; $i++) {
 
@@ -63,6 +66,7 @@ sub ltsp_read_config($) {
 sub ltsp_write_config($) {
 
   my $conf_file = shift(@_);
+  &lock_file("$conf_file");
   open (LST, ">$conf_file");
 
   foreach (&ltsp_get_hces()) {
@@ -80,6 +84,8 @@ sub ltsp_write_config($) {
   }
 
   close (LST);
+  &unlock_file("$conf_file");
+  &webmin_log("write", "file", $conf_file, );
 
 }
 
