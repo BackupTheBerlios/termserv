@@ -2,9 +2,6 @@
 
  - finish the non-rewriting configuration file modification routine
    (sledge)
- - create a distinction for values which need to be quoted and the
-    non-quoted ones
-   (sledge)
  - clean up the mess
 
 0.6:

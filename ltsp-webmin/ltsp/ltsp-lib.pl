@@ -132,16 +132,23 @@ sub _ltsp_modify_entry_on_write(@) {
 
     foreach (@modified) {
       if ($_ eq $key) {
-        
+        if (/( *)?([^ ]*)?=( *)?"([^"]*)?"( *)?/) {
+          print "<blink>quoted: $_!</blink>";
+        }
       }
+    }
+
+  }
+
+  foreach (@added) {
+    if (&ltsp_value_needs_quotes("$_")) {
+      push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n");
+    } else {
+      push (@lines, "$_ = " . $conf{"$_"} . "\n");
     }
   }
 
-  foreach $key (keys(%cur_conf)) {
-#    print "_ltsp_modify_entry_on_write: key is $key, value is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
-  }
-
-  print "_ltsp_modify_entry_on_write says bye-bye<br>\n";
+  print "_ltsp_modify_entry_on_write says bye-bye<br>\n" if $DEBUG;
 
 }
 
@@ -153,7 +160,7 @@ sub ltsp_write_config($) {
 
   &lock_file("$config_file");
   open (LST, "<$config_file");
-  @lines = (<LST>);
+  my @lines = (<LST>);
   close (LST);
   &unlock_file("$config_file");
   &webmin_log("read", "file", $config_file, );
@@ -235,26 +242,31 @@ sub ltsp_write_config($) {
         push (@lines, "[$cur_hce]\n");
         foreach (keys(%conf)) { 
           # RESPECT NOQUOTE!
-          push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n"); 
+          if (&ltsp_value_needs_quotes("$_")) {
+            push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n"); 
+          } else {
+            push (@lines, "$_ = " . $conf{"$_"} . "\n"); 
+          }
         } 
       }
     }
   }
 
-  #&lock_file("$conf_file");
-  #open (LST, ">$conf_file");
+  &lock_file("$conf_file");
+  open (LST, ">$conf_file");
 
   # Insert file writing operation code here
  
   if ($DEBUG) {
     foreach (@lines) {
       print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n";
+      print LST;
     }
   }
 
-  #close (LST);
-  #&unlock_file("$conf_file");
-  #&webmin_log("write", "file", $conf_file, );
+  close (LST);
+  &unlock_file("$conf_file");
+  &webmin_log("write", "file", $conf_file, );
 
   # Set back "helper" variables
   @added_hosts = ();
@@ -366,8 +378,9 @@ sub ltsp_value_needs_quotes($) {
 
   if ( -e "./options/$option/quoted") {
     return 1;
+  } else {
+    return 0;
   }
-  return 0;
 }
 
 sub ltsp_modify_entry($, %) {
