@@ -143,51 +143,56 @@ These protocols are also the protocols used in a terminal server network
 and are described below.
 </p>
 
-<sect2>MAC adresses<label id="mac-addresses">
+<sect2>MAC addresses<label id="mac-addresses">
  
 <p>
-MAC-Adressen sind Netzwerk-Adressierungen auf der technisch untersten Ebene.
-Jede Netzwerkkarte hat eine fest eingerichtete MAC-Adresse (gelegentlich auch
-``Hardware-Ethernet-Adresse'' genannt). Sie wird durch den Hersteller festgelegt.
-Würden zwei Netzwerkkarten in einem Netzwerk die gleiche MAC-Adresse besitzen,
-würde dies zu einem Konflikt führen. Jedoch haben alle Hersteller Übereinkünfte
-über die Verteilung von MAC-Adressen getroffen.
+MAC addresses are network addresses on the low level. Every network interface
+card has a fixed MAC address (sometimes called ''hardware ethernet address'').
+It is determined by the card vendor. If two network interface cards in the
+same network possessed the same MAC address, the network might be seriously
+messed. But the card vendors have contracts concerning the distribution of
+MAC addresses.
 </p>
  
-<sect3>Beispiel
+<sect3>Example
  
 <p>
-Eine MAC-Adresse besteht aus sechs zweistelligen Hexadezimalzahlen, die meist
-durch Doppelpunkte getrennt sind, wie etwa <em/00:0D:84:F6:3A:10/. 
+A MAC address consists of six two-digit hexadecimal numbers which are
+usually separated with colons, e.g. <em/00:0D:84:F6:3A:10/. 
 </p>
 
-<sect2>IP-Adressen
+<sect2>IP addresses
 
 <p> 
-IP-Adressen geben eine logische Struktur in einem Netzwerk vor. Sie sind durch
-den Systembetreuer konfigurierbar.
-</p>
- 
-<sect3>Beispiel
-
-<p> 
-Eine IP-Adresse besteht aus vier zweistelligen Hexadezimalzahlen, die jedoch
-fast immer der Übersichtlichkeit halber als Dezimalzahlen geschrieben werden.
-Sie werden mit Punkten voneinander getrennt. In einem Schulnetzwerk könnte der
-Server die IP-Adresse <em/192.168.1.1/ besitzen. Der Proxy-Server besitzt
-die IP <em/192.168.1.2/. Die Terminals bekommen <em/192.168.1.10/, <em/192.168.1.11/,
-usw.
+IP addresses define a network's logical structure. They are user-configurable.
 </p>
  
-<sect2>Rechnernamen und Domänen (DNS)
+<sect3>Example
 
-<p> 
-IP-Adressen sind zur Strukturierung ganz nützlich, jedoch können in einem IP-Netzwerk
-rein mathematisch über 4 Milliarden Rechner beheimatet sein! Damit man sich
-kein ``Telefonbuch'' für IP-Adressen anlegen muss und stattdessen menschenlesbare
-Namen verwenden kann, wurde das Domänennamenssystem DNS (``Domain Name System'')
-entwickelt. DNS-Server in einem Netzwerk halten eine Liste über IP-Adressen
-und ihre Namen vor, die von Terminals abgefragt werden kann.
+<p>
+An IP address consists of four two-digit hexadecimal numbers, which are usually
+written as decimal numbers for the sake of understandability. They are
+separated with points. In a network, the server might have the IP address
+<em/192.168.1.1/, The proxy server <em/192.168.1.2/ and terminals
+<em/192.168.1.10/, <em/192.168.1.11/, etc.
+</p>
+ 
+<sect2>Host names and domains (DNS)
+
+<p>
+IP addresses are quite useful for structuring; however an IP-based network 
+can contain up to 4 billion IP addresses! To avoid that everyone using
+that network has to create his personal ''phone book'' for IP addresses
+and instead enable the use of human-readable names, the domain naming
+service (''DNS'') was developed. DNS servers in a network host a list
+of IP addresses and their corresponding host names, which then can be
+queried by hosts within the network.
+
+The concept is domain-oriented, there is a hierarchy: 
+<em/arktur.cg-bamberg.de/ is a German (<em/de/) computer of the Clavius 
+High School Bamberg (<em/cg-bamberg/) with the name <em/arktur/. The last
+part is called top level Domain (short ''TLD''), the second-last part is the
+domain. Before that, there are either computers or further domains. 
 </p>
 
 <p>
