@@ -42,4 +42,20 @@ Jedes Terminal kann nur importieren, was der Server ausdrücklich exportiert!
  
 \subsection{X11 - Fenster in der Ferne}   
 
-\includegraphics{userguide-networkbasics-protocols-x-flow.eps}
+\begin{figure}
+
+\begin{center}
+\resizebox*{!}{7cm}{\includegraphics{userguide-networkbasics-protocols-x-flow.eps}}
+\end{center}
+
+\caption{Funktionsweise des X11-Protokolls
+\label{userguide-networkbasics-protocols-x-flow}}
+
+\end{figure}
+
+X11 ist ein System, welches unter GNU/Linux- und Unix-Systemen die Grafikausgabe regelt.
+Das Besondere an ihm ist seine Netzwerkfähigkeit. So kann ein Programm auf einem bestimmten Rechner
+laufen, die Anzeige und Bedienung des Programms findet aber auf einem anderen Rechner statt! Im
+GNU/Linux- bzw. Unix-Mehrbenutzerbetrieb können also beliebig viele Rechner
+Programme auf einem einzigen Server starten und bei sich anzeigen lassen. Die Zeichnung
+\ref{userguide-networkbasics-protocols-x-flow} gibt einen schematischen Überblick.
