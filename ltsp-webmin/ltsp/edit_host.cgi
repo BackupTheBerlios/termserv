@@ -92,6 +92,10 @@ foreach (&ltsp_get_option_groups()) {
 
 }
 
+#
+# Submit button
+# 
+
 print "</tr><tr $cb><td><input type=\"submit\" value=\"" . $text{'save_settings'} . "\">\n</td></tr></form>\n";
 
 #
