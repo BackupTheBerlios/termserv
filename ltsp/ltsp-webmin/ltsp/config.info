@@ -1,3 +1,0 @@
-ltsconf_path=Path to LTSP configuration file,0
-path_to_etherboot=Path to Etherboot package,0
-path_to_rom_images=Path to Etherboot ROM images,0
