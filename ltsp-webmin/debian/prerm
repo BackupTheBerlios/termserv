@@ -18,6 +18,7 @@ set -e
 case "$1" in
     remove|upgrade|deconfigure)
 #       install-info --quiet --remove /usr/info/ltsp-webmin.info.gz
+	/usr/sbin/update-webmin remove ltsp
         ;;
     failed-upgrade)
         ;;

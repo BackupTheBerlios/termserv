@@ -43,6 +43,11 @@ die entsprechenden Webmin-Module für diese Aufgabe.
   #
   make install DESTDIR=${RPM_BUILD_ROOT}
 
+  # This is a HACK! It does only work because currently all config files
+  # for rpm based distros are the same!
+  mkdir -p ${RPM_BUILD_ROOT}/etc/webmin/ltsp
+  cp ltsp/config-redhat-linux ${RPM_BUILD_ROOT}/etc/webmin/ltsp/config
+
 %clean
   # Cleanup after the build process on the development machine
   make clean
@@ -56,6 +61,7 @@ die entsprechenden Webmin-Module für diese Aufgabe.
 
 %files
   /usr/share/webmin/ltsp
+  %attr(0600, root, root) %config /etc/webmin/ltsp/config
   %doc CREDITS
   %doc INSTALL
   %doc LICENSE
@@ -81,6 +87,21 @@ for d in ${WEBMINDIRS}
 do
     test -d ${d} && ln -sf /usr/share/webmin/ltsp ${d}/ltsp
 done
+
+if ! test -f /etc/webmin/ltsp/admin.acl; then
+    touch /etc/webmin/ltsp/admin.acl
+    chown root:root /etc/webmin/ltsp/admin.acl
+    chmod 0600 /etc/webmin/ltsp/admin.acl
+fi
+
+# Tell webmin about the ltsp module.
+# This should be better. Maybe use update-webmin fom Debian?
+if ! grep ltsp /etc/webmin/webmin.acl > /dev/null 2>&1; then
+    sed 's/^root:.*/\0 ltsp/g' < /etc/webmin/webmin.acl > /etc/webmin/webmin.acl.new.$$
+    # to preserve permissions:
+    cat /etc/webmin/webmin.acl.new.$$ > /etc/webmin/webmin.acl
+    rm -f /etc/webmin/webmin.acl.new.$$
+fi
 
 %changelog
 * Mon Jul 16 2001 Georg Baum <gbaum@users.sourceforge.net>
