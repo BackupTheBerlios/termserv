@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+require "./helper.pl";
+
 $DEBUG = 1;
 
 # Hash "profiles"
@@ -49,7 +51,6 @@ sub ltsp_read_config($) {
 
     if (/^\[(.*)?\]/) {
       $cur_hce = "$1";
-      print "ltsp_read_config: $1<br>\n" if $DEBUG;
 
       do {
         $i++;
@@ -74,38 +75,44 @@ sub ltsp_read_config($) {
 
 }
 
-sub _ltsp_modify_entry_on_write(@, %) {
+sub _ltsp_modify_entry_on_write(@) {
 
+  print "_ltsp_modify_entry_on_write called<br>\n";
   # This function reads a list, which contains the entry in the
   # config file, and a hash, which contains the configuration
   # information of the entry; it returns the modified list
 
-  @lines = shift(@_);
-  %conf = shift(@_);
+  *lines = shift(@_);
 
   %cur_conf = ();
   
-  for ($i = 0; $i<$#lines; $i++) {
+  for ($i = 0; $i<=$#lines; $i++) {
 
     $_ = $lines[$i];
     chomp;
     if (/^\#/) { next; }
     if (length($_) == "0") { next; }
-    if (/^\[(.*)?\]/) { next; }
+    if (/^\[(.*)?\]/) { 
+      $host = $1;
+      next; 
+    }
 
     $lines[$i] =~ s/ //g;
-    chop($lines[$i]);
 
-    ($key, $value) = split(/=/, $lines[$i]);
+    ($key, $value) = split(/=/);
     chomp($key); $key =~ s/( *)?//;
     chomp($value); $value =~ s/( *)?//;
     $value =~ s/\"//g;
     $cur_conf{"$key"} .= $value;
   }
 
+  print "_ltsp_modify_entry_on_write: host is $host<br>\n"; 
+
   foreach $key (keys(%cur_conf)) {
-    print "$key is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
+    print "_ltsp_modify_entry_on_write: key is $key, value is " . $cur_conf{"$key"} . "<br>\n" if $DEBUG;
   }
+
+  print "_ltsp_modify_entry_on_write says bye-bye<br>\n";
 
 }
 
@@ -182,7 +189,7 @@ sub ltsp_write_config($) {
         push (@mod_lines, $lines[$i]); 
       }
       # MODIFICATION ROUTINE CALL IT HERE
-      #&_ltsp_modify_entry_on_write(
+      &_ltsp_modify_entry_on_write(\@mod_lines);
     }
 
   }
@@ -231,7 +238,7 @@ sub ltsp_write_config($) {
 
 sub ltsp_get_hces() {
 
-  return sort(keys(%profiles));
+  return keys(%profiles);
 
 }
 
@@ -254,16 +261,12 @@ sub ltsp_get_configuration($) {
 
 sub ltsp_get_option_groups() {
 
-  print "ltsp_get_option_groups called<br>\n" if $DEBUG;
-
   my @options = ();
 
   open (LST, "./options/order");
   foreach (<LST>) {
-    chop;
-    print "ltsp_get_option_groups: $_<br>\n" if $DEBUG;
+    chomp;
     s/=(.*)?$//;
-    print "ltsp_get_option_groups: $_<br>\n" if $DEBUG;
     push (@options, $_);
   }
   close (LST);
@@ -274,8 +277,6 @@ sub ltsp_get_option_groups() {
 
 sub ltsp_get_options() {
 
-  print "ltsp_get_options called<br>\n" if $DEBUG;
-
   my $option = shift(@_);
   my @options = ();
 
@@ -283,11 +284,9 @@ sub ltsp_get_options() {
   foreach (<LST>) {
     chop;
     if (/^$option/) {
-      print "ltsp_get_options: option found<br>\n" if $DEBUG;
       s/^(.*)?=//;
       foreach (split(/\,/)) {
         push (@options, $_);
-        print "ltsp_get_options: $_<br>\n" if $DEBUG;
       }
     }
   }
@@ -304,8 +303,9 @@ sub ltsp_get_option_type($) {
     return "select";
   } elsif (-e "./options/$option/ip") {
     return "ip";
+  } elsif (-e "./options/$option/text") {
+    return "text";
   }
-
 }
 
 sub ltsp_get_possible_values($) {
