@@ -1,3 +1,10 @@
+ltsp-x-core-i386 (3.0.4-0) unstable; urgency=low
+
+  * new upstream release
+  * added ldconfig call to postinst
+
+ -- Georg Baum <gbaum@users.sf.net>  Tue,  4 Feb 2003 21:09:23 +0100
+
 ltsp-x-core-i386 (3.0.0-0) unstable; urgency=low
 
   * new package name to reflect upstream change as well as the fact that

@@ -7,7 +7,7 @@ Build-Depends: cpio, findutils, debhelper
 
 Package: ltsp-x-core-i386
 Architecture: all
-Depends: ltsp-core-i386 (>= 3.0.0)
+Depends: ltsp-core-i386 (>= 3.0.7)
 Suggests: ltsp-x-fonts-i386
 Provides: ltsp-x-xserver-i386
 Description: XFree86 for the Linux Terminal Server Project (ltsp.org)

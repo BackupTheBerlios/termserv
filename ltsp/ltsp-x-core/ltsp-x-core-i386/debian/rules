@@ -33,6 +33,7 @@ clean:
 	dh_clean
 	rm -f debian/conffiles
 	rm -f debian/dirs
+	rm -f debian/postinst
 
 install: install-stamp
 install-stamp: build-stamp debian/dirs
@@ -52,8 +53,11 @@ debian/conffiles: debian/conffiles.in
 debian/dirs: debian/dirs.in
 	sed 's!_REL_ROOT_DIR_!$(REL_ROOT_DIR)!g' < $< > $@
 
+debian/postinst: debian/postinst.in
+	sed 's!_LTSP_DIR_!$(LTSP_DIR)!g' < $< > $@
+
 # Build architecture-independent files here.
-binary-indep: build install debian/conffiles
+binary-indep: build install debian/conffiles debian/postinst
 #	dh_testversion
 	dh_testdir -i
 	dh_testroot -i
@@ -75,7 +79,7 @@ binary-indep: build install debian/conffiles
 	dh_builddeb -i
 
 # Build architecture-dependent files here.
-binary-arch: build install debian/conffiles
+binary-arch: build install debian/conffiles debian/postinst
 ##	dh_testversion
 #	dh_testdir -a
 #	dh_testroot -a

@@ -1,6 +1,6 @@
---- inst.sh	Sat Nov 24 20:21:31 2001
-+++ inst.sh	Sat Nov 24 20:25:25 2001
-@@ -30,7 +30,7 @@
+--- inst.sh	Mon Nov  4 06:36:38 2002
++++ inst.sh	Tue Feb  4 21:12:58 2003
+@@ -33,7 +33,7 @@
  #
  # Make sure this script is being run by the superuser.
  #
@@ -9,7 +9,7 @@
      echo
      echo "You MUST run this script as superuser!"
      echo
-@@ -41,15 +41,7 @@
+@@ -44,15 +44,7 @@
      exit 1
  fi
  
@@ -26,3 +26,11 @@
  
  if [ ! -d ${LTSP_DIR} ]; then
      echo 
+@@ -71,6 +63,6 @@
+     exit 1
+ fi
+ 
+-/sbin/ldconfig -r ${LTSP_DIR}/i386
++#/sbin/ldconfig -r ${LTSP_DIR}/i386
+ 
+ 
