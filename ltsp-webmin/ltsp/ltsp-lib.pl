@@ -77,7 +77,7 @@ sub ltsp_read_config($) {
 
 sub _ltsp_modify_entry_on_write(@) {
 
-  print "_ltsp_modify_entry_on_write called<br>\n";
+  print "_ltsp_modify_entry_on_write called<br>\n" if $DEBUG;
   # This function reads a list, which contains the entry in the
   # config file, and a hash, which contains the configuration
   # information of the entry; it returns the modified list
@@ -270,11 +270,9 @@ sub ltsp_write_config($) {
 
   # Insert file writing operation code here
  
-  if ($DEBUG) {
-    foreach (@lines) {
-      print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n";
-      print LST "$_";
-    }
+  foreach (@lines) { 
+    print LST "$_"; 
+    print "<tt><font color=\"#0000ff\">$_</font></tt><br>\n" if $DEBUG;
   }
 
   close (LST);
