@@ -7,7 +7,7 @@ require './ltsp-lib.pl';
 
 &ReadParse();
 
-&header($text{"index_title"}, "", undef);
+&header($text{"index_title"}, "", undef, "config");
 
 print "<hr><br>\n";
 
