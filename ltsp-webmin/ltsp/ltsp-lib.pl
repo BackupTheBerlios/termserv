@@ -54,14 +54,18 @@ sub ltsp_read_config($) {
 
       do {
         $i++;
-        $lines[$i] =~ s/ //g;
-        chop($lines[$i]);
+        # $lines[$i] =~ s/ //g;
+        chomp($lines[$i]);
 
         # If line is not empty or a comment
         if ((length($lines[$i]) != "0") and (!($lines[$i] =~ /^\#/))) {
           ($key, $value) = split(/=/, $lines[$i]);
-          # RESPECT NOQUOTE!
+
+          $key =~ s/(\s*)?//g;
+          $value =~ s/^(\s*)?//;
+          $value =~ s/(\s*)$//;
           $value =~ s/\"//g;
+
           $profiles{"$cur_hce"} .= ";$key,$value";
         }
       } until (($lines[$i+1] =~ /^\[(.*)?\]/) or ($#lines == $i));
@@ -98,8 +102,10 @@ sub _ltsp_modify_entry_on_write(@) {
     }
 
     ($key, $value) = split(/=/);
-    chomp($key); $key =~ s/( *)?//g;
-    chomp($value); $value =~ s/( *)?//g;
+    chomp($key); $key =~ s/(\s*)?//g;
+    # CHANGED
+    chomp($value); $value =~ s/^(\s*)?//;
+    $value =~ s/(\s*)$//;
     $value =~ s/\"//g;
     $cur_conf{"$key"} .= $value;
   }
@@ -116,8 +122,10 @@ sub _ltsp_modify_entry_on_write(@) {
     if (/^\[(.*)?\]/) { next; }
 
     ($key, $value) = split(/=/);
-    chomp($key); $key =~ s/( *)?//g;
-    chomp($value); $value =~ s/( *)?//g;
+    chomp($key); $key =~ s/(\s*)?//g;
+    # CHANGED
+    chomp($value); $value =~ s/^(\s*)?//;
+    $value =~ s/(\s*)$//;
     $value =~ s/\"//g;
 
     # And once again Larry gets on my ****. He is too stupid to invent
@@ -133,19 +141,19 @@ sub _ltsp_modify_entry_on_write(@) {
     foreach (@modified) {
       if ($_ eq $key) {
         print "modified: $_<br>\n" if $DEBUG;
-        if ($lines[$i] =~ /( *)?(\w*)?(.*)?=(.*)?\"(.*)?\"(.*)?/) {
+        if ($lines[$i] =~ /(\s*)?(\w*)?(.*)?=(.*)?\"(.*)?\"(.*)?/) {
           $rep = $conf{"$_"};
           if (&ltsp_value_needs_quotes("$_")) {
             $lines[$i] =~ s/=(.*)?\"(.*)?\"(.*)?/=$1\"$rep\"$3/;
           } else {
             $lines[$i] =~ s/=(.*)?\"(.*)?\"(.*)?/=$1$rep$3/;
           }
-        } elsif ($lines[$i] =~ /( *)?(\w*)?(.*)?=((\t| )*)?([^ ]*)?( *)?/) {
+        } elsif ($lines[$i] =~ /(\s*)?(\w*)?(.*)?=(\s*)?([^ ]*)?( *)?/) {
           $rep = $conf{"$_"};
           if (&ltsp_value_needs_quotes("$_")) {
-            $lines[$i] =~ s/=((\t| )*)?([^ ]*)?( *)?/=$1\"$rep\"$3/;
+            $lines[$i] =~ s/=(\s*)?([^ ]*)?( *)?/=$1\"$rep\"$3/;
           } else {
-            $lines[$i] =~ s/=((\t| )*)?([^ ]*)?( *)?/=$1$rep$3/;
+            $lines[$i] =~ s/=(\s*)?([^ ]*)?( *)?/=$1$rep$3/;
           }
         }
       }
