@@ -88,25 +88,23 @@ sub _ltsp_modify_entry_on_write(@) {
 
   *lines = shift(@_);
 
+  for ($i = 0; $i <= $#lines; $i++) { $lines[$i] =~ s/\n//; }
+
   %cur_conf = ();
   
   for ($i = 0; $i<=$#lines; $i++) {
 
     $_ = $lines[$i];
-    chomp;
+
     if (/^\#/) { next; }
     if (length($_) == "0") { next; }
-    if (/^\[(.*)?\]/) { 
-      $host = $1;
-      next; 
-    }
+    if (/^\s*?\[(.*)?\]/) { $host = $1; next; }
 
     ($key, $value) = split(/=/);
-    chomp($key); $key =~ s/(\s*)?//g;
-    # CHANGED
-    chomp($value); $value =~ s/^(\s*)?//;
-    $value =~ s/(\s*)$//;
-    $value =~ s/\"//g;
+    $key =~ s/(\s*)?//g;
+    print "<tt>key captured: $key</tt>\n";
+    $value =~ s/^(\s|\t)*(\"{0,1})(.*?)\"{0,1}\s*$/$3/;
+    print "<tt>value captured: $value</tt>\n";
     $cur_conf{"$key"} .= $value;
   }
 
@@ -116,17 +114,13 @@ sub _ltsp_modify_entry_on_write(@) {
 
   for ($i = 0; $i<=$#lines; $i++) {
     $_ = $lines[$i];
-    chomp;
     if (/^\#/) { next; }
     if (length($_) == "0") { next; }
-    if (/^\[(.*)?\]/) { next; }
+    if (/\s+?\[(.*)?\]/) { next; }
 
     ($key, $value) = split(/=/);
-    chomp($key); $key =~ s/(\s*)?//g;
-    # CHANGED
-    chomp($value); $value =~ s/^(\s*)?//;
-    $value =~ s/(\s*)$//;
-    $value =~ s/\"//g;
+    $key =~ s/(\s*)?//g;
+    $value =~ s/^(\s|\t)*(\"{0,1})(.*?)\"{0,1}\s*$/$3/;
 
     # And once again Larry gets on my ****. He is too stupid to invent
     # the "a in b" operator which returns true when string a is in array b
@@ -163,11 +157,13 @@ sub _ltsp_modify_entry_on_write(@) {
 
   foreach (@added) {
     if (&ltsp_value_needs_quotes("$_")) {
-      push (@lines, "$_ = \"" . $conf{"$_"} . "\"\n");
+      push (@lines, "$_ = \"" . $conf{"$_"} . "\"");
     } else {
-      push (@lines, "$_ = " . $conf{"$_"} . "\n");
+      push (@lines, "$_ = " . $conf{"$_"});
     }
   }
+
+  foreach ($i = 0; $i<=$#lines; $i++) { $lines[$i] .= "\n"; }
 
   print "_ltsp_modify_entry_on_write says bye-bye<br>\n" if $DEBUG;
 
